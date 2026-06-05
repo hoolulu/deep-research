@@ -250,10 +250,13 @@ OpenCode 用户有两种方式：
 
 **非 OpenCode 用户能自动更新吗？**
 
-不能。你拿到的是架构参考快照，没有自动更新通道。建议：
-1. 定期访问 [Releases](https://github.com/hoolulu/deep-research/releases) 查看更新
-2. 关注提交历史了解改动
-3. 手动 cherry-pick 需要的修复/改进到你的适配版本中
+不能。`/research-update` 是 OpenCode 专属功能，其他 AI 编程工具没有对应的命令系统，没法一键更新。
+
+你可以让 AI 帮你做版本对比和更新适配。把下面这段提示词粘贴到你的 AI 编码工具中：
+
+```text
+请调研 https://github.com/hoolulu/deep-research 项目的最新版本代码，对比当前本地已有代码的差异，找出自上次安装以来上游新增了哪些功能、修复了哪些问题，然后逐项应用到本地的适配版本中。注意保持你所在平台的适配改动不变，只合并上游的通用改进。
+```
 
 ## License
 
