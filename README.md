@@ -122,7 +122,7 @@ curl -fsSL https://raw.githubusercontent.com/hoolulu/deep-research/main/install.
 
 > 发送后 OpenCode 的 AI agent 会自动在终端执行安装，你不需要手动打开命令行。
 
-安装脚本会：检测 OpenCode 目录 → 放置 skill → 检查 OMO 插件 → 检查 Exa / Scrapling MCP。
+安装脚本会：检测 OpenCode 目录 → 放置 skill → 检查 OMO 插件 → 检测 Python + Scrapling → 检查 Exa / Scrapling MCP → 注册 `/research` 命令。
 
 ### 还没有 OpenCode？
 

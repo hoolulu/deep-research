@@ -53,6 +53,31 @@ check_mcp() {
     return 1
 }
 
+check_python() {
+    if command -v python3 &>/dev/null; then
+        ok "Python3 可用: $(python3 --version 2>&1)"
+        PYTHON=python3
+    elif command -v python &>/dev/null; then
+        ok "Python 可用: $(python --version 2>&1)"
+        PYTHON=python
+    else
+        warn "未检测到 Python。Scrapling 需要 Python 环境"
+        warn "安装 Python：https://www.python.org/downloads/"
+        return 1
+    fi
+}
+
+check_scrapling() {
+    if $PYTHON -c "import scrapling" 2>/dev/null; then
+        local ver=$($PYTHON -c "import scrapling; print(getattr(scrapling, '__version__', '?'))")
+        ok "Scrapling 已安装 ($ver)"
+        return 0
+    fi
+    warn "Scrapling 未安装（网页抓取需要）"
+    warn "安装：pip install scrapling"
+    return 1
+}
+
 main() {
     log "检测 OpenCode 环境..."
     local skills_dir
@@ -73,6 +98,10 @@ main() {
     install_skill "$skills_dir/$SKILL_NAME"
 
     check_omo
+
+    log "检查 Python 环境..."
+    check_python || true
+    check_scrapling || true
 
     local oc_config=""
     for cfg in "$HOME/.opencode/opencode.json" "$HOME/.opencode/opencode.jsonc" \
