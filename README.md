@@ -3,11 +3,20 @@
 **OpenCode 深度调研报告生成 Skill。**
 
 > **当前版本：** `1.0.0` · [查看更新](https://github.com/hoolulu/deep-research/commits/main)
-> **一条命令，六分钟，一份对标券商标准的深度调研报告。**
+
+**一条命令，六分钟，一份对标券商标准的深度调研报告。**
 
 ---
 
-**非 OpenCode 独占，但更新只对 OpenCode 用户无缝同步。** 其他平台（Claude Code、Codex CLI、Cursor 等）读者，请将本项目视为**架构参考快照**——后续改进需要自行 cherry-pick。详见[更新策略](#-更新)。
+**非 OpenCode 独占。** Claude Code、Codex CLI、Cursor、Windsurf、Cline、Aider、Continue.dev 等主流 AI 编码工具读取本项目后稍作改造即可使用。
+
+多 agent 编排（OpenCode 的 `task()`）思路通用，各平台有自己的等价机制，照猫画虎就行。Scrapling（Python 抓取库）和搜索 API 都是标准 Python/HTTP 工具，不绑定平台。Scrapling 是保证抓取效率和质量的核心依赖，推荐必装。
+
+本 skill 的核心价值在于实现思路，而非适配某个特定工具。
+
+如果你用不同的 CLI 工具，你可以定义任何搜索工具，或者在 Rules.md 和 Types.md 中修改对特定行业的需求。
+
+注意，适配调研任何主题，不光是能做行业研报哦！看我出的案例报告就知道啦。
 
 ---
 
@@ -131,8 +140,6 @@ curl -fsSL https://raw.githubusercontent.com/hoolulu/deep-research/main/install.
 
 ### 🔧 方式三：非 OpenCode 用户（Claude Code / Codex CLI / Cursor 等）
 
-> ⚠️ **参考快照模式**：本项目对非 OpenCode 平台以"架构参考"形式提供。每次你拉取的是某个时间点的代码快照，后续更新（bug 修复、新功能）不会自动同步到你的 fork。如果上游有重要改动，需要手动 cherry-pick。
-
 把这段提示词粘贴到你的 AI 编码工具中：
 
 ```text
@@ -161,40 +168,6 @@ curl -fsSL https://opencode.ai/install | bash
 
 
 > 本 skill 依赖 OH-MY-OPENAGENT 插件提供的 `oracle` 子 agent。如果没有安装，`/research` 命令无法执行。
-
-## 🔄 更新
-
-### OpenCode 用户
-
-安装后，skill 目录自带 git 仓库。更新方式：
-
-**方式一：AI 命令（推荐）**
-
-在 OpenCode 聊天框输入：
-
-```
-/research-update
-```
-
-AI 会自动检查本地和远程版本号，如有更新则执行 `git pull`。
-
-**方式二：手动**
-
-```bash
-cd ~/.opencode/skills/deep-research
-git pull
-```
-
-版本号存储在根目录 `VERSION` 文件中。可通过 `cat ~/.opencode/skills/deep-research/VERSION` 查看当前版本。
-
-### 非 OpenCode 用户
-
-你拿到的是架构参考快照，没有自动更新通道。建议：
-1. 定期访问 [Releases](https://github.com/hoolulu/deep-research/releases) 查看更新
-2. 关注提交历史 `git log` 了解改动
-3. 手动 cherry-pick 需要的修复/改进到你的适配版本中
-
----
 
 ## 使用方法
 
@@ -253,6 +226,22 @@ git pull
 
 **数据安全吗？**
 所有处理在本地完成。不收集、不上传任何用户数据。
+
+**如何更新到最新版本？**
+
+OpenCode 用户有两种方式：
+
+- **AI 命令**：输入 `/research-update`，AI 自动对比本地和远程版本号，如有更新则执行 `git pull`
+- **手动**：`cd ~/.opencode/skills/deep-research && git pull`
+
+版本号可通过 `cat ~/.opencode/skills/deep-research/VERSION` 查看。
+
+**非 OpenCode 用户能自动更新吗？**
+
+不能。你拿到的是架构参考快照，没有自动更新通道。建议：
+1. 定期访问 [Releases](https://github.com/hoolulu/deep-research/releases) 查看更新
+2. 关注提交历史了解改动
+3. 手动 cherry-pick 需要的修复/改进到你的适配版本中
 
 ## License
 
