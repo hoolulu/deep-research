@@ -216,6 +216,8 @@ curl -fsSL https://opencode.ai/install | bash
 
 可以用任何 Markdown 阅读器（Typora / Obsidian / VS Code 等）打开。
 
+你也可以指定报告的存放路径，让 AI 帮你修改。
+
 👉 **[浏览所有已生成的案例报告](案例报告/)** — 点击即可查看历史报告列表。
 
 ## 十一、成本
@@ -265,6 +267,8 @@ OpenCode 用户有两种方式：
 
 MIT
 
+本项目采用 MIT 协议。选择 MIT 而非 GPL/CC 等更严格的协议，是因为本项目的核心是一套可移植的方法论和管道设计，而非需要保护版权的成品库。MIT 能让它在不同平台和工具链中被最大化地复用和改造，与"非 OpenCode 独占"的定位一致。
+
 ---
 
-> 社区讨论：[LINUX DO](https://linux.do/t/topic/2312608)
+> 社区讨论帖子：[LINUX DO](https://linux.do/t/topic/2312664)
