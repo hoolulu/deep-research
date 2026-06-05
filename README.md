@@ -114,7 +114,15 @@ Scrapling 批量抓取（获取全文，不被 WAF/Cloudflare 拦住）
 
 ## 安装
 
-### 已有 OpenCode（把下面这行复制到 OpenCode 的聊天框发送即可）
+### 🧠 方式一：AI 傻瓜安装（推荐）
+
+把下面这段提示词复制到 OpenCode 聊天框发送，AI 会自动完成一切：
+
+> 请调研 https://github.com/hoolulu/deep-research 项目，根据 SKILL.md 和 README 的要求，自动安装所有前置依赖（Python、Scrapling、oh-my-openagent），注册 `/research` 命令，确保此 skill 在 OpenCode 中正常使用。
+
+AI 会读取项目文档→识别依赖链→逐项安装→验证可用性。不需要手动执行任何命令。
+
+### ⚡ 方式二：一键脚本安装
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/hoolulu/deep-research/main/install.sh | bash
@@ -122,7 +130,7 @@ curl -fsSL https://raw.githubusercontent.com/hoolulu/deep-research/main/install.
 
 > 发送后 OpenCode 的 AI agent 会自动在终端执行安装，你不需要手动打开命令行。
 
-安装脚本会：检测 OpenCode 目录 → 放置 skill → 检查 OMO 插件 → 检测 Python + Scrapling → 检查 Exa / Scrapling MCP → 注册 `/research` 命令。
+安装脚本会：检测 OpenCode 目录 → 放置 skill → 自动安装 OMO / Python / Scrapling → 检查 MCP → 注册 `/research` 命令。
 
 ### 还没有 OpenCode？
 
@@ -130,7 +138,7 @@ curl -fsSL https://raw.githubusercontent.com/hoolulu/deep-research/main/install.
 curl -fsSL https://opencode.ai/install | bash
 ```
 
-装完再运行上面的安装命令。
+装完再选上面的方式安装。
 
 ### 前置依赖
 
