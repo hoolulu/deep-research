@@ -90,7 +90,7 @@ risk: medium
     → 在一个循环内为每一章调用 task()，全部使用 run_in_background=true 一次性发出
     → 收集所有 background task ID
     → 发出所有章节后，统一等待全部完成
-    → 读取 {TMPDIR}/chapters/ 下所有 chapter-*-manifest.json，提取 word_count，汇总写入 {TMPDIR}/wordcounts.json
+    → 汇总各章字数写入 {TMPDIR}/wordcounts.json（各章节 agent 返回时会输出 manifest JSON，其中含 word_count 字段。主 agent 已看到这些值，直接用 `write` 工具写入汇总 JSON，**禁止为做此事编写任何 Python 脚本**——`dr_tools.py` 未提供此聚合命令，正确的做法是用 `write` 直接写已知值。如果因为 manifest JSON 不标准而无法解析，责任在生成方，**不在主 agent**——主 agent 应直接回退到从 Task 4 子 agent 的返回输出中提取已知字数。如需验证，用 `python {TOOLSDIR}/dr_tools.py word-count {TMPDIR}/chapters/chapter-*.md` 逐个核验。）
     → todowrite 标记完成（每完成一章标记一个子项）
     → 向用户报告进度（"N 章撰写完成，进入装配"）
  9. ══ Task 5 — 装配 + QA + 清理 ══

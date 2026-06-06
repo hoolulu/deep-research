@@ -60,6 +60,7 @@ python {TOOLSDIR}/dr_tools.py prepare-chapter \
 ```json
 {"chapter":N,"word_count":3580,"file_path":"{TMPDIR}/chapters/chapter-{N}.md"}
 ```
+⚠️ **JSON 编码洁净**：`file_path` 必须使用**正斜杠 `/`**（如 `"D:/TEMP/dr-xxx/chapters/chapter-1.md"`），禁止使用反斜杠 `\`——Windows 反斜杠在 JSON 中属于非法转义序列，会导致主 agent 解析失败。
 
 在回答中只返回文件路径。
 **关键**：字数数据在 manifest 文件中，**不得写入章节正文文件**。
