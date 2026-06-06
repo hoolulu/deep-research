@@ -79,12 +79,10 @@ risk: medium
     → 读取 {TMPDIR}/task2_manifest.json，提取 source_count + fact_count + fetch_method
     → todowrite 标记完成
     → 向用户报告进度（"数据已收集，N 个来源，🔧 Scrapling/🌐 webfetch"）
- 7. ══ Task 3 — 预检 + 验证 ══
-    → 读取 {PROMPTSDIR}/task3_precheck.md，替换 {TMPDIR} {TOOLSDIR}，注入 prompt
-    → 等待返回 cautions.json 路径
-    → 读取 {TMPDIR}/task3_manifest.json + cautions.json，提取预检结果 + cautions 列表 + data_limited 标记
+ 7. ══ Task 3 — 已合并至 Task 2（预检步骤在 Task 2 内部完成，不再单独派发 sub-agent） ══
+    → 读取 {TMPDIR}/task2_manifest.json，提取 source_count + fact_count + fetch_method + data_limited + cautions_path
     → todowrite 标记完成
-    → 向用户报告进度（"预检通过，开始撰写 N 章"）
+    → 向用户报告进度（"数据已收集，N 个来源，🔧 Scrapling/🌐 webfetch"）
  8. ══ Task 4 — 预分片 + 并行派发章节撰写 ══
     → 读取 {TMPDIR}/outline.json 获取 chapters 数组；读取 {TMPDIR}/data-pool.json
     → **按章节预分片数据池**：遍历 outline.chapters，对每章提取其 sub_questions 对应的 data-pool 条目，用 `write` 工具写入 `{TMPDIR}/ch{N}-facts.json`（N=章节号）。这比让每个章节 agent 读全量 data-pool 更省 token、写得更快。
@@ -94,10 +92,11 @@ risk: medium
     → **不用统计字数**（装配阶段统一计算，中间环节不需要）
     → todowrite 标记完成（每完成一章标记一个子项）
     → 向用户报告进度（"N 章撰写完成，进入装配"）
- 9. ══ Task 5 — 装配 + QA + 清理 ══
-    → 读取 {PROMPTSDIR}/task5_assembly.md，替换 {TMPDIR} {TOOLSDIR} {depth_mode} {target_year} {data_limited}，注入 prompt
-    → 等待返回报告路径
-    → 读取 {TMPDIR}/task5_manifest.json，提取 report_path + line_count + chapter_count + word_count + qa_passed
+ 9. ══ Task 5 — 装配 + QA（**主 agent 直接执行，不派 sub-agent**） ══
+    → **Step 1 — 装配**：`python {TOOLSDIR}/dr_tools.py assemble-report --outline {TMPDIR}/outline.json --chapters-dir {TMPDIR}/chapters/ --datapool {TMPDIR}/data-pool.json --mode {depth_mode} --target-year {target_year} --output 案例报告/`，从输出行提取报告路径 `$REPORT`
+    → **Step 2 — 引用转换**：`python {TOOLSDIR}/dr_tools.py convert-citations --datapool {TMPDIR}/data-pool.json "$REPORT"`（`$REPORT` 替换为上一步输出的实际路径）
+    → **Step 3 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year}`，读取 JSON 输出中的 passed 字段
+    → 使用 `write` 工具创建 {TMPDIR}/task5_manifest.json（含 qa_passed 结果）
     → todowrite 标记完成
     → ⏱ **强制计算总耗时**（读取 start_time.txt + 当前时间算差值，不可跳过）：
       ```
@@ -137,16 +136,11 @@ risk: medium
 
 ---
 
-## 4. Task 3 — 预检 + 验证（unspecified-high）
+## 4. Task 3 — 已合并至 Task 2
 
-**工具**：`task(category="unspecified-high", load_skills=[], ...)`
+预检步骤（数据质量检查、来源可信度评估、cautions.json 生成）已合并到 Task 2 内部完成，不再单独派发 sub-agent。
 
-该子 agent 负责在章节撰写前对 data-pool.json 做数据质量检查，返回预检结果和注意事项。当数据量不足时标记 `data_limited=true`，传递给 Task 5 调整质量预期。
-
-**prompt 文件**：`prompts/task3_precheck.md`
-**用法**：读取文件内容，替换 `{TMPDIR}` `{TOOLSDIR}` 为实际路径后注入 prompt。
-
-**输出**：{TMPDIR}/cautions.json + {TMPDIR}/task3_manifest.json（使用 `write` 工具创建）
+**数据来源**：{TMPDIR}/data-pool.json + {TMPDIR}/cautions.json（由 Task 2 一并输出）
 
 ### 章节 agent 指令模板（由 Task 4 主 agent 在派发时使用）
 
@@ -166,16 +160,15 @@ risk: medium
 
 ---
 
-## 5. Task 5 — 装配 + QA + 清理（unspecified-high）
+## 5. Task 5 — 装配 + QA（主 agent 直接执行，不派 sub-agent）
 
-**工具**：`task(category="unspecified-high", load_skills=[], ...)`
+装配、引用转换、QA 检查均由主 agent 通过 bash 命令直接执行 `{TOOLSDIR}/dr_tools.py` 完成，不再派发独立的 sub-agent。三个命令依次执行：
 
-该子 agent 在所有章节写完后，负责装配最终报告、质量验收、清理中间文件。
+1. `python {TOOLSDIR}/dr_tools.py assemble-report ...` → 生成报告
+2. `python {TOOLSDIR}/dr_tools.py convert-citations ...` → 引用转换
+3. `python {TOOLSDIR}/dr_tools.py qa-report ...` → 质量检查
 
-**prompt 文件**：`prompts/task5_assembly.md`
-**用法**：读取文件内容，替换 `{TMPDIR}` `{TOOLSDIR}` 为实际路径以及 `{depth_mode}` `{target_year}` `{data_limited}` 为对应值后注入 prompt。（`data_limited` 从 task3_manifest.json 读取，true/false）
-
-**输出**：最终报告 + {TMPDIR}/task5_manifest.json（manifest 使用 `write` 工具创建）
+**清理**：装配完成后主 agent 执行 `Remove-Item -Recurse -Force "{TMPDIR}"` 清理临时文件。
 
 ---
 
