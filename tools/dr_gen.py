@@ -119,8 +119,7 @@ def generate_refs(datapool_path: str, numbered: bool = False) -> dict:
     plain:   - [标题 · 机构 · 年](url)
     numbered: [1] [标题 · 机构 · 年](url)
     """
-    with open(datapool_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    data = _read_json_handle_bom(datapool_path)
     records = data if isinstance(data, list) else [data]
     seen_keys = set()
     entries = []
@@ -154,12 +153,19 @@ def generate_refs(datapool_path: str, numbered: bool = False) -> dict:
 
 CITATION_RE = re.compile(r'[（(]([^）)]+?)[，,]\s*(\d{4})[）)]')
 
+_UTF8_SIG = 'utf-8-sig'
+
+def _read_json_handle_bom(path: str):
+    """Read JSON file, auto-handling UTF-8 BOM."""
+    with open(path, 'r', encoding=_UTF8_SIG) as f:
+        return json.load(f)
+
 
 def convert_citations(report_path: str, datapool_path: str, output_path: str = None) -> dict:
-    """Convert （机构，年份） citations to numeric index [N] with reference list.
+    """Convert （机构，年份） citations to [^N] footnote links with reference list.
 
-    Reads the assembled report, scans for citation patterns, replaces with [N],
-    builds a numbered reference list from data-pool.json, and writes back.
+    [^N] in body links to [^N]: description at bottom — supports clickable
+    back-and-forth navigation in most markdown renderers.
     """
     with open(report_path, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -181,29 +187,26 @@ def convert_citations(report_path: str, datapool_path: str, output_path: str = N
     # Build mapping: (inst, yr) → ref number
     ref_map = {pair: i + 1 for i, pair in enumerate(ordered)}
 
-    # Replace in-text citations with [N]
+    # Replace in-text citations with clickable [^N]
     def _replace(m):
         inst = m.group(1).strip()
         yr = m.group(2)
         num = ref_map.get((inst, yr))
         if not num:
-            # fallback: search by year only
             for (i, y), n in ref_map.items():
                 if y == yr and inst in i:
                     num = n
                     break
             if not num:
-                return m.group(0)  # leave unchanged if not found
-        return f'[{num}]'
+                return m.group(0)
+        return f'[^{num}]'
 
     new_content = CITATION_RE.sub(_replace, content)
 
-    # Load data-pool for titles
-    with open(datapool_path, 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    # Load data-pool for titles/URLs
+    data = _read_json_handle_bom(datapool_path)
     records = data if isinstance(data, list) else [data]
 
-    # Build reference list from data-pool
     pool_map = {}  # (inst, yr) → (title, url)
     for rec in records:
         for fact in rec.get('facts') or []:
@@ -214,14 +217,16 @@ def convert_citations(report_path: str, datapool_path: str, output_path: str = N
             if inst and yr and url:
                 pool_map[(inst, yr)] = (title or inst, url)
 
-    ref_lines = ["\n\n## 参考来源\n"]
+    ref_lines = ["\n\n## 参考来源\n\n"]
     for (inst, yr), num in sorted(ref_map.items(), key=lambda x: x[1]):
         title, url = pool_map.get((inst, yr), (inst, ''))
-        label = f"{title} · {inst}" + (f" · {yr}" if yr else "")
+        # Avoid redundant "标题 · 来源" when they're the same
+        label = title if title == inst else f"{title} · {inst}"
+        label = label + (f" · {yr}" if yr else "")
         if url:
-            ref_lines.append(f"[{num}] [{label}]({url})")
+            ref_lines.append(f"[^{num}]: [{label}]({url})")
         else:
-            ref_lines.append(f"[{num}] {label}")
+            ref_lines.append(f"[^{num}]: {label}")
 
     ref_text = '\n'.join(ref_lines)
 
