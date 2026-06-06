@@ -112,7 +112,8 @@ GDELT 全球新闻   │  36氪 / 澎湃新闻（科技商业新闻）
 | `/research 主题 -deep`  | 极致深度        | 10-15 段/章 | ~15,000–30,000 字 | ~800+ | ~12–18 min |
 
 ## 八、运行截图
-<img width="1638" height="1301" alt="image" src="https://github.com/user-attachments/assets/1e014aff-9ac1-49d0-8cb8-465ecbb24c9f" />
+<img width="1807" height="1449" alt="image" src="https://github.com/user-attachments/assets/f13fccef-dee1-43ef-a1bc-1aabda02b86f" />
+
 
 
 ## 九、安装
