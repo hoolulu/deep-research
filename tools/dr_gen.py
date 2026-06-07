@@ -542,7 +542,7 @@ def assemble_report(outline_path: str, chapters_dir: str,
         f"{temp_meta['full_block']}\n",
         "## 目录\n", toc_text, "\n",
     ]
-    temp_parts.extend(chapter_texts)
+    temp_parts.append('\n\n'.join(chapter_texts))
     temp_parts.append("\n\n---\n\n")
     temp_parts.append(ref_text)
     temp_parts.append(f"\n\n## 免责声明\n\n{DISCLAIMER}\n")
@@ -567,7 +567,7 @@ def assemble_report(outline_path: str, chapters_dir: str,
         f"{meta['full_block']}\n",
         "## 目录\n", toc_text, "\n",
     ]
-    report_parts.extend(chapter_texts)
+    report_parts.append('\n\n'.join(chapter_texts))
     report_parts.append("\n\n---\n\n")
     report_parts.append(ref_text)
     report_parts.append(f"\n\n## 免责声明\n\n{DISCLAIMER}\n")
