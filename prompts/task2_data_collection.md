@@ -201,14 +201,20 @@ Step 6 — 输出数据池 + 数据质检
 ]
 ```
 
-写入后用 {TOOLSDIR}/dr_tools.py 验证：
-☐ 数据池结构：`python {TOOLSDIR}/dr_tools.py check-datapool {TMPDIR}/data-pool.json --mode {depth_mode}`
+写入后运行数据质检（**必须使用脚本统计 source_count / fact_count，禁止自己写 Python 算**）：
+☐ `python {TOOLSDIR}/dr_tools.py check-datapool {TMPDIR}/data-pool.json --mode {depth_mode}`
+    → 从输出中的 `STATS: {...}` 行提取 `source_count` 和 `fact_count` 用于 manifest
+    → 如果脚本报错（exit code != 0），修复数据池中的问题后重新运行。DATA_LIMITED 以下兜底
 ☐ 每子问题 ≥ 1 条事实或 gap 说明
 ☐ priority=high 子问题 facts ≥ 2 条
 ☐ **来源可信度检查**：逐条检查 priority=high 的 fact 来源。域名后缀 .edu/.gov/.org 或知名研究机构标记可信，自媒体/企业来源标记存疑。
 ☐ **乱码检查**：扫描 facts[].ctx 字段，检查替换字符（\ufffd）或 GBK→UTF-8 Mojibake。
 ☐ **跨事实一致性**：同一指标跨子问题差值 > 20% 且口径不明 → 记录。
     ☐ 根据检查结果标记 `data_limited`（独立来源 < 8 或总事实 < 30 时标记 true）。
+    ☐ **兜底**：如果脚本反复报错无法通过，用以下命令手动提取 count（放弃脚本统计改为手动）：
+       ```
+       python -c "import json; d=json.load(open('{TMPDIR}/data-pool.json')); src=set(); [src.update(r['src']) for r in d]; print('source_count:', len(src)); print('fact_count:', sum(len(r['facts']) for r in d))"
+       ```
 
 ## 硬规则
 1. **搜索引擎优先级**：SearXNG（自建 Layer 1 主力）→ Exa（Layer 2 冷备）→ 免费源补强（Layer 3 兜底）。检测通过即用，不继续探测下级引擎。

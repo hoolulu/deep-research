@@ -251,7 +251,19 @@ def check_datapool(filepath: str, mode: str) -> dict:
                     issues.append(f"Record {i} fact {j}: {mode} mode should have 'cur'")
                 if 'conf' not in fact:
                     issues.append(f"Record {i} fact {j}: {mode} mode should have 'conf'")
-    return {"passed": len(issues) == 0, "issues": issues, "record_count": len(records)}
+    all_srcs = set()
+    total_facts = 0
+    for rec in records:
+        for s in rec.get('src', []):
+            all_srcs.add(s)
+        total_facts += len(rec.get('facts', []))
+    return {
+        "passed": len(issues) == 0,
+        "issues": issues,
+        "record_count": len(records),
+        "source_count": len(all_srcs),
+        "fact_count": total_facts,
+    }
 
 
 # ── Chapter Validation (single-command for sub-agents) ─────────────────

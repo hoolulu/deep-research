@@ -25,10 +25,15 @@ def _exit(result: dict):
     """Print result and exit."""
     passed = result.get('passed', False)
     issues = result.get('issues', [])
+    # Stats first (always printed, even on failure — agent can still use partial data)
+    stats = {k: result[k] for k in ('record_count', 'source_count', 'fact_count') if k in result}
+    if stats:
+        import json
+        print(f"STATS: {json.dumps(stats)}")
     print("PASS" if passed else "FAIL")
     if not passed:
         for issue in issues:
-            print(f"  - {issue}", file=sys.stderr)
+            print(f"  - {issue}")
     sys.exit(0 if passed else 1)
 
 
