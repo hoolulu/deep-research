@@ -483,8 +483,8 @@ def assemble_report(outline_path: str, chapters_dir: str,
     for num, fpath in sorted(chapter_files):
         with open(fpath, 'r', encoding='utf-8') as f:
             content = f.read().strip()
-        # Strip any H2 heading the agent might have written (agents are told not to)
-        content = re.sub(r'^## .+?\n+', '', content, count=1)
+        # Strip any H1/H2 heading the agent might have written (agents are told not to)
+        content = re.sub(r'^#{1,2} .+?\n+', '', content, count=1)
         # Prepend correct H2 heading from outline
         prefix = CHINESE_NUMERALS[num - 1] if num - 1 < len(CHINESE_NUMERALS) else str(num)
         ch_title = chapters[num - 1].get('title', '未知')
