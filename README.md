@@ -179,7 +179,7 @@ curl -fsSL https://opencode.ai/install | bash
 安装并重启 OpenCode 后，在聊天框输入：
 
 | 命令 | 说明 |
-|:-----|:-----|
+|------|------|
 | `/research 你的主题` | standard 模式，~10-15 分钟 |
 | `/research 你的主题 -quick` | quick 模式，~8-12 分钟 |
 | `/research 你的主题 -deep` | deep 模式，~15-25 分钟 |
