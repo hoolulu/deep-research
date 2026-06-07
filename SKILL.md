@@ -83,7 +83,7 @@ risk: medium
     → 读取 {TMPDIR}/outline.json 获取 chapters 数组；读取 {TMPDIR}/data-pool.json
     → **读取 `profiles.json` 获取当前模式的 `max_chars`**，计算 `per_chapter_chars = max_chars ÷ chapters.length`
     → 从 data-pool.json 提取所有唯一 (src, yr) 组合，按首次出现顺序预分配引用编号 [1], [2], [3]...，写入 {TMPDIR}/citation_map.json
-    → 读取 `{PROMPTSDIR}/chapter_agent.md` 模板
+    → 读取 `{PROMPTSDIR}/task3_chapter_agent.md` 模板
      → 在一个循环内为每一章调用 task()：
       - 读取 outline.chapters[N] 的 title、sections
       - 从 data-pool.json 中筛选该章 sub_questions 对应的事实条目
@@ -141,9 +141,9 @@ risk: medium
 
 ## 3. Task 3 — 章节撰写 & 章节 agent 指令模板
 
-主 agent 在循环中为每章调用 `task()` 时，prompt 参数使用 `{PROMPTSDIR}/chapter_agent.md` 模板。
+主 agent 在循环中为每章调用 `task()` 时，prompt 参数使用 `{PROMPTSDIR}/task3_chapter_agent.md` 模板。
 
-**用法**：读取 `{PROMPTSDIR}/chapter_agent.md`，替换以下变量：
+**用法**：读取 `{PROMPTSDIR}/task3_chapter_agent.md`，替换以下变量：
 - `[章节 title]` → 当前章的 title（从 outline.json chapters 数组读取）
 - `[N]` → 当前章节编号（第 1 章为 1，第 2 章为 2...）
 - `[total]` → chapters 数组总长度
