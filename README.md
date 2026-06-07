@@ -58,7 +58,7 @@ AI 编数字 → 看起来合理，但找不到来源。
 ```
 ① 分析大纲 — 分析主题，生成调研框架和搜索计划
          ↓
-② 采集数据 — SearXNG / Exa 级联搜索 + Scrapling 批量抓取 + 数据池提取 + 预检（合并完成）
+② 采集数据 — SearXNG / Exa 级联搜索 → Scrapling 批量抓取 → 数据池提取 → 数据质检
          ↓
 ③ 并行撰写 — 多章节同时撰写，事实直接嵌入 prompt，不做工具调用
          ↓
@@ -190,7 +190,7 @@ curl -fsSL https://opencode.ai/install | bash
 
 ```
 ① 分析大纲 — 分析主题，生成调研框架和搜索计划
-② 采集数据 — SearXNG / Exa 级联搜索 → Scrapling 批量抓取 → 数据池提取 → 预检验证（合并完成）
+② 采集数据 — SearXNG / Exa 级联搜索 → Scrapling 批量抓取 → 数据池提取 → 数据质检
 ③ 并行撰写 — 多章节同时撰写，事实直接嵌入 prompt，不做额外工具调用
 ④ 装配验收 — 批量 validate → assemble-report → convert-citations → qa-report（主 agent 直接执行，不派 sub-agent）
 ```
