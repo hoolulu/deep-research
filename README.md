@@ -195,7 +195,7 @@ curl -fsSL https://opencode.ai/install | bash
 ④ 装配验收 — 批量 validate → assemble-report → convert-citations → qa-report（主 agent 直接执行，不派 sub-agent）
 ```
 
-> 以上累计 ~4-5 分钟。复杂主题可能延长，简单主题可能缩短。
+> 以上累计 ~10-20 分钟。复杂主题可能延长，简单主题可能缩短。
 
 ### 输出文件
 
@@ -238,7 +238,7 @@ curl -fsSL https://opencode.ai/install | bash
 
 **如果自己注册 Exa 的 API Key：**
 
-免费注册 Exa（https://dashboard.exa.ai/api-keys，每月 1,000 次，不绑卡），设置环境变量：
+免费注册 Exa（https://dashboard.exa.ai/api-keys），每月 1,000 次，不绑卡），设置环境变量：
 ```
 $env:EXA_API_KEY = "你的exa-key"
 ```
