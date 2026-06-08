@@ -87,14 +87,12 @@ repository: https://github.com/hoolulu/deep-research
  2. 记录任务开始时间
  3. 创建临时目录 TMPDIR；同时确定 TOOLSDIR 和 PROMPTSDIR
  4. todowrite 创建进度条目（使用 $LANG 语言）
- 5. ══ Task 1 — 分析主题 + 生成大纲 ══
-    → 读取 {PROMPTSDIR}/task1_oracle.md，替换 {TMPDIR} {TOOLSDIR}，注入 prompt
-    → **只做变量替换，不添加语言、格式、报告结构等额外指令。语言已由 Step 0 判定为 $LANG。**
-    → 等待返回 oracle 回答（不写文件，只输出 JSON 内容）
-    → 从回答中提取 outline.json 内容
-    → **注入 `"language": "$LANG"` 到 outline.json**
-    → 用 `write` 工具创建 {TMPDIR}/outline.json
-    → 从 outline.json 读取 title + chapter_count
+  5. ══ Task 1 — 分析主题 + 生成大纲 ══
+    → 读取 {PROMPTSDIR}/task1_oracle.md，替换 {TMPDIR} {TOOLSDIR} {LANG}，注入 prompt
+    → **只做变量替换，不添加语言、格式、报告结构等额外指令。语言已由 Step 0 判定为 $LANG 并在 prompt 中替换 {LANG}。**
+    → oracle 使用 `write` 工具直接将 outline.json 写入 {TMPDIR}/outline.json（绕过 shell pipe，避免非 ASCII 编码损坏）
+    → 等待返回 oracle 回答
+    → 用 `read` 工具读取 {TMPDIR}/outline.json，提取 title + chapter_count + depth_mode
     → todowrite 标记完成
     → 向用户报告进度（使用 $LANG 语言）
  6. ══ Task 2 — 数据收集 + 结构化数据池 ══
