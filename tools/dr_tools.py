@@ -160,7 +160,7 @@ def main():
         _exit(json_validate(args.file))
     elif args.command == 'json-get':
         import json as _json
-        with open(args.file, 'r', encoding='utf-8') as _f:
+        with open(args.file, 'r', encoding='utf-8-sig') as _f:
             _data = _json.load(_f)
         _val = _data
         for _key in args.key_path.split('.'):

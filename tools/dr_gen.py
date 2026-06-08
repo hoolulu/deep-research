@@ -15,7 +15,7 @@ SOURCE_PATTERN = re.compile(r'[（(]([^）)]+?)[，,]\s*(\d{4})[）)]')
 
 
 def extract_sources(filepath: str) -> dict:
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         content = f.read()
     matches = SOURCE_PATTERN.findall(content)
     seen = set()
@@ -43,7 +43,7 @@ def _github_anchor(text: str) -> str:
 
 
 def generate_toc(outline_path: str) -> dict:
-    with open(outline_path, 'r', encoding='utf-8') as f:
+    with open(outline_path, 'r', encoding='utf-8-sig') as f:
         outline = json.load(f)
     chapters = outline.get('chapters', [])
     lang = outline.get('language', 'zh')
@@ -103,7 +103,7 @@ def generate_metadata(word_count: int, reading_time: int, data_until: str,
 
 
 def map_chapters(outline_path: str) -> dict:
-    with open(outline_path, 'r', encoding='utf-8') as f:
+    with open(outline_path, 'r', encoding='utf-8-sig') as f:
         outline = json.load(f)
     chapters = outline.get('chapters', [])
     mapping = {}
@@ -198,7 +198,7 @@ def detect_engine() -> dict:
 
 
 def convert_citations(report_path: str, datapool_path: str, output_path: str = None, lang: str = "zh") -> dict:
-    with open(report_path, 'r', encoding='utf-8') as f:
+    with open(report_path, 'r', encoding='utf-8-sig') as f:
         content = f.read()
 
     cfg = get_lang_config(lang)
@@ -357,9 +357,9 @@ def write_md(filepath: str) -> dict:
 
 def prepare_chapter(outline_path: str, datapool_path: str,
                     chapter_num: int, total_chapters: int, mode: str) -> dict:
-    with open(outline_path, 'r', encoding='utf-8') as f:
+    with open(outline_path, 'r', encoding='utf-8-sig') as f:
         outline = json.load(f)
-    with open(datapool_path, 'r', encoding='utf-8') as f:
+    with open(datapool_path, 'r', encoding='utf-8-sig') as f:
         data = json.load(f)
 
     chapters = outline.get('chapters', [])
@@ -445,7 +445,7 @@ def assemble_report(outline_path: str, chapters_dir: str,
     issues = []
 
     try:
-        with open(outline_path, 'r', encoding='utf-8') as f:
+        with open(outline_path, 'r', encoding='utf-8-sig') as f:
             outline = json.load(f)
     except Exception as e:
         return {"passed": False, "issues": [f"Failed to read outline: {e}"]}
@@ -476,7 +476,7 @@ def assemble_report(outline_path: str, chapters_dir: str,
 
     chapter_texts = []
     for num, fpath in sorted(chapter_files):
-        with open(fpath, 'r', encoding='utf-8') as f:
+        with open(fpath, 'r', encoding='utf-8-sig') as f:
             content = f.read().strip()
         content = re.sub(r'^#{1,2} .+?\n+', '', content, count=1)
         heading = cfg['chapter_heading'](num, chapters[num - 1].get('title', ''))
@@ -495,7 +495,7 @@ def assemble_report(outline_path: str, chapters_dir: str,
         issues.append(f"Source extraction failed: {e}")
 
     try:
-        with open(datapool_path, 'r', encoding='utf-8') as f:
+        with open(datapool_path, 'r', encoding='utf-8-sig') as f:
             dp_data = json.load(f)
         records = dp_data if isinstance(dp_data, list) else [dp_data]
         source_freq = {}
@@ -511,7 +511,7 @@ def assemble_report(outline_path: str, chapters_dir: str,
     script_dir = os.path.dirname(os.path.abspath(__file__))
     version_path = os.path.join(script_dir, '..', 'VERSION')
     try:
-        with open(version_path, 'r', encoding='utf-8') as f:
+        with open(version_path, 'r', encoding='utf-8-sig') as f:
             version = f.read().strip()
     except Exception:
         version = ""

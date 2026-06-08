@@ -16,7 +16,7 @@ def load_profile(mode: str) -> dict:
     if _PROFILES_CACHE is None:
         base = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         path = os.path.join(base, 'profiles.json')
-        with open(path, 'r', encoding='utf-8') as f:
+        with open(path, 'r', encoding='utf-8-sig') as f:
             _PROFILES_CACHE = json.load(f)
     return _PROFILES_CACHE.get(mode, _PROFILES_CACHE.get('quick', {}))
 
@@ -56,7 +56,7 @@ def check_encoding(filepath: str) -> dict:
 # ── Word Count ────────────────────────────────────────────────────────────
 
 def _clean_text(filepath: str) -> str:
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         text = f.read()
     text = re.sub(r'^#{1,6}\s+', '', text, flags=re.MULTILINE)
     text = re.sub(r'^>\s?', '', text, flags=re.MULTILINE)
@@ -83,7 +83,7 @@ def word_count(filepath: str) -> int:
 
 def json_validate(filepath: str) -> dict:
     try:
-        with open(filepath, 'r', encoding='utf-8') as f:
+        with open(filepath, 'r', encoding='utf-8-sig') as f:
             json.load(f)
         return {"passed": True, "issues": []}
     except (json.JSONDecodeError, UnicodeDecodeError) as e:
@@ -95,7 +95,7 @@ def json_validate(filepath: str) -> dict:
 
 def check_headers(filepath: str, lang: str = "zh") -> dict:
     issues = []
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         lines = f.readlines()
     cfg = get_lang_config(lang)
     for i, line in enumerate(lines):
@@ -117,7 +117,7 @@ def check_headers(filepath: str, lang: str = "zh") -> dict:
 
 
 def check_chapter_numbers(filepath: str, lang: str = "zh") -> dict:
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         lines = f.readlines()
     cfg = get_lang_config(lang)
     pattern = re.compile(cfg['check']['ch_number_pattern'])
@@ -129,7 +129,7 @@ def check_chapter_numbers(filepath: str, lang: str = "zh") -> dict:
 
 
 def check_metadata(filepath: str, lang: str = "zh") -> dict:
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         content = f.read()
     cfg = get_lang_config(lang)
     issues = []
@@ -149,7 +149,7 @@ def check_metadata(filepath: str, lang: str = "zh") -> dict:
 
 
 def check_toc(filepath: str, expected: int = None, lang: str = "zh") -> dict:
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         lines = f.readlines()
     issues = []
     cfg = get_lang_config(lang)
@@ -176,7 +176,7 @@ def check_toc(filepath: str, expected: int = None, lang: str = "zh") -> dict:
 
 
 def check_tail(filepath: str, lang: str = "zh") -> dict:
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         content = f.read()
     cfg = get_lang_config(lang)
     issues = []
@@ -198,7 +198,7 @@ def check_tail(filepath: str, lang: str = "zh") -> dict:
 
 
 def year_density(filepath: str, target_year: int) -> dict:
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         content = f.read()
     years = re.findall(r'20[2-9]\d', content)
     if not years:
@@ -219,7 +219,7 @@ def year_density(filepath: str, target_year: int) -> dict:
 
 
 def check_datapool(filepath: str, mode: str) -> dict:
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         try:
             data = json.load(f)
         except json.JSONDecodeError as e:
@@ -286,7 +286,7 @@ def validate_chapter(filepath: str, expected_sections: int = 0) -> dict:
     except Exception:
         wc = 0
     results['word_count'] = wc
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, 'r', encoding='utf-8-sig') as f:
         lines = [l.strip() for l in f.readlines() if l.strip()]
     check_lines = lines[1:] if lines and lines[0].startswith('#') else lines
     has_bq = len(check_lines) > 0 and check_lines[0].startswith('>')

@@ -2,13 +2,23 @@
 """
 Deterministic language detection for deep-research Step 0.
 
-Reads a topic string from argv or stdin, outputs the best-matching
+Reads a topic string from --file, argv, or stdin, outputs the best-matching
 language code from LANG_CONFIG keys. Uses Unicode ranges + common word
 matching — no ML, no LLM, no ambiguity.
 
 Usage:
     python3 detect_lang.py "日本の半導体産業の競争力"
     echo "Analyse der deutschen Automobilindustrie" | python3 detect_lang.py
+    python3 detect_lang.py --file topic.txt
+    python3 detect_lang.py --file topic.txt --output result.txt
+
+Notes:
+    On Windows (PowerShell with legacy code pages like CP936/GBK), passing
+    non-ASCII characters via argv will corrupt the input. Use --file instead:
+        1. Write topic to UTF-8 file via `write` tool
+        2. Run: python detect_lang.py --file path/to/topic.txt --output path/to/lang.txt
+        3. Read result from output file
+    This completely bypasses shell encoding issues.
 """
 import sys
 import unicodedata
@@ -153,8 +163,51 @@ def detect_language(topic: str) -> str:
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        topic = ' '.join(sys.argv[1:])
+    # Ensure UTF-8 stdout (especially needed on Windows with legacy code pages)
+    if hasattr(sys.stdout, 'reconfigure'):
+        try:
+            sys.stdout.reconfigure(encoding='utf-8')
+        except Exception:
+            pass
+
+    # Parse args: --file <path> or --output <path>
+    input_topic = ''
+    output_path = None
+    i = 1
+    while i < len(sys.argv):
+        if sys.argv[i] == '--file' and i + 1 < len(sys.argv):
+            filepath = sys.argv[i + 1]
+            try:
+                with open(filepath, 'r', encoding='utf-8-sig') as f:
+                    input_topic = f.read().strip()
+            except Exception as e:
+                print(f"detect_lang.py: error reading --file '{filepath}': {e}", file=sys.stderr)
+                sys.exit(1)
+            i += 2
+        elif sys.argv[i] == '--output' and i + 1 < len(sys.argv):
+            output_path = sys.argv[i + 1]
+            i += 2
+        else:
+            # Accumulate non-flag args as topic (avoid relying on shell to keep them as one arg)
+            if not input_topic:
+                input_topic = sys.argv[i]
+            i += 1
+
+    # If no --file, try stdin (byte-level for cross-platform safety)
+    if not input_topic:
+        raw = sys.stdin.buffer.read()
+        if raw:
+            input_topic = raw.decode('utf-8', errors='replace').strip()
+
+    result = detect_language(input_topic)
+
+    # Write result: to --output file (cross-platform safe) or to stdout
+    if output_path:
+        try:
+            with open(output_path, 'w', encoding='utf-8', newline='\n') as f:
+                f.write(result + '\n')
+        except Exception as e:
+            print(f"detect_lang.py: error writing --output '{output_path}': {e}", file=sys.stderr)
+            sys.exit(1)
     else:
-        topic = sys.stdin.read().strip()
-    print(detect_language(topic))
+        print(result)
