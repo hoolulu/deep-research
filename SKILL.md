@@ -146,7 +146,7 @@ repository: https://github.com/hoolulu/deep-research
       ```
     → todowrite 全部完成
 
-**禁止**：不要在调度之间插入搜索引擎调用、数据读取、文件检查等操作。一切数据操作都在 Task 内部完成。
+**禁止**：主 agent 不得在 Task 调度之间自行执行搜索引擎调用或数据处理。搜索/抓取归 Task 2，大纲生成归 Task 1，章节撰写归 Task 3，装配验证归 Task 4。Task 间的 handoff 文件读取（outline.json、task2_manifest.json 等）不受此限。
 
 ---
 
