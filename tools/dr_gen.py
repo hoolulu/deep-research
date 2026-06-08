@@ -565,6 +565,18 @@ def assemble_report(outline_path: str, chapters_dir: str,
     full_report = '\n'.join(report_parts)
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    # Auto-dedup: delete older report files with same title in the same directory
+    out_dir = os.path.dirname(output_path)
+    pattern = re.compile(r'^' + re.escape(safe_title) + r'-\d{8}-\d{6}\.md$')
+    for fname in os.listdir(out_dir):
+        if pattern.match(fname) and fname != os.path.basename(output_path):
+            old_path = os.path.join(out_dir, fname)
+            try:
+                os.remove(old_path)
+            except OSError:
+                pass
+
     tmp = output_path + '.tmp'
     try:
         with open(tmp, 'w', encoding='utf-8', newline='\n') as f:
