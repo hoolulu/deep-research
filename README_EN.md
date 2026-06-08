@@ -210,14 +210,14 @@ You can also specify a custom output path — ask AI to configure it.
 
 | Component | Cost |
 |-----------|------|
-| **LLM (already using)** | **DeepSeek v4 Flash** baseline: quick ~10–20k tokens / < $0.02, standard ~15–35k / < $0.04, deep ~30–60k / < $0.08 |
+| **LLM (already using)** | **DeepSeek v4 Flash** baseline: quick ~100–150k tokens / < $0.03, standard ~150–300k / < $0.06, deep ~300–500k / < $0.10 |
 | **SearXNG search (author-deployed)** | Deployed on VPS, zero cost, unlimited usage |
 | **Exa search** | Built into OpenCode, zero additional cost (cold standby) |
 | **Scrapling fetching** | Runs locally, zero cost |
 | **Domestic sources** | Direct connection, zero cost, no proxy needed |
 | **OpenCode runtime** | MIT open source, zero cost |
 
-> Estimates based on DeepSeek v4 Flash. Actual costs vary by model and topic complexity.
+> Estimates based on DeepSeek v4 Flash ($0.14/1M input, $0.28/1M output, source: `https://api-docs.deepseek.com/quick_start/pricing`). Actual costs vary by cache hit rate and topic complexity.
 
 ## 12. FAQ
 
