@@ -82,6 +82,7 @@ repository: https://github.com/hoolulu/deep-research
  → Write language code: use `write` tool to create {TMPDIR}/language.txt with the ISO code
  → Set `$LANG` = language code from the step above
  → **From now on, ALL output must be in $LANG**
+ → Announce detected language to the user (single line, in $LANG, e.g. "🌐 Language detected: en")
 
 ══ 主流程 ══
 
