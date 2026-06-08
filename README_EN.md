@@ -145,12 +145,16 @@ Paste this into your AI coding tool:
 Please read the https://github.com/hoolulu/deep-research project, auto-install prerequisites and adapt for the current CLI tool:
 1. Install Python and Scrapling (refer to Scrapling docs and your system)
 2. Register Scrapling MCP Server, verify after restart
-3. Register custom commands equivalent to /research and /research-update
-4. Translate the Task chain architecture to the current tool's equivalent
+3. Register equivalent entry points for /research and /research-update based on the current tool's capabilities:
+   - **Codex CLI** → Register as a skill (the `command/` directory already contains command files; registration activates them)
+   - **Claude Code** → Register as a slash command (Hook)
+   - **Cursor** → Adapt per platform (custom commands / Agent rules)
+   - Other tools: check for skill/command mechanisms first, then pick the best fit
+4. Translate the multi-agent chain architecture (outline → data collection → parallel writing → assembly+QA) to the current tool's equivalent, preserving the sequential dependencies between stages
 Confirm each step, then read VERSION and summarize.
 ```
 
-Adaptation notes: Multi-agent orchestration needs to map to each platform's native mechanisms. Search and scraping logic (python-scrapling + search API) can be reused as-is.
+Adaptation notes: Multi-agent orchestration needs to map to each platform's native mechanisms (Claude Code's sub-agent, Codex CLI's agent/skill mode, Cursor's agent mode, etc.). Entry point registration also varies by tool (OpenCode/Codex CLI use skills, Claude Code uses Hooks/commands, Cursor uses custom instructions). Search and scraping logic (python-scrapling + search API) can be reused as-is.
 
 ### Prerequisites
 
