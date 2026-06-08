@@ -69,6 +69,12 @@ repository: https://github.com/hoolulu/deep-research
 ```
 你（主 agent）的完整流程：
 
+══ Setup (必须先执行) ══
+
+ → 创建一个带时间戳的临时目录作为 TMPDIR（例如 D:\TEMP\opencode\deep-research-YYYYMMDD-HHMMSS）
+ → 同时确定 TOOLSDIR（本 skill 的 tools/ 目录）和 PROMPTSDIR（本 skill 的 prompts/ 目录）
+ → 读取本 SKILL.md + RULES.md + TYPES.md
+
 ══ Step 0 — Language Detection (output nothing before detection) ══
 
  → Clean topic: strip wrapper text, keep only the user's actual research topic
@@ -86,11 +92,9 @@ repository: https://github.com/hoolulu/deep-research
 
 ══ 主流程 ══
 
- 1. 读取本 SKILL.md + RULES.md + TYPES.md
- 2. 记录任务开始时间
- 3. 创建临时目录 TMPDIR；同时确定 TOOLSDIR 和 PROMPTSDIR
- 4. todowrite 创建进度条目（使用 $LANG 语言）
-  5. ══ Task 1 — 分析主题 + 生成大纲 ══
+ 1. 记录任务开始时间到 {TMPDIR}/start_time.txt
+ 2. todowrite 创建进度条目（使用 $LANG 语言）
+ 3. ══ Task 1 — 分析主题 + 生成大纲 ══
     → 读取 {PROMPTSDIR}/task1_oracle.md，替换 {TMPDIR} {TOOLSDIR} {LANG}，注入 prompt
     → **只做变量替换，不添加语言、格式、报告结构等额外指令。语言已由 Step 0 判定为 $LANG 并在 prompt 中替换 {LANG}。**
     → 等待返回 oracle 回答
