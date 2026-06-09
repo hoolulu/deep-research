@@ -25,7 +25,7 @@
 | `/research Анализ рынка нефти и газа в России` | Отчёт на русском |
 | `/research 日本のアニメ産業のグローバル市場戦略` | 日本語レポート |
 | `/research 한국 반도체 산업의 글로벌 경쟁력 분석` | 한국어 보고서 |
-| `local file research` | offline mode, read local files, no internet |
+| `local file research` | offline mode, read local files |
 
 > It interacts with you entirely in the language you set and searches for materials in that target language — not a simple translation pipeline.
 
