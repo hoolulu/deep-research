@@ -143,7 +143,7 @@ repository: https://github.com/hoolulu/deep-research
     → 读取 {TMPDIR}/task2_manifest.json，提取 source_count + fact_count + search_engine + fetch_method
     → todowrite 标记完成
     → 向用户报告进度（使用 $LANG 语言）
- 7. ══ Task 3 — 并行派发章节撰写 ══
+  7. ══ Task 3 — 并行派发章节撰写 ══
     → 读取 {TMPDIR}/outline.json 获取 chapters 数组；读取 {TMPDIR}/data-pool.json
     → **读取 `profiles.json` 获取当前模式的 `max_chars`**，计算 `per_chapter_chars = max_chars ÷ chapters.length`
     → 从 data-pool.json 提取所有唯一 (src, yr) 组合，按首次出现顺序预分配引用编号 [1], [2], [3]...，写入 {TMPDIR}/citation_map.json
@@ -154,7 +154,7 @@ repository: https://github.com/hoolulu/deep-research
        - **将事实直接嵌入 prompt**：每条事实前标注预分配的 `[N] 编号`（替换 `[章节 title]`、`[N]`、`[sections 列表]`、`{per_chapter_chars}`，并在 prompt 末尾追加该章相关的 [N] 事实列表）
        - 全部使用 run_in_background=true 一次性发出
      → 收集所有返回的 background_task_id
-     → **逐个调用 background_output(task_id="<id>", block=true) 等待每一章——先调工具，后说话。不要先输出文字再等，那样会结束回合。全部 background_output 返回后，再向用户报告进度。**
+     → **等待全部完成后继续**（不做额外操作，让系统自动通知）
      → **章节 agent 不做任何工具调用**（不跑 prepare-chapter、validate、manifest），只写文件
      → 用 `read` 工具确认每章的 {TMPDIR}/chapters/chapter-{N}.md 已存在
      → todowrite 标记完成（每完成一章标记一个子项）
