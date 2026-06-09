@@ -74,7 +74,7 @@ The pipeline runs in 4 automated stages:
 ② Collect data — ╭─ Online: SearXNG / Exa cascading search → Scrapling batch fetch → data pool
                   ╰─ Offline: read local files directly (PDF/DOCX/TXT/MD) → data pool
          ↓
-③ Parallel writing — Multiple chapters written simultaneously, facts embedded directly in prompts, no tool calls
+③ Serial writing — One chapter at a time synchronously, facts embedded directly in prompts, no tool calls
          ↓
 ④ Validate & assemble — Batch validate → assemble-report → convert-citations → qa-report
 ```
@@ -202,7 +202,7 @@ The entire pipeline runs automatically — you don't need to do anything:
 ```
 ① Analyze outline — Analyze topic, generate framework and search plan
 ② Collect data — SearXNG/Exa cascade → Scrapling batch fetch → data pool → quality check
-③ Parallel writing — Multiple chapters simultaneously, facts embedded in prompts
+③ Serial writing — One chapter at a time, facts embedded in prompts
 ④ Validate & assemble — Batch validate → assemble → citations → QA
 ```
 
