@@ -124,7 +124,7 @@ repository: https://github.com/hoolulu/deep-research
      → 如果 `offline_mode=false`，替换 {OFFLINE_MODE} → false，{LOCAL_PATHS} → 空字符串
      → 派发 task()，等待返回
     → 如失败（task 报错或 task2_manifest.json 不存在），**自动重试 1 次**，重新派发。第二次仍失败则向用户报告并终止
-    → 读取 {TMPDIR}/task2_manifest.json，提取 source_count + fact_count + search_engine + fetch_method
+    → 读取 {TMPDIR}/task2_manifest.json，提取 source_count + fact_count + search_engine + fetch_method + engines + free_fallback + english_fallback + unique_domains + freshness_pct + freshness_2yr
     → todowrite 标记完成
     → 向用户报告进度（使用 $LANG 语言）
     7. ══ Task 3 Round 1 — 并行派发所有章节 ══
@@ -168,31 +168,75 @@ repository: https://github.com/hoolulu/deep-research
     → todowrite 标记完成
     → ⏱ **强制计算总耗时**（读取 start_time.txt + 当前时间算差值）
     → 从 outline.json + task2_manifest.json + qa-report 中提取数据，使用 $LANG 语言汇报最终结果。
-      严格按以下结构输出（表格表头固定"阶段"/"详情"始终不翻译；
-      阶段/详情/大纲/观点速览/数据质量/报告/章节列表/执行总结/行/字/分钟/生成时间 等标签必须根据 $LANG 翻译）：
+
+      **语言自适应标签映射表**（以下所有 <词> 根据 $LANG 替换）：
+
+      | 中文 | en | ja | ko | fr | de | es | 其余语言 |
+      |------|----|----|----|----|----|----|---------|
+      | 执行总结 | Execution Summary | 実行サマリー | 실행 요약 | Résumé exécutif | Zusammenfassung | Resumen ejecutivo | Execution Summary |
+      | 阶段 | Stage | 段階 | 단계 | Phase | Phase | Fase | Stage |
+      | 详情 | Detail | 詳細 | 세부 | Détail | Detail | Detalle | Detail |
+      | 大纲/Plan | Plan | 概要 | 개요 | Plan | Plan | Plan | Plan |
+      | 观点速览/Insight | Insight | 洞察 | 인사이트 | Aperçu | Einblick | Perspectiva | Insight |
+      | 数据/Data | Data | データ | 데이터 | Données | Daten | Datos | Data |
+      | 新鲜度/Freshness | Freshness | 新鮮度 | 신선도 | Actualité | Aktualität | Actualidad | Freshness |
+      | 报告/Report | Report | レポート | 보고서 | Rapport | Bericht | Informe | Report |
+      | 章 | ch | 章 | 장 | chap. | Kap. | cap. | ch |
+      | 来源 | sources | ソース | 출처 | sources | Quellen | fuentes | sources |
+      | 事实 | facts | 事実 | 사실 | faits | Fakten | datos | facts |
+      | 独立域名 | domains | ドメイン | 도메인 | domaines | Domains | dominios | domains |
+      | 行 | lines | 行 | 줄 | lignes | Zeilen | líneas | lines |
+      | 字 | words | 語 | 단어 | mots | Wörter | palabras | words |
+      | 分钟 | min | 分 | 분 | min | Min. | min | min |
+      | 生成时间 | Generated | 生成時刻 | 생성 시간 | Généré le | Erzeugt | Generado | Generated |
+      | 搜索 | Search | 検索 | 검색 | Recherche | Suche | Búsqueda | Search |
+      | 数据充足 ✓ | Adequate ✓ | 十分 ✓ | 충분 ✓ | Suffisantes ✓ | Ausreichend ✓ | Adecuado ✓ | Adequate ✓ |
+      | 数据受限 ⚠ | Limited ⚠ | 制限 ⚠ | 제한 ⚠ | Limitées ⚠ | Eingeschränkt ⚠ | Limitado ⚠ | Limited ⚠ |
+      | 免费源补强 | free fallback | 無料補強 | 무료 보강 | sources gratuites | kostenlose Quellen | fuentes gratuitas | free fallback |
+      | 本地文件 | local files | ローカル | 로컬 파일 | fichiers locaux | lokale Dateien | archivos locales | local files |
+
+      **搜索策略描述拼接规则**（使用映射表中的翻译）：
+
+      ```
+      IF offline_mode=true:
+        <搜索词>：{offline_$LANG}
+      ELSE:
+        engines_names = engines 数组元素大写（["searxng","exa"] → "SearXNG+Exa"）
+        desc = engines_names
+        IF free_fallback=true: desc += " (+{free_fallback_$LANG})"
+        IF english_fallback=true: desc += " (+EN)"
+        <搜索词>：{desc}
+      ```
+
+      **数据质量徽标规则**：
+
+      ```
+      IF data_limited=true: <质量词> = {limited_$LANG}
+      ELSE: <质量词> = {adequate_$LANG}
+      ```
+
+      严格按以下结构输出：
 
       ```
       📊 **<执行总结词>**
 
       | <阶段词> | <详情词> |
       |:----|:------|
-      | 📋 <大纲词> | {outline.title} · {outline.chapter_count} <章词> · {outline.depth_mode} |
-      | 🎯 <观点速览词> | {outline.chapters[0].description} |
-      | 📡 <数据质量词> | {task2_manifest.source_count} <来源词> · {task2_manifest.fact_count} <事实词> · {task2_manifest.search_engine} · {task2_manifest.fetch_method} |
-      | 📄 <报告词> | {REPORT} |
-      |       | {qa_report.line_count} <行词> · {qa_report.word_count} <字词> · {outline.chapter_count} <章词> · ⏱ {totalMin} <分钟词> · <生成时间词>：{gen_time} |
-
-      <章节列表标题>：
-      1. {各章标题} — {各章描述}
-      2. {各章标题} — {各章描述}
-      ...
+      | 📋 <Plan词> | {outline.title} · {outline.chapter_count} <章词> · {outline.depth_mode} |
+      | 🎯 <Insight词> | {outline.chapters[0].description} |
+      | 📡 <Data词> | {task2_manifest.source_count} <来源词> · {task2_manifest.unique_domains} <独立域名词> · {task2_manifest.fact_count} <事实词> · <搜索词>：{search_desc} · {task2_manifest.fetch_method} |
+      | 📈 <Freshness词> | ~{task2_manifest.freshness_pct}% from {target_year} · ~{task2_manifest.freshness_2yr}% from {target_year}-{target_year-1} · <质量词>：{data_quality_badge} |
+      | 📄 <Report词> | {REPORT} |
+      |       | {qa_report.line_count} <行词> · {qa_report.word_count} <字词> · ⏱ {totalMin} <分钟词> · <生成时间词>：{gen_time} |
       ```
 
       其中：
       - `{outline.chapters[0].description}` = 从 outline.json 读取第 1 章（核心观点）的 description 字段，作为观点速览摘要
       - `{gen_time}` = 读取 {TMPDIR}/start_time.txt 中的任务开始时间，格式化为 `YYYY-MM-DD HH:mm:ss`
       - `{REPORT}` 仅输出最终报告路径（`reports/{LANG}/xxx.md`），不包含任何 TMPDIR 中间路径
-      - 如果 `data_limited=true`，在章节列表后追加数据说明行
+      - `{search_desc}` = 按搜索策略拼接规则生成，所有中文词根据 $LANG 翻译
+      - `{data_quality_badge}` = 按数据质量徽标规则生成
+      - `{target_year}` = 从 outline.json 的 `time_anchor.target_year` 读取
     → todowrite 全部完成
 
 **禁止**：主 agent 不得在 Task 调度之间自行执行搜索引擎调用或数据处理。搜索/抓取归 Task 2，大纲生成归 Task 1，章节撰写归 Task 3，装配验证归 Task 4。Task 间的 handoff 文件读取（outline.json、task2_manifest.json 等）不受此限。
