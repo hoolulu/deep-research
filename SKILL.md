@@ -87,7 +87,9 @@ repository: https://github.com/hoolulu/deep-research
    → Do NOT output anything during this step.
  → Write language code: use `write` tool to create {TMPDIR}/language.txt with the ISO code
  → Set `$LANG` = language code from the step above
- → **From now on, ALL output must be in $LANG**
+   → **从这一行开始，你在用户界面显示的所有内容必须使用 $LANG**
+  → **⚠️ SKILL.md 的指令是中文写的（为了让我读懂），但你的输出绝不能跟着用中文。你读到中文指令时意识上翻译一下再输出。**
+  → **任何面向用户的文字——状态汇报、进度条、Todo、错误信息、思考过程——全部用 $LANG。只有代码/文件名/工具调用保持原文。**
   → Announce detected language to the user (single line, in $LANG, e.g. "🌐 Language detected: en")
 
 ══ Step 0.5 — 离线模式判定 ══
@@ -115,6 +117,8 @@ repository: https://github.com/hoolulu/deep-research
     - 正常模式 → 空路径，`offline_mode=false`
 
 ══ 主流程 ══
+
+⚠️ **再次提醒：以下所有"向用户报告进度"的输出必须使用 $LANG，不得使用中文（除非 $LANG=zh）。即使你读到的指令是中文。** ⚠️
 
  1. 记录任务开始时间到 {TMPDIR}/start_time.txt
  2. todowrite 创建进度条目（使用 $LANG 语言）
