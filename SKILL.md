@@ -153,10 +153,8 @@ repository: https://github.com/hoolulu/deep-research
        - 从 data-pool.json 中筛选该章 sub_questions 对应的事实条目
        - **将事实直接嵌入 prompt**：每条事实前标注预分配的 `[N] 编号`（替换 `[章节 title]`、`[N]`、`[sections 列表]`、`{per_chapter_chars}`，并在 prompt 末尾追加该章相关的 [N] 事实列表）
        - 全部使用 run_in_background=true 一次性发出
-     → 收集所有返回的 background_task_id
-     → **等待全部完成后继续**（不做额外操作，让系统自动通知）
+      → 收集所有 background task ID，等待全部完成
      → **章节 agent 不做任何工具调用**（不跑 prepare-chapter、validate、manifest），只写文件
-     → 用 `read` 工具确认每章的 {TMPDIR}/chapters/chapter-{N}.md 已存在
      → todowrite 标记完成（每完成一章标记一个子项）
      → 向用户报告进度（使用 $LANG 语言）
       8. ══ Task 4 — 验证 + 装配 + QA（**主 agent 直接执行**） ══
