@@ -124,7 +124,7 @@ repository: https://github.com/hoolulu/deep-research
      → 如果 `offline_mode=false`，替换 {OFFLINE_MODE} → false，{LOCAL_PATHS} → 空字符串
      → 派发 task()，等待返回
     → 如失败（task 报错或 task2_manifest.json 不存在），**自动重试 1 次**，重新派发。第二次仍失败则向用户报告并终止
-    → 读取 {TMPDIR}/task2_manifest.json，提取 source_count + fact_count + search_engine + fetch_method + engines + free_fallback + english_fallback + unique_domains + freshness_pct + freshness_2yr
+     → 读取 {TMPDIR}/task2_manifest.json，提取 source_count + fact_count + search_engine + fetch_method + engines + free_fallback + english_fallback + unique_domains
     → todowrite 标记完成
     → 向用户报告进度（使用 $LANG 语言）
     7. ══ Task 3 Round 1 — 并行派发所有章节 ══
@@ -179,7 +179,6 @@ repository: https://github.com/hoolulu/deep-research
       | 大纲/Plan | Plan | 概要 | 개요 | Plan | Plan | Plan | Plan |
       | 观点速览/Insight | Insight | 洞察 | 인사이트 | Aperçu | Einblick | Perspectiva | Insight |
       | 数据/Data | Data | データ | 데이터 | Données | Daten | Datos | Data |
-      | 新鲜度/Freshness | Freshness | 新鮮度 | 신선도 | Actualité | Aktualität | Actualidad | Freshness |
       | 报告/Report | Report | レポート | 보고서 | Rapport | Bericht | Informe | Report |
       | 章 | ch | 章 | 장 | chap. | Kap. | cap. | ch |
       | 来源 | sources | ソース | 출처 | sources | Quellen | fuentes | sources |
@@ -224,8 +223,7 @@ repository: https://github.com/hoolulu/deep-research
       |:----|:------|
       | 📋 <Plan词> | {outline.title} · {outline.chapter_count} <章词> · {outline.depth_mode} |
       | 🎯 <Insight词> | {outline.chapters[0].description} |
-      | 📡 <Data词> | {task2_manifest.source_count} <来源词> · {task2_manifest.unique_domains} <独立域名词> · {task2_manifest.fact_count} <事实词> · <搜索词>：{search_desc} · {task2_manifest.fetch_method} |
-      | 📈 <Freshness词> | ~{task2_manifest.freshness_pct}% from {target_year} · ~{task2_manifest.freshness_2yr}% from {target_year}-{target_year-1} · <质量词>：{data_quality_badge} |
+      | 📡 <Data词> | {task2_manifest.source_count} <来源词> · {task2_manifest.unique_domains} <独立域名词> · {task2_manifest.fact_count} <事实词> · <搜索词>：{search_desc} · {task2_manifest.fetch_method} · {data_quality_badge} |
       | 📄 <Report词> | {REPORT} |
       |       | {qa_report.line_count} <行词> · {qa_report.word_count} <字词> · ⏱ {totalMin} <分钟词> · <生成时间词>：{gen_time} |
       ```
@@ -236,7 +234,6 @@ repository: https://github.com/hoolulu/deep-research
       - `{REPORT}` 仅输出最终报告路径（`reports/{LANG}/xxx.md`），不包含任何 TMPDIR 中间路径
       - `{search_desc}` = 按搜索策略拼接规则生成，所有中文词根据 $LANG 翻译
       - `{data_quality_badge}` = 按数据质量徽标规则生成
-      - `{target_year}` = 从 outline.json 的 `time_anchor.target_year` 读取
     → todowrite 全部完成
 
 **禁止**：主 agent 不得在 Task 调度之间自行执行搜索引擎调用或数据处理。搜索/抓取归 Task 2，大纲生成归 Task 1，章节撰写归 Task 3，装配验证归 Task 4。Task 间的 handoff 文件读取（outline.json、task2_manifest.json 等）不受此限。
