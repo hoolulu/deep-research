@@ -6,16 +6,16 @@
 ## Inhaltsverzeichnis
 
 
-- [1. Einleitung und Problemstellung](#1einleitungundproblemstellung)
-- [2. Methodik der Meinungsforschung](#2methodikdermeinungsforschung)
-- [3. Gesamtstimmung zur Energiewende](#3gesamtstimmungzurenergiewende)
-- [4. Wahrnehmung der Energiepreise](#4wahrnehmungderenergiepreise)
-- [5. Akzeptanz konkreter Klimaschutzmaßnahmen](#5akzeptanzkonkreterklimaschutzmaßnahmen)
-- [6. Soziale und regionale Unterschiede](#6sozialeundregionaleunterschiede)
-- [7. Vertrauen in politische Akteure und Institutionen](#7vertraueninpolitischeakteureundinstitutionen)
-- [8. Medien und Informationsverhalten](#8medienundinformationsverhalten)
-- [9. Zukunftserwartungen und Lösungsansätze](#9zukunftserwartungenundlösungsansätze)
-- [10. Fazit und Handlungsempfehlungen](#10fazitundhandlungsempfehlungen)
+- [1. Einleitung und Problemstellung](#1-einleitung-und-problemstellung)
+- [2. Methodik der Meinungsforschung](#2-methodik-der-meinungsforschung)
+- [3. Gesamtstimmung zur Energiewende](#3-gesamtstimmung-zur-energiewende)
+- [4. Wahrnehmung der Energiepreise](#4-wahrnehmung-der-energiepreise)
+- [5. Akzeptanz konkreter Klimaschutzmaßnahmen](#5-akzeptanz-konkreter-klimaschutzmaßnahmen)
+- [6. Soziale und regionale Unterschiede](#6-soziale-und-regionale-unterschiede)
+- [7. Vertrauen in politische Akteure und Institutionen](#7-vertrauen-in-politische-akteure-und-institutionen)
+- [8. Medien und Informationsverhalten](#8-medien-und-informationsverhalten)
+- [9. Zukunftserwartungen und Lösungsansätze](#9-zukunftserwartungen-und-lösungsansätze)
+- [10. Fazit und Handlungsempfehlungen](#10-fazit-und-handlungsempfehlungen)
 
 
 ## 1. Einleitung und Problemstellung

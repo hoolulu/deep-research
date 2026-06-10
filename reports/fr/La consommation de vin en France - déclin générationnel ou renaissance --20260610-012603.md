@@ -6,13 +6,13 @@
 ## Table des matières
 
 
-- [1. Constats clés](#1constatsclés)
-- [2. Contexte historique](#2contextehistorique)
-- [3. Profil du consommateur](#3profilduconsommateur)
-- [4. Générations jeunes](#4générationsjeunes)
-- [5. Distribution et offre](#5distributionetoffre)
-- [6. Tendances émergentes](#6tendancesémergentes)
-- [7. Synthèse et controverses](#7synthèseetcontroverses)
+- [1. Constats clés](#1-constats-clés)
+- [2. Contexte historique](#2-contexte-historique)
+- [3. Profil du consommateur](#3-profil-du-consommateur)
+- [4. Générations jeunes](#4-générations-jeunes)
+- [5. Distribution et offre](#5-distribution-et-offre)
+- [6. Tendances émergentes](#6-tendances-émergentes)
+- [7. Synthèse et controverses](#7-synthèse-et-controverses)
 
 
 ## 1. Constats clés

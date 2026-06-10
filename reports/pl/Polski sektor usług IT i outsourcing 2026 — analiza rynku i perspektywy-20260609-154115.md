@@ -6,13 +6,13 @@
 ## Spis treści
 
 
-- [1. Wprowadzenie i zakres raportu](#1wprowadzenieizakresraportu)
-- [2. Wielkość i struktura rynku IT w Polsce](#2wielkośćistrukturarynkuitwpolsce)
-- [3. Sektor outsourcingu i nearshoringu](#3sektoroutsourcinguinearshoringu)
-- [4. Rynek pracy i kapitał ludzki](#4rynekpracyikapitałludzki)
-- [5. Wpływ AI i transformacja cyfrowa](#5wpływaiitransformacjacyfrowa)
-- [6. Otoczenie regulacyjne i finansowanie](#6otoczenieregulacyjneifinansowanie)
-- [7. Perspektywy i prognozy na 2026 rok](#7perspektywyiprognozyna2026rok)
+- [1. Wprowadzenie i zakres raportu](#1-wprowadzenie-i-zakres-raportu)
+- [2. Wielkość i struktura rynku IT w Polsce](#2-wielkość-i-struktura-rynku-it-w-polsce)
+- [3. Sektor outsourcingu i nearshoringu](#3-sektor-outsourcingu-i-nearshoringu)
+- [4. Rynek pracy i kapitał ludzki](#4-rynek-pracy-i-kapitał-ludzki)
+- [5. Wpływ AI i transformacja cyfrowa](#5-wpływ-ai-i-transformacja-cyfrowa)
+- [6. Otoczenie regulacyjne i finansowanie](#6-otoczenie-regulacyjne-i-finansowanie)
+- [7. Perspektywy i prognozy na 2026 rok](#7-perspektywy-i-prognozy-na-2026-rok)
 
 
 ## 1. Wprowadzenie i zakres raportu

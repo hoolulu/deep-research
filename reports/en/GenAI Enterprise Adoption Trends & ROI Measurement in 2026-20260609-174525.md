@@ -6,13 +6,13 @@
 ## Table of Contents
 
 
-- [1. Executive Summary & Key Theses](#1executivesummary&keytheses)
-- [2. Enterprise GenAI Adoption Landscape in 2026](#2enterprisegenaiadoptionlandscapein2026)
-- [3. Use Case Maturity & Value Realization](#3usecasematurity&valuerealization)
-- [4. ROI Measurement Frameworks & Methodologies](#4roimeasurementframeworks&methodologies)
-- [5. Industry Deep-Dives: Adoption & ROI by Sector](#5industrydeep-divesadoption&roibysector)
-- [6. Barriers, Risks & Skeptical Perspectives](#6barriersrisks&skepticalperspectives)
-- [7. Strategic Recommendations & 2027 Outlook](#7strategicrecommendations&2027outlook)
+- [1. Executive Summary & Key Theses](#1-executive-summary-key-theses)
+- [2. Enterprise GenAI Adoption Landscape in 2026](#2-enterprise-genai-adoption-landscape-in-2026)
+- [3. Use Case Maturity & Value Realization](#3-use-case-maturity-value-realization)
+- [4. ROI Measurement Frameworks & Methodologies](#4-roi-measurement-frameworks-methodologies)
+- [5. Industry Deep-Dives: Adoption & ROI by Sector](#5-industry-deep-dives-adoption-roi-by-sector)
+- [6. Barriers, Risks & Skeptical Perspectives](#6-barriers-risks-skeptical-perspectives)
+- [7. Strategic Recommendations & 2027 Outlook](#7-strategic-recommendations-2027-outlook)
 
 
 ## 1. Executive Summary & Key Theses

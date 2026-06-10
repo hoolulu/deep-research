@@ -6,12 +6,12 @@
 ## Table of Contents
 
 
-- [1. Core View: BNPL Becomes Credit Infrastructure](#1coreviewbnplbecomescreditinfrastructure)
-- [2. Market Size: Growth Slows but Penetration Rises](#2marketsizegrowthslowsbutpenetrationrises)
-- [3. Regulation: Compliance Becomes a Cost Floor](#3regulationcompliancebecomesacostfloor)
-- [4. Profitability: Unit Economics Beat Pure GMV](#4profitabilityuniteconomicsbeatpuregmv)
-- [5. Gen Z Usage: Convenience Masks Credit Stress](#5genzusageconveniencemaskscreditstress)
-- [6. Competitive Outlook: Banks and Platforms Compress Margins](#6competitiveoutlookbanksandplatformscompressmargins)
+- [1. Core View: BNPL Becomes Credit Infrastructure](#1-core-view-bnpl-becomes-credit-infrastructure)
+- [2. Market Size: Growth Slows but Penetration Rises](#2-market-size-growth-slows-but-penetration-rises)
+- [3. Regulation: Compliance Becomes a Cost Floor](#3-regulation-compliance-becomes-a-cost-floor)
+- [4. Profitability: Unit Economics Beat Pure GMV](#4-profitability-unit-economics-beat-pure-gmv)
+- [5. Gen Z Usage: Convenience Masks Credit Stress](#5-gen-z-usage-convenience-masks-credit-stress)
+- [6. Competitive Outlook: Banks and Platforms Compress Margins](#6-competitive-outlook-banks-and-platforms-compress-margins)
 
 
 ## 1. Core View: BNPL Becomes Credit Infrastructure

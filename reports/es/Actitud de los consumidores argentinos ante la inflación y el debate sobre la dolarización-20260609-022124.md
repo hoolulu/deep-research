@@ -6,15 +6,15 @@
 ## Índice
 
 
-- [1. Ideas clave](#1ideasclave)
-- [2. Contexto macroeconómico y evolución inflacionaria](#2contextomacroeconómicoyevolucióninflacionaria)
-- [3. Percepción y expectativas de inflación del consumidor](#3percepciónyexpectativasdeinflacióndelconsumidor)
-- [4. Cambios en el comportamiento de consumo y ahorro](#4cambiosenelcomportamientodeconsumoyahorro)
-- [5. Estrategias de protección financiera de los hogares](#5estrategiasdeprotecciónfinancieradeloshogares)
-- [6. El debate sobre la dolarización: fundamentos y controversias](#6eldebatesobreladolarizaciónfundamentosycontroversias)
-- [7. Opinión pública sobre la dolarización](#7opiniónpúblicasobreladolarización)
-- [8. Lecciones de experiencias internacionales de dolarización](#8leccionesdeexperienciasinternacionalesdedolarización)
-- [9. Conclusiones, escenarios y advertencias](#9conclusionesescenariosyadvertencias)
+- [1. Ideas clave](#1-ideas-clave)
+- [2. Contexto macroeconómico y evolución inflacionaria](#2-contexto-macroeconómico-y-evolución-inflacionaria)
+- [3. Percepción y expectativas de inflación del consumidor](#3-percepción-y-expectativas-de-inflación-del-consumidor)
+- [4. Cambios en el comportamiento de consumo y ahorro](#4-cambios-en-el-comportamiento-de-consumo-y-ahorro)
+- [5. Estrategias de protección financiera de los hogares](#5-estrategias-de-protección-financiera-de-los-hogares)
+- [6. El debate sobre la dolarización: fundamentos y controversias](#6-el-debate-sobre-la-dolarización-fundamentos-y-controversias)
+- [7. Opinión pública sobre la dolarización](#7-opinión-pública-sobre-la-dolarización)
+- [8. Lecciones de experiencias internacionales de dolarización](#8-lecciones-de-experiencias-internacionales-de-dolarización)
+- [9. Conclusiones, escenarios y advertencias](#9-conclusiones-escenarios-y-advertencias)
 
 
 ## 1. Ideas clave

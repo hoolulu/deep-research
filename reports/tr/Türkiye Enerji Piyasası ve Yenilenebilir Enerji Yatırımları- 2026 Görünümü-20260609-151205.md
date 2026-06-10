@@ -6,12 +6,12 @@
 ## İçindekiler
 
 
-- [1. Enerji Piyasasının Yapısı ve Makroekonomik Çerçeve](#1enerjipiyasasınınyapısıvemakroekonomikçerçeve)
-- [2. Yenilenebilir Enerjide Kapasite Artışı ve Üretim Eğilimleri](#2yenilenebilirenerjidekapasiteartışıveüretimeğilimleri)
-- [3. Yatırım Ortamı, Teşvik Mekanizmaları ve Lisanssız Üretim](#3yatırımortamıteşvikmekanizmalarıvelisanssızüretim)
-- [4. Enerji Depolama ve Akkuyu Nükleer Santralinin Piyasaya Etkisi](#4enerjidepolamaveakkuyunükleersantralininpiyasayaetkisi)
-- [5. Regülasyonlar, AB Yeşil Mutabakatı ve Enerji Verimliliği](#5regülasyonlarabyeşilmutabakatıveenerjiverimliliği)
-- [6. Kritik Riskler ve Tartışmalı Konular](#6kritikrisklervetartışmalıkonular)
+- [1. Enerji Piyasasının Yapısı ve Makroekonomik Çerçeve](#1-enerji-piyasasının-yapısı-ve-makroekonomik-çerçeve)
+- [2. Yenilenebilir Enerjide Kapasite Artışı ve Üretim Eğilimleri](#2-yenilenebilir-enerjide-kapasite-artışı-ve-üretim-eğilimleri)
+- [3. Yatırım Ortamı, Teşvik Mekanizmaları ve Lisanssız Üretim](#3-yatırım-ortamı-teşvik-mekanizmaları-ve-lisanssız-üretim)
+- [4. Enerji Depolama ve Akkuyu Nükleer Santralinin Piyasaya Etkisi](#4-enerji-depolama-ve-akkuyu-nükleer-santralinin-piyasaya-etkisi)
+- [5. Regülasyonlar, AB Yeşil Mutabakatı ve Enerji Verimliliği](#5-regülasyonlar-ab-yeşil-mutabakatı-ve-enerji-verimliliği)
+- [6. Kritik Riskler ve Tartışmalı Konular](#6-kritik-riskler-ve-tartışmalı-konular)
 
 
 ## 1. Enerji Piyasasının Yapısı ve Makroekonomik Çerçeve

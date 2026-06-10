@@ -6,18 +6,18 @@
 ## Table of Contents
 
 
-- [1. Executive Summary](#1executivesummary)
-- [2. Macroeconomic Context: Inflation and Consumer Financial Pressure](#2macroeconomiccontextinflationandconsumerfinancialpressure)
-- [3. Theoretical Lens: Brand Loyalty and Trade-Down in Inflationary Periods](#3theoreticallensbrandloyaltyandtrade-downininflationaryperiods)
-- [4. Consumer Sentiment and Behavioral Indicators](#4consumersentimentandbehavioralindicators)
-- [5. Demographic Segmentation of Trade-Down Behavior](#5demographicsegmentationoftrade-downbehavior)
-- [6. Category-Level Trade-Down Analysis](#6category-leveltrade-downanalysis)
-- [7. Private Label and Store Brand Ascendancy](#7privatelabelandstorebrandascendancy)
-- [8. Brand Defense Strategies: Pricing, Promotion, and Loyalty](#8branddefensestrategiespricingpromotionandloyalty)
-- [9. Retail Channel Disruption and Discounter Growth](#9retailchanneldisruptionanddiscountergrowth)
-- [10. The Premium Brand Conundrum: Loyalty in Resilient Tiers](#10thepremiumbrandconundrumloyaltyinresilienttiers)
-- [11. Counter-Arguments and Controversies: Cyclical vs. Structural Change](#11counter-argumentsandcontroversiescyclicalvsstructuralchange)
-- [12. Strategic Outlook, Risk Assessment, and Conclusion](#12strategicoutlookriskassessmentandconclusion)
+- [1. Executive Summary](#1-executive-summary)
+- [2. Macroeconomic Context: Inflation and Consumer Financial Pressure](#2-macroeconomic-context-inflation-and-consumer-financial-pressure)
+- [3. Theoretical Lens: Brand Loyalty and Trade-Down in Inflationary Periods](#3-theoretical-lens-brand-loyalty-and-trade-down-in-inflationary-periods)
+- [4. Consumer Sentiment and Behavioral Indicators](#4-consumer-sentiment-and-behavioral-indicators)
+- [5. Demographic Segmentation of Trade-Down Behavior](#5-demographic-segmentation-of-trade-down-behavior)
+- [6. Category-Level Trade-Down Analysis](#6-category-level-trade-down-analysis)
+- [7. Private Label and Store Brand Ascendancy](#7-private-label-and-store-brand-ascendancy)
+- [8. Brand Defense Strategies: Pricing, Promotion, and Loyalty](#8-brand-defense-strategies-pricing-promotion-and-loyalty)
+- [9. Retail Channel Disruption and Discounter Growth](#9-retail-channel-disruption-and-discounter-growth)
+- [10. The Premium Brand Conundrum: Loyalty in Resilient Tiers](#10-the-premium-brand-conundrum-loyalty-in-resilient-tiers)
+- [11. Counter-Arguments and Controversies: Cyclical vs. Structural Change](#11-counter-arguments-and-controversies-cyclical-vs-structural-change)
+- [12. Strategic Outlook, Risk Assessment, and Conclusion](#12-strategic-outlook-risk-assessment-and-conclusion)
 
 
 ## 1. Executive Summary

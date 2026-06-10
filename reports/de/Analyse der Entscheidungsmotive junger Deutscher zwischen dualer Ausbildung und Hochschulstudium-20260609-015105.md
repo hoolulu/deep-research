@@ -7,16 +7,16 @@
 ## Inhaltsverzeichnis
 
 
-- [1. Einleitung und Problemstellung](#1einleitungundproblemstellung)
-- [2. Theoretischer Rahmen: Berufswahltheorien und Entscheidungsmodelle](#2theoretischerrahmenberufswahltheorienundentscheidungsmodelle)
-- [3. Strukturelle Rahmenbedingungen der Bildungswege](#3strukturellerahmenbedingungenderbildungswege)
-- [4. Sozioökonomische und demografische Einflussfaktoren](#4sozioökonomischeunddemografischeeinflussfaktoren)
-- [5. Ökonomische Motive: Kosten, Nutzen und Renditeerwartungen](#5ökonomischemotivekostennutzenundrenditeerwartungen)
-- [6. Psychosoziale und kulturelle Einflussfaktoren](#6psychosozialeundkulturelleeinflussfaktoren)
-- [7. Informationsverhalten und Entscheidungsprozesse](#7informationsverhaltenundentscheidungsprozesse)
-- [8. Aktuelle Trends und Zukunftsperspektiven](#8aktuelletrendsundzukunftsperspektiven)
-- [9. Handlungsempfehlungen und bildungspolitische Implikationen](#9handlungsempfehlungenundbildungspolitischeimplikationen)
-- [10. Kritische Würdigung und Risikohinweise](#10kritischewürdigungundrisikohinweise)
+- [1. Einleitung und Problemstellung](#1-einleitung-und-problemstellung)
+- [2. Theoretischer Rahmen: Berufswahltheorien und Entscheidungsmodelle](#2-theoretischer-rahmen-berufswahltheorien-und-entscheidungsmodelle)
+- [3. Strukturelle Rahmenbedingungen der Bildungswege](#3-strukturelle-rahmenbedingungen-der-bildungswege)
+- [4. Sozioökonomische und demografische Einflussfaktoren](#4-sozioökonomische-und-demografische-einflussfaktoren)
+- [5. Ökonomische Motive: Kosten, Nutzen und Renditeerwartungen](#5-ökonomische-motive-kosten-nutzen-und-renditeerwartungen)
+- [6. Psychosoziale und kulturelle Einflussfaktoren](#6-psychosoziale-und-kulturelle-einflussfaktoren)
+- [7. Informationsverhalten und Entscheidungsprozesse](#7-informationsverhalten-und-entscheidungsprozesse)
+- [8. Aktuelle Trends und Zukunftsperspektiven](#8-aktuelle-trends-und-zukunftsperspektiven)
+- [9. Handlungsempfehlungen und bildungspolitische Implikationen](#9-handlungsempfehlungen-und-bildungspolitische-implikationen)
+- [10. Kritische Würdigung und Risikohinweise](#10-kritische-würdigung-und-risikohinweise)
 
 
 ## 1. Einleitung und Problemstellung

@@ -6,14 +6,14 @@
 ## Table of Contents
 
 
-- [1. Key Findings](#1keyfindings)
-- [2. Global Data Center Energy Consumption Landscape](#2globaldatacenterenergyconsumptionlandscape)
-- [3. Drivers of Energy Demand in the AI and Cloud Era](#3driversofenergydemandintheaiandcloudera)
-- [4. Conventional Cooling Technologies — Status and Limitations](#4conventionalcoolingtechnologiesstatusandlimitations)
-- [5. Emerging Sustainable Cooling Technologies](#5emergingsustainablecoolingtechnologies)
-- [6. Economic and Policy Dimensions of Cooling Technology Transition](#6economicandpolicydimensionsofcoolingtechnologytransition)
-- [7. Controversies and Open Challenges in Sustainable Cooling](#7controversiesandopenchallengesinsustainablecooling)
-- [8. Future Outlook and Strategic Recommendations](#8futureoutlookandstrategicrecommendations)
+- [1. Key Findings](#1-key-findings)
+- [2. Global Data Center Energy Consumption Landscape](#2-global-data-center-energy-consumption-landscape)
+- [3. Drivers of Energy Demand in the AI and Cloud Era](#3-drivers-of-energy-demand-in-the-ai-and-cloud-era)
+- [4. Conventional Cooling Technologies — Status and Limitations](#4-conventional-cooling-technologies-status-and-limitations)
+- [5. Emerging Sustainable Cooling Technologies](#5-emerging-sustainable-cooling-technologies)
+- [6. Economic and Policy Dimensions of Cooling Technology Transition](#6-economic-and-policy-dimensions-of-cooling-technology-transition)
+- [7. Controversies and Open Challenges in Sustainable Cooling](#7-controversies-and-open-challenges-in-sustainable-cooling)
+- [8. Future Outlook and Strategic Recommendations](#8-future-outlook-and-strategic-recommendations)
 
 
 ## 1. Key Findings

@@ -6,14 +6,14 @@
 ## Table of Contents
 
 
-- [1. Key Takeaways](#1keytakeaways)
-- [2. Global AI Chip Market Size & Segmentation](#2globalaichipmarketsize&segmentation)
-- [3. NVIDIA's Competitive Position & Ecosystem](#3nvidiascompetitiveposition&ecosystem)
-- [4. Challengers: AMD, Intel & AI Chip Startups](#4challengersamdintel&aichipstartups)
-- [5. Hyperscaler Custom Silicon & the Merchant Chip Tension](#5hyperscalercustomsilicon&themerchantchiptension)
-- [6. China's AI Chip Ecosystem Under Export Controls](#6chinasaichipecosystemunderexportcontrols)
-- [7. Supply Chain, Manufacturing & Geopolitical Risk](#7supplychainmanufacturing&geopoliticalrisk)
-- [8. Outlook, Risks & Investment Implications](#8outlookrisks&investmentimplications)
+- [1. Key Takeaways](#1-key-takeaways)
+- [2. Global AI Chip Market Size & Segmentation](#2-global-ai-chip-market-size-segmentation)
+- [3. NVIDIA's Competitive Position & Ecosystem](#3-nvidias-competitive-position-ecosystem)
+- [4. Challengers: AMD, Intel & AI Chip Startups](#4-challengers-amd-intel-ai-chip-startups)
+- [5. Hyperscaler Custom Silicon & the Merchant Chip Tension](#5-hyperscaler-custom-silicon-the-merchant-chip-tension)
+- [6. China's AI Chip Ecosystem Under Export Controls](#6-chinas-ai-chip-ecosystem-under-export-controls)
+- [7. Supply Chain, Manufacturing & Geopolitical Risk](#7-supply-chain-manufacturing-geopolitical-risk)
+- [8. Outlook, Risks & Investment Implications](#8-outlook-risks-investment-implications)
 
 
 ## 1. Key Takeaways

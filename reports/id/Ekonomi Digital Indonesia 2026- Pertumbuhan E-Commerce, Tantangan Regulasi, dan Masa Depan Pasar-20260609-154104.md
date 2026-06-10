@@ -6,13 +6,13 @@
 ## Daftar Isi
 
 
-- [1. Gambaran Umum Ekonomi Digital Indonesia 2026](#1gambaranumumekonomidigitalindonesia2026)
-- [2. Ukuran Pasar dan Pertumbuhan E-Commerce](#2ukuranpasardanpertumbuhane-commerce)
-- [3. Infrastruktur Digital dan Sistem Pembayaran](#3infrastrukturdigitaldansistempembayaran)
-- [4. Regulasi dan Kebijakan Pemerintah](#4regulasidankebijakanpemerintah)
-- [5. Perilaku Konsumen dan Tren Belanja Online](#5perilakukonsumendantrenbelanjaonline)
-- [6. Tantangan dan Hambatan Pertumbuhan](#6tantangandanhambatanpertumbuhan)
-- [7. Prospek dan Rekomendasi 2026](#7prospekdanrekomendasi2026)
+- [1. Gambaran Umum Ekonomi Digital Indonesia 2026](#1-gambaran-umum-ekonomi-digital-indonesia-2026)
+- [2. Ukuran Pasar dan Pertumbuhan E-Commerce](#2-ukuran-pasar-dan-pertumbuhan-e-commerce)
+- [3. Infrastruktur Digital dan Sistem Pembayaran](#3-infrastruktur-digital-dan-sistem-pembayaran)
+- [4. Regulasi dan Kebijakan Pemerintah](#4-regulasi-dan-kebijakan-pemerintah)
+- [5. Perilaku Konsumen dan Tren Belanja Online](#5-perilaku-konsumen-dan-tren-belanja-online)
+- [6. Tantangan dan Hambatan Pertumbuhan](#6-tantangan-dan-hambatan-pertumbuhan)
+- [7. Prospek dan Rekomendasi 2026](#7-prospek-dan-rekomendasi-2026)
 
 
 ## 1. Gambaran Umum Ekonomi Digital Indonesia 2026

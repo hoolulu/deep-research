@@ -6,15 +6,15 @@
 ## Índice
 
 
-- [1. Ideias-chave](#1ideias-chave)
-- [2. Turismo em Portugal](#2turismoemportugal)
-- [3. Arrendamento local](#3arrendamentolocal)
-- [4. Atitude dos residentes](#4atitudedosresidentes)
-- [5. Contradição e tensões](#5contradiçãoetensões)
-- [6. Fatores explicativos](#6fatoresexplicativos)
-- [7. Políticas públicas](#7políticaspúblicas)
-- [8. Conclusões](#8conclusões)
-- [9. Aviso de riscos](#9avisoderiscos)
+- [1. Ideias-chave](#1-ideias-chave)
+- [2. Turismo em Portugal](#2-turismo-em-portugal)
+- [3. Arrendamento local](#3-arrendamento-local)
+- [4. Atitude dos residentes](#4-atitude-dos-residentes)
+- [5. Contradição e tensões](#5-contradição-e-tensões)
+- [6. Fatores explicativos](#6-fatores-explicativos)
+- [7. Políticas públicas](#7-políticas-públicas)
+- [8. Conclusões](#8-conclusões)
+- [9. Aviso de riscos](#9-aviso-de-riscos)
 
 
 ## 1. Ideias-chave

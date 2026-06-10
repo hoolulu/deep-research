@@ -6,13 +6,13 @@
 ## Table of Contents
 
 
-- [1. Executive Summary](#1executivesummary)
-- [2. Market Growth & Macroeconomic Drivers](#2marketgrowth&macroeconomicdrivers)
-- [3. Infrastructure & Technology Enablers](#3infrastructure&technologyenablers)
-- [4. Policy, Trade & Regulatory Landscape](#4policytrade&regulatorylandscape)
-- [5. Competitive Landscape & Operational Models](#5competitivelandscape&operationalmodels)
-- [6. Challenges, Controversies & Risk Factors](#6challengescontroversies&riskfactors)
-- [7. Outlook & Strategic Recommendations](#7outlook&strategicrecommendations)
+- [1. Executive Summary](#1-executive-summary)
+- [2. Market Growth & Macroeconomic Drivers](#2-market-growth-macroeconomic-drivers)
+- [3. Infrastructure & Technology Enablers](#3-infrastructure-technology-enablers)
+- [4. Policy, Trade & Regulatory Landscape](#4-policy-trade-regulatory-landscape)
+- [5. Competitive Landscape & Operational Models](#5-competitive-landscape-operational-models)
+- [6. Challenges, Controversies & Risk Factors](#6-challenges-controversies-risk-factors)
+- [7. Outlook & Strategic Recommendations](#7-outlook-strategic-recommendations)
 
 
 ## 1. Executive Summary

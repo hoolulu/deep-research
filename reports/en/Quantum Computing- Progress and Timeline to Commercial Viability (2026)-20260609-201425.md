@@ -6,13 +6,13 @@
 ## Table of Contents
 
 
-- [1. Executive Summary](#1executivesummary)
-- [2. Quantum Hardware Progress](#2quantumhardwareprogress)
-- [3. Quantum Error Correction Milestones](#3quantumerrorcorrectionmilestones)
-- [4. Industry Roadmaps and Key Milestones](#4industryroadmapsandkeymilestones)
-- [5. Commercial Applications and Sector Analysis](#5commercialapplicationsandsectoranalysis)
-- [6. Controversies and Counter-Arguments](#6controversiesandcounter-arguments)
-- [7. Timeline Assessment and Conclusion](#7timelineassessmentandconclusion)
+- [1. Executive Summary](#1-executive-summary)
+- [2. Quantum Hardware Progress](#2-quantum-hardware-progress)
+- [3. Quantum Error Correction Milestones](#3-quantum-error-correction-milestones)
+- [4. Industry Roadmaps and Key Milestones](#4-industry-roadmaps-and-key-milestones)
+- [5. Commercial Applications and Sector Analysis](#5-commercial-applications-and-sector-analysis)
+- [6. Controversies and Counter-Arguments](#6-controversies-and-counter-arguments)
+- [7. Timeline Assessment and Conclusion](#7-timeline-assessment-and-conclusion)
 
 
 ## 1. Executive Summary

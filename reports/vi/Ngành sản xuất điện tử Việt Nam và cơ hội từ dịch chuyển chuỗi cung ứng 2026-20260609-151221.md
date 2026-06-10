@@ -8,13 +8,13 @@
 ## Mục lục
 
 
-- [1. Tổng quan ngành sản xuất điện tử Việt Nam](#1tổngquanngànhsảnxuấtđiệntửviệtnam)
-- [2. Xu hướng dịch chuyển chuỗi cung ứng toàn cầu và tác động đến ASEAN](#2xuhướngdịchchuyểnchuỗicungứngtoàncầuvàtácđộngđếnasean)
-- [3. Dòng vốn FDI và các dự án điện tử trọng điểm tại Việt Nam](#3dòngvốnfdivàcácdựánđiệntửtrọngđiểmtạiviệtnam)
-- [4. Lợi thế cạnh tranh và hiệp định thương mại thúc đẩy ngành điện tử](#4lợithếcạnhtranhvàhiệpđịnhthươngmạithúcđẩyngànhđiệntử)
-- [5. Thách thức và rủi ro đối với ngành điện tử Việt Nam](#5tháchthứcvàrủirođốivớingànhđiệntửviệtnam)
-- [6. Đánh giá từ tổ chức quốc tế và góc nhìn đối lập](#6đánhgiátừtổchứcquốctếvàgócnhìnđốilập)
-- [7. Triển vọng và khuyến nghị chiến lược](#7triểnvọngvàkhuyếnnghịchiếnlược)
+- [1. Tổng quan ngành sản xuất điện tử Việt Nam](#1-tổng-quan-ngành-sản-xuất-điện-tử-việt-nam)
+- [2. Xu hướng dịch chuyển chuỗi cung ứng toàn cầu và tác động đến ASEAN](#2-xu-hướng-dịch-chuyển-chuỗi-cung-ứng-toàn-cầu-và-tác-động-đến-asean)
+- [3. Dòng vốn FDI và các dự án điện tử trọng điểm tại Việt Nam](#3-dòng-vốn-fdi-và-các-dự-án-điện-tử-trọng-điểm-tại-việt-nam)
+- [4. Lợi thế cạnh tranh và hiệp định thương mại thúc đẩy ngành điện tử](#4-lợi-thế-cạnh-tranh-và-hiệp-định-thương-mại-thúc-đẩy-ngành-điện-tử)
+- [5. Thách thức và rủi ro đối với ngành điện tử Việt Nam](#5-thách-thức-và-rủi-ro-đối-với-ngành-điện-tử-việt-nam)
+- [6. Đánh giá từ tổ chức quốc tế và góc nhìn đối lập](#6-đánh-giá-từ-tổ-chức-quốc-tế-và-góc-nhìn-đối-lập)
+- [7. Triển vọng và khuyến nghị chiến lược](#7-triển-vọng-và-khuyến-nghị-chiến-lược)
 
 
 ## 1. Tổng quan ngành sản xuất điện tử Việt Nam

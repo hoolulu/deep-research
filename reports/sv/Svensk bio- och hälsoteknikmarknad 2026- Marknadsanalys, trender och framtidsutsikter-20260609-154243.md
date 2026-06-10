@@ -6,13 +6,13 @@
 ## Innehållsförteckning
 
 
-- [1. Introduktion och marknadsöversikt](#1introduktionochmarknadsöversikt)
-- [2. Marknadsstorlek och tillväxtprognoser](#2marknadsstorlekochtillväxtprognoser)
-- [3. Regulatorisk miljö och policyramverk](#3regulatoriskmiljöochpolicyramverk)
-- [4. Teknologiska trender och innovationslandskap](#4teknologiskatrenderochinnovationslandskap)
-- [5. Konkurrenslandskap och nyckelaktörer](#5konkurrenslandskapochnyckelaktörer)
-- [6. Finansiering och investeringsklimat](#6finansieringochinvesteringsklimat)
-- [7. Utmaningar, risker och framtidsutsikter](#7utmaningarriskerochframtidsutsikter)
+- [1. Introduktion och marknadsöversikt](#1-introduktion-och-marknadsöversikt)
+- [2. Marknadsstorlek och tillväxtprognoser](#2-marknadsstorlek-och-tillväxtprognoser)
+- [3. Regulatorisk miljö och policyramverk](#3-regulatorisk-miljö-och-policyramverk)
+- [4. Teknologiska trender och innovationslandskap](#4-teknologiska-trender-och-innovationslandskap)
+- [5. Konkurrenslandskap och nyckelaktörer](#5-konkurrenslandskap-och-nyckelaktörer)
+- [6. Finansiering och investeringsklimat](#6-finansiering-och-investeringsklimat)
+- [7. Utmaningar, risker och framtidsutsikter](#7-utmaningar-risker-och-framtidsutsikter)
 
 
 ## 1. Introduktion och marknadsöversikt

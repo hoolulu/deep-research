@@ -6,18 +6,18 @@
 ## Table of Contents
 
 
-- [1. Executive Summary](#1executivesummary)
-- [2. Research Scope & Methodology](#2researchscope&methodology)
-- [3. Quantum Computing Technology Landscape & Readiness](#3quantumcomputingtechnologylandscape&readiness)
-- [4. Global Market Size & Growth Forecast](#4globalmarketsize&growthforecast)
-- [5. Value Chain & Ecosystem Analysis](#5valuechain&ecosystemanalysis)
-- [6. Competitive Landscape & Market Positioning](#6competitivelandscape&marketpositioning)
-- [7. Application Scenarios by Industry Vertical](#7applicationscenariosbyindustryvertical)
-- [8. Regional Market Analysis](#8regionalmarketanalysis)
-- [9. Investment, Funding & Policy Environment](#9investmentfunding&policyenvironment)
-- [10. Challenges, Limitations & Controversial Debates](#10challengeslimitations&controversialdebates)
-- [11. Future Outlook & Emerging Trends (2027-2035)](#11futureoutlook&emergingtrends2027-2035)
-- [12. Risk Disclosures & Investment Considerations](#12riskdisclosures&investmentconsiderations)
+- [1. Executive Summary](#1-executive-summary)
+- [2. Research Scope & Methodology](#2-research-scope-methodology)
+- [3. Quantum Computing Technology Landscape & Readiness](#3-quantum-computing-technology-landscape-readiness)
+- [4. Global Market Size & Growth Forecast](#4-global-market-size-growth-forecast)
+- [5. Value Chain & Ecosystem Analysis](#5-value-chain-ecosystem-analysis)
+- [6. Competitive Landscape & Market Positioning](#6-competitive-landscape-market-positioning)
+- [7. Application Scenarios by Industry Vertical](#7-application-scenarios-by-industry-vertical)
+- [8. Regional Market Analysis](#8-regional-market-analysis)
+- [9. Investment, Funding & Policy Environment](#9-investment-funding-policy-environment)
+- [10. Challenges, Limitations & Controversial Debates](#10-challenges-limitations-controversial-debates)
+- [11. Future Outlook & Emerging Trends (2027-2035)](#11-future-outlook-emerging-trends-2027-2035)
+- [12. Risk Disclosures & Investment Considerations](#12-risk-disclosures-investment-considerations)
 
 
 ## 1. Executive Summary

@@ -6,14 +6,14 @@
 ## Indice
 
 
-- [1. Sintesi e tesi chiave](#1sintesietesichiave)
-- [2. Dimensioni e struttura del mercato](#2dimensioniestrutturadelmercato)
-- [3. Scenario competitivo](#3scenariocompetitivo)
-- [4. Evoluzione del consumatore](#4evoluzionedelconsumatore)
-- [5. Sostenibilità e trasparenza](#5sostenibilitàetrasparenza)
-- [6. Digitalizzazione e canali](#6digitalizzazioneecanali)
-- [7. Driver di crescita, rischi e controversie](#7driverdicrescitarischiecontroversie)
-- [8. Prospettive 2026-2030](#8prospettive2026-2030)
+- [1. Sintesi e tesi chiave](#1-sintesi-e-tesi-chiave)
+- [2. Dimensioni e struttura del mercato](#2-dimensioni-e-struttura-del-mercato)
+- [3. Scenario competitivo](#3-scenario-competitivo)
+- [4. Evoluzione del consumatore](#4-evoluzione-del-consumatore)
+- [5. Sostenibilità e trasparenza](#5-sostenibilità-e-trasparenza)
+- [6. Digitalizzazione e canali](#6-digitalizzazione-e-canali)
+- [7. Driver di crescita, rischi e controversie](#7-driver-di-crescita-rischi-e-controversie)
+- [8. Prospettive 2026-2030](#8-prospettive-2026-2030)
 
 
 ## 1. Sintesi e tesi chiave

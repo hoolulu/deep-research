@@ -37,9 +37,23 @@ def extract_sources(filepath: str) -> dict:
 
 
 def _github_anchor(text: str) -> str:
-    punct = r'''，。、：；？！""''（）【】《》—…·,:;.!?()[]{}"'<>  '''
-    table = str.maketrans('', '', punct)
-    return text.translate(table).replace(' ', '-').lower()
+    """Generate a GitHub-compatible heading anchor.
+    
+    Mirrors cmark-gfm + utf8proc: keep only Unicode letters (L), digits (N),
+    spaces (Z), underscore (_), and hyphen (-). Drop all punctuation and symbols.
+    """
+    import unicodedata
+    text = text.lower()
+    result = []
+    for ch in text:
+        cat = unicodedata.category(ch)
+        if cat.startswith(('L', 'N')) or ch in (' ', '_', '-'):
+            result.append(ch)
+    text = ''.join(result)
+    text = re.sub(r'\s+', '-', text)
+    text = re.sub(r'-+', '-', text)
+    text = text.strip('-')
+    return text
 
 
 def generate_toc(outline_path: str) -> dict:

@@ -6,14 +6,14 @@
 ## Table of Contents
 
 
-- [1. Executive Summary](#1executivesummary)
-- [2. Global EV Battery Supply Chain Architecture](#2globalevbatterysupplychainarchitecture)
-- [3. Critical Raw Material Geopolitics](#3criticalrawmaterialgeopolitics)
-- [4. Geopolitical Rivalries and Strategic Competition](#4geopoliticalrivalriesandstrategiccompetition)
-- [5. Supply Chain Vulnerabilities and Bottlenecks](#5supplychainvulnerabilitiesandbottlenecks)
-- [6. Corporate and Policy Responses](#6corporateandpolicyresponses)
-- [7. Outlook and Scenario Analysis 2026-2030](#7outlookandscenarioanalysis2026-2030)
-- [8. Research Limitations and Confidence Assessment](#8researchlimitationsandconfidenceassessment)
+- [1. Executive Summary](#1-executive-summary)
+- [2. Global EV Battery Supply Chain Architecture](#2-global-ev-battery-supply-chain-architecture)
+- [3. Critical Raw Material Geopolitics](#3-critical-raw-material-geopolitics)
+- [4. Geopolitical Rivalries and Strategic Competition](#4-geopolitical-rivalries-and-strategic-competition)
+- [5. Supply Chain Vulnerabilities and Bottlenecks](#5-supply-chain-vulnerabilities-and-bottlenecks)
+- [6. Corporate and Policy Responses](#6-corporate-and-policy-responses)
+- [7. Outlook and Scenario Analysis 2026-2030](#7-outlook-and-scenario-analysis-2026-2030)
+- [8. Research Limitations and Confidence Assessment](#8-research-limitations-and-confidence-assessment)
 
 
 ## 1. Executive Summary

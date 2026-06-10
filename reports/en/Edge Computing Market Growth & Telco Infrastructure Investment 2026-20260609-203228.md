@@ -6,13 +6,13 @@
 ## Table of Contents
 
 
-- [1. Market Definition & Scope](#1marketdefinition&scope)
-- [2. Market Size & Growth Trajectory](#2marketsize&growthtrajectory)
-- [3. Telco Infrastructure Investment Drivers](#3telcoinfrastructureinvestmentdrivers)
-- [4. Technology Architecture & Deployment Models](#4technologyarchitecture&deploymentmodels)
-- [5. Competitive Landscape & Strategic Positioning](#5competitivelandscape&strategicpositioning)
-- [6. Use Cases, Monetization & Revenue Models](#6usecasesmonetization&revenuemodels)
-- [7. Challenges, Controversies & 2026 Outlook](#7challengescontroversies&2026outlook)
+- [1. Market Definition & Scope](#1-market-definition-scope)
+- [2. Market Size & Growth Trajectory](#2-market-size-growth-trajectory)
+- [3. Telco Infrastructure Investment Drivers](#3-telco-infrastructure-investment-drivers)
+- [4. Technology Architecture & Deployment Models](#4-technology-architecture-deployment-models)
+- [5. Competitive Landscape & Strategic Positioning](#5-competitive-landscape-strategic-positioning)
+- [6. Use Cases, Monetization & Revenue Models](#6-use-cases-monetization-revenue-models)
+- [7. Challenges, Controversies & 2026 Outlook](#7-challenges-controversies-2026-outlook)
 
 
 ## 1. Market Definition & Scope

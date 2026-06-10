@@ -6,13 +6,13 @@
 ## Table of Contents
 
 
-- [1. Executive Summary](#1executivesummary)
-- [2. United States: Federal vs. State Patchwork](#2unitedstatesfederalvsstatepatchwork)
-- [3. European Union: UNECE R157 and the AI Act Layer](#3europeanunionunecer157andtheaiactlayer)
-- [4. China: Centralized Regulation and Local Pilots](#4chinacentralizedregulationandlocalpilots)
-- [5. Safety Standards and Testing Protocols](#5safetystandardsandtestingprotocols)
-- [6. Liability, Cybersecurity, and Data Governance](#6liabilitycybersecurityanddatagovernance)
-- [7. Conclusion and Market Outlook](#7conclusionandmarketoutlook)
+- [1. Executive Summary](#1-executive-summary)
+- [2. United States: Federal vs. State Patchwork](#2-united-states-federal-vs-state-patchwork)
+- [3. European Union: UNECE R157 and the AI Act Layer](#3-european-union-unece-r157-and-the-ai-act-layer)
+- [4. China: Centralized Regulation and Local Pilots](#4-china-centralized-regulation-and-local-pilots)
+- [5. Safety Standards and Testing Protocols](#5-safety-standards-and-testing-protocols)
+- [6. Liability, Cybersecurity, and Data Governance](#6-liability-cybersecurity-and-data-governance)
+- [7. Conclusion and Market Outlook](#7-conclusion-and-market-outlook)
 
 
 ## 1. Executive Summary
