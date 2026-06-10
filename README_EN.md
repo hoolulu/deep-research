@@ -164,6 +164,8 @@ Please read the https://github.com/hoolulu/deep-research project, auto-install p
    - **Cursor** → Adapt per platform (custom commands / Agent rules)
    - Other tools: check for skill/command mechanisms first, then pick the best fit
 4. Translate the multi-agent chain architecture (outline → data collection → parallel writing → assembly+QA) to the current tool's equivalent, preserving the sequential dependencies between stages
+5. If multiple CLI tools are installed on this machine (e.g., Claude Code, Cursor, Codex CLI, etc.), strictly limit yourself: **only configure the tool that is currently executing this instruction**. Do not modify, register, or affect any other CLI tool's configuration
+
 Confirm each step, then read VERSION and summarize.
 ```
 
