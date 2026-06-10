@@ -64,6 +64,18 @@ People who need professional-grade research capabilities without relying on paid
 
 📂 **[Browse all generated reports →](reports/)** — click to open and read.
 
+### 📖 Featured Reports
+
+| Report | Tags |
+|--------|------|
+| <a href="reports/en/Buy Now Pay Later Market Outlook 2026- Regulation, Profitability, and Gen Z Usage-20260610-163516.md" target="_blank">Buy Now Pay Later Market Outlook 2026</a> | Personal Finance · BNPL · Gen Z |
+| <a href="reports/en/GenAI Enterprise Adoption Trends & ROI Measurement in 2026-20260609-174525.md" target="_blank">GenAI Enterprise Adoption Trends & ROI 2026</a> | AI · Enterprise · ROI |
+| <a href="reports/en/Electric Vehicle Battery Supply Chain and Raw Material Geopolitics 2026-20260609-171947.md" target="_blank">Electric Vehicle Battery Supply Chain 2026</a> | EV · Geopolitics · Supply Chain |
+| <a href="reports/en/Cross-border E-commerce Logistics Trends in Southeast Asia 2026-20260609-165623.md" target="_blank">Cross-border E-commerce Logistics in SE Asia 2026</a> | E-commerce · Global Trade |
+| <a href="reports/en/Quantum Computing Market Outlook 2026-20260608-200801.md" target="_blank">Quantum Computing Market Outlook 2026</a> | Cutting-edge Tech · Future |
+
+Click a report title to open and read it in a new window.
+
 ## 4. How It Works
 
 The pipeline runs in 4 automated stages:

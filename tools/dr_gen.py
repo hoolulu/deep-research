@@ -562,6 +562,8 @@ def assemble_report(outline_path: str, chapters_dir: str,
     report_parts.append(ref_text)
     report_parts.append(f"\n\n{cfg['disclaimer_title']}\n\n{cfg['disclaimer_text']}\n")
     report_parts.append(f"\n{cfg['report_generated'].format(time=generate_time)}\n")
+    promo = cfg.get('promo_line') or get_lang_config('en').get('promo_line', '')
+    report_parts.append(f"{promo}\n")
     full_report = '\n'.join(report_parts)
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
