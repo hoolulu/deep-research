@@ -83,7 +83,7 @@ The pipeline runs in 4 automated stages:
 ```
 ① Analyze outline — Analyze topic, generate research framework and search plan
          ↓
-② Collect data — ╭─ Online: SearXNG + Exa parallel search → quality-triggered reinforcement → Scrapling batch fetch → data pool
+② Collect data — ╭─ Online: SearXNG + sources.json parallel search → quality-triggered reinforcement → Scrapling batch fetch → data pool
                   ╰─ Offline: read local files directly (PDF/DOCX/TXT/MD) → data pool
          ↓
 ③ Serial writing — One chapter at a time synchronously, facts embedded directly in prompts, no tool calls
@@ -95,11 +95,11 @@ The pipeline runs in 4 automated stages:
 
 ## 5. Search Pipeline & Built-in Resources
 
-All tools are built-in, no additional purchase needed. The system uses a **dual-engine parallel + quality-triggered reinforcement** strategy: SearXNG (author-deployed, 70+ engines incl. Baidu/Google/Brave) and Exa (OMO built-in) are **detected in parallel** — when both are available, searches run simultaneously and results are merged and deduplicated. Free source reinforcement is triggered only when search result quality is insufficient (< 3 URLs per sub-question / outdated results / too few sources).
+All tools are built-in, no additional purchase needed. The system uses a **2-layer + quality-triggered reinforcement** strategy: SearXNG (author-deployed, 70+ engines incl. Baidu/Google/Brave) and sources.json quality sources are searched in **parallel** — results are merged and deduplicated. Free source reinforcement is triggered only when search result quality is insufficient (< 3 URLs per sub-question / outdated results / too few sources).
 
 ```
 SearXNG (Layer 1, author-deployed primary, 70+ engines, ready out of the box)
-  + Exa (Layer 2, OMO built-in standby, zero cost)
+  + sources.json (Layer 2, 30+ curated sources)
   ∥ parallel search, results merged & deduplicated
   ↓ triggered when search quality is insufficient
 Layer 3 — Free source reinforcement (fallback)
@@ -188,12 +188,10 @@ Adaptation notes: Multi-agent orchestration needs to map to each platform's nati
 | Component | Online mode | Offline mode | How to get |
 |-----------|:-----------:|:------------:|------------|
 | **LLM runtime** (OpenCode / Claude Code / Codex CLI / Cursor etc.) | ✅ Required | ✅ Required | Pick your preferred tool |
-| **oh-my-openagent (OpenCode users)** | ✅ Required | ✅ Required | Installs sub-agent orchestration |
 | **Scrapling** | ✅ Required | ❌ Not needed | For web scraping; offline mode doesn't need it |
 | **SearXNG** (author-deployed, 70+ engines) | ✅ Used | ❌ Not needed | Built-in endpoint, ready out of the box |
-| **Exa MCP** | ✅ Cold standby | ❌ Not needed | Built into OMO |
 
-> **Platform note**: OpenCode requires the oh-my-openagent plugin for multi-agent orchestration (Task 1-4 architecture). Other tools (Claude Code, Cursor, Codex CLI) have their own native multi-agent frameworks and can adapt this skill's workflow without oh-my-openagent. Offline mode only needs the LLM's file-reading capability — no search/scraping components required.
+> **Platform note**: OpenCode has native multi-agent orchestration (Task 1-4 architecture) — no additional plugins needed. Other tools (Claude Code, Cursor, Codex CLI) have their own native multi-agent frameworks and can adapt this skill's workflow directly. Offline mode only needs the LLM's file-reading capability — no search/scraping components required.
 
 ## 10. Usage
 
@@ -215,7 +213,7 @@ The entire pipeline runs automatically — you don't need to do anything:
 
 ```
 ① Analyze outline — Analyze topic, generate framework and search plan
-② Collect data — SearXNG + Exa parallel search → quality-triggered reinforcement → Scrapling batch fetch → data pool → quality check
+② Collect data — SearXNG + sources.json parallel search → quality-triggered reinforcement → Scrapling batch fetch → data pool → quality check
 ③ Parallel writing — All chapters simultaneously, facts embedded in prompts
 ④ Validate & assemble — Batch validate → assemble → citations → QA
 ```
@@ -240,7 +238,6 @@ You can also specify a custom output path — ask AI to configure it.
 |-----------|------|
 | **LLM (already using)** | **DeepSeek v4 Flash** baseline: quick ~100–150k tokens / < $0.03, standard ~150–300k / < $0.06, deep ~300–500k / < $0.10 |
 | **SearXNG search (author-deployed)** | Deployed on VPS, zero cost, unlimited usage |
-| **Exa search** | Built into OpenCode, zero additional cost (cold standby) |
 | **Scrapling fetching** | Runs locally, zero cost |
 | **Domestic sources** | Direct connection, zero cost, no proxy needed |
 | **OpenCode runtime** | MIT open source, zero cost |
@@ -251,10 +248,10 @@ You can also specify a custom output path — ask AI to configure it.
 
 **1. Search quotas? How to ensure uninterrupted searching?**
 
-The system uses a **3-layer cascading search** architecture, each layer independent, auto-degrades on failure:
+The system uses a **2-layer + free source fallback** search architecture, each layer independent, auto-degrades on failure:
 
 - **Layer 1 — SearXNG (author-deployed)**: Meta-search engine aggregating 70+ engines (Baidu/Google/Brave), full coverage of Chinese and English. Built-in endpoint, ready out of the box, unlimited, no rate limits.
-- **Layer 2 — Exa (standby)**: OpenCode built-in search, OMO auto-configures, zero cost. Runs in **parallel** with SearXNG — both are detected simultaneously, and when both are available, search results are merged and deduplicated.
+- **Layer 2 — sources.json quality sources**: 30+ curated sources (Semantic Scholar / arXiv / Nature / World Bank / IMF / Reuters / BBC / Baidu Baike / Zhihu / 36Kr / iResearch / East Money etc.). Auto health check on startup, dead sources skipped.
 - **Layer 3 — Free source reinforcement (final fallback)**: DuckDuckGo / Bing / Brave / Mojeek / Semantic Scholar / GDELT / arXiv + 20+ Chinese sources. No API keys required, always available.
 
 **2. How to use local materials for report generation?**
