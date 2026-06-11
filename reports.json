@@ -1,1 +1,592 @@
-[]
+[
+  {
+    "title": "2026年AI编程助手工具发展趋势报告",
+    "path": "reports/zh/2026年AI编程助手工具发展趋势报告-20260610-120939.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 12473,
+    "date": "2026-06-10",
+    "sources": 51
+  },
+  {
+    "title": "2026年中国智能家居市场：从单品智能到全屋智能的商业化路径",
+    "path": "reports/zh/2026年中国智能家居市场：从单品智能到全屋智能的商业化路径-20260610-151516.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 10913,
+    "date": "2026-06-10",
+    "sources": 17
+  },
+  {
+    "title": "2026年中国玩具行业深度研究报告",
+    "path": "reports/zh/2026年中国玩具行业深度研究报告-20260610-111541.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 10832,
+    "date": "2026-06-10",
+    "sources": 26
+  },
+  {
+    "title": "2026年抖音个人自媒体生态现状与趋势研究",
+    "path": "reports/zh/2026年抖音个人自媒体生态现状与趋势研究-20260610-101533.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 8359,
+    "date": "2026-06-10",
+    "sources": 15
+  },
+  {
+    "title": "《置身钉内》与《置身钉外》：钉钉ONE事件与互联网大厂管理困局深度分析",
+    "path": "reports/zh/《置身钉内》与《置身钉外》：钉钉ONE事件与互联网大厂管理困局深度分析-20260610-165526.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 27718,
+    "date": "2026-06-10",
+    "sources": 41
+  },
+  {
+    "title": "为何没有三百年以上的软件公司——组织长寿的跨界比较",
+    "path": "reports/zh/为何没有三百年以上的软件公司——组织长寿的跨界比较-20260610-003357.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 12808,
+    "date": "2026-06-10",
+    "sources": 33
+  },
+  {
+    "title": "Buy Now Pay Later Market Outlook 2026: Regulation, Profitability, and Gen Z Usage",
+    "path": "reports/en/Buy Now Pay Later Market Outlook 2026- Regulation, Profitability, and Gen Z Usage-20260610-163516.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 13295,
+    "date": "2026-06-10",
+    "sources": 16
+  },
+  {
+    "title": "La consommation de vin en France : déclin générationnel ou renaissance ?",
+    "path": "reports/fr/La consommation de vin en France - déclin générationnel ou renaissance --20260610-012603.md",
+    "lang": "fr",
+    "lang_name": "Français",
+    "mode": "quick",
+    "word_count": 16769,
+    "date": "2026-06-10",
+    "sources": 48
+  },
+  {
+    "title": "Ngành sản xuất điện tử Việt Nam và cơ hội từ dịch chuyển chuỗi cung ứng 2026",
+    "path": "reports/vi/Ngành sản xuất điện tử Việt Nam và cơ hội từ dịch chuyển chuỗi cung ứng 2026-20260609-151221.md",
+    "lang": "vi",
+    "lang_name": "Tiếng Việt",
+    "mode": "standard",
+    "word_count": 13429,
+    "date": "2026-06-09",
+    "sources": 28
+  },
+  {
+    "title": "2026年海克斯大乱斗强化符文系统深入分析",
+    "path": "reports/zh/2026年海克斯大乱斗强化符文系统深入分析-20260609-224917.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "standard",
+    "word_count": 12571,
+    "date": "2026-06-09",
+    "sources": 29
+  },
+  {
+    "title": "직장 내 괴롭힘 금지법 시행 이후 직장 문화 변화에 대한 한국 직장인 평가",
+    "path": "reports/ko/직장 내 괴롭힘 금지법 시행 이후 직장 문화 변화에 대한 한국 직장인 평가-20260609-014147.md",
+    "lang": "ko",
+    "lang_name": "한국어",
+    "mode": "standard",
+    "word_count": 16727,
+    "date": "2026-06-09",
+    "sources": 20
+  },
+  {
+    "title": "تقييم قبول المواطنين الإماراتيين للخدمات الصحية عن بعد - العوامل المحفزة والعوائق",
+    "path": "reports/ar/تقييم قبول المواطنين الإماراتيين للخدمات الصحية عن بعد - العوامل المحفزة والعوائق-20260609-021413.md",
+    "lang": "ar",
+    "lang_name": "العربية",
+    "mode": "standard",
+    "word_count": 16717,
+    "date": "2026-06-09",
+    "sources": 27
+  },
+  {
+    "title": "Atitude contraditória dos residentes portugueses face ao crescimento do turismo e à pressão no mercado de arrendamento local",
+    "path": "reports/pt/Atitude contraditória dos residentes portugueses face ao crescimento do turismo e à pressão no mercado de arrendamento local-20260609-021844.md",
+    "lang": "pt",
+    "lang_name": "Português",
+    "mode": "standard",
+    "word_count": 16849,
+    "date": "2026-06-09",
+    "sources": 19
+  },
+  {
+    "title": "Türkiye Enerji Piyasası ve Yenilenebilir Enerji Yatırımları: 2026 Görünümü",
+    "path": "reports/tr/Türkiye Enerji Piyasası ve Yenilenebilir Enerji Yatırımları- 2026 Görünümü-20260609-151205.md",
+    "lang": "tr",
+    "lang_name": "Türkçe",
+    "mode": "standard",
+    "word_count": 18154,
+    "date": "2026-06-09",
+    "sources": 48
+  },
+  {
+    "title": "รายงานการฟื้นตัวของอุตสาหกรรมการท่องเที่ยวไทยหลังโควิด 2026",
+    "path": "reports/th/รายงานการฟื้นตัวของอุตสาหกรรมการท่องเที่ยวไทยหลังโควิด 2026-20260609-163559.md",
+    "lang": "th",
+    "lang_name": "ไทย",
+    "mode": "standard",
+    "word_count": 12607,
+    "date": "2026-06-09",
+    "sources": 7
+  },
+  {
+    "title": "Исследование потребительской мотивации на рынке подержанной одежды и электроники в России",
+    "path": "reports/ru/Исследование потребительской мотивации на рынке подержанной одежды и электроники в России-20260609-011024.md",
+    "lang": "ru",
+    "lang_name": "Русский",
+    "mode": "standard",
+    "word_count": 16211,
+    "date": "2026-06-09",
+    "sources": 7
+  },
+  {
+    "title": "Предпочтения российской молодёжи в вопросах аренды и покупки недвижимости — комплексное исследование рынка",
+    "path": "reports/ru/Предпочтения российской молодёжи в вопросах аренды и покупки недвижимости — комплексное исследование рынка-20260609-010716.md",
+    "lang": "ru",
+    "lang_name": "Русский",
+    "mode": "standard",
+    "word_count": 32142,
+    "date": "2026-06-09",
+    "sources": 32
+  },
+  {
+    "title": "Il mercato della moda di lusso italiano nel 2026: dimensioni, tendenze e prospettive",
+    "path": "reports/it/Il mercato della moda di lusso italiano nel 2026- dimensioni, tendenze e prospettive-20260609-151117.md",
+    "lang": "it",
+    "lang_name": "Italiano",
+    "mode": "standard",
+    "word_count": 20771,
+    "date": "2026-06-09",
+    "sources": 34
+  },
+  {
+    "title": "Svensk bio- och hälsoteknikmarknad 2026: Marknadsanalys, trender och framtidsutsikter",
+    "path": "reports/sv/Svensk bio- och hälsoteknikmarknad 2026- Marknadsanalys, trender och framtidsutsikter-20260609-154243.md",
+    "lang": "sv",
+    "lang_name": "Svenska",
+    "mode": "standard",
+    "word_count": 16085,
+    "date": "2026-06-09",
+    "sources": 33
+  },
+  {
+    "title": "De Nederlandse Halfgeleiderindustrie en het ASML-ecosysteem 2026",
+    "path": "reports/nl/De Nederlandse Halfgeleiderindustrie en het ASML-ecosysteem 2026-20260609-154326.md",
+    "lang": "nl",
+    "lang_name": "Nederlands",
+    "mode": "quick",
+    "word_count": 14714,
+    "date": "2026-06-09",
+    "sources": 20
+  },
+  {
+    "title": "Polski sektor usług IT i outsourcing 2026 — analiza rynku i perspektywy",
+    "path": "reports/pl/Polski sektor usług IT i outsourcing 2026 — analiza rynku i perspektywy-20260609-154115.md",
+    "lang": "pl",
+    "lang_name": "Polski",
+    "mode": "standard",
+    "word_count": 16033,
+    "date": "2026-06-09",
+    "sources": 36
+  },
+  {
+    "title": "Analyse der Entscheidungsmotive junger Deutscher zwischen dualer Ausbildung und Hochschulstudium",
+    "path": "reports/de/Analyse der Entscheidungsmotive junger Deutscher zwischen dualer Ausbildung und Hochschulstudium-20260609-015105.md",
+    "lang": "de",
+    "lang_name": "Deutsch",
+    "mode": "standard",
+    "word_count": 20556,
+    "date": "2026-06-09",
+    "sources": 34
+  },
+  {
+    "title": "Meinungen der deutschen Bevölkerung zur Energiewende und zu steigenden Energiepreisen",
+    "path": "reports/de/Meinungen der deutschen Bevölkerung zur Energiewende und zu steigenden Energiepreisen-20260609-014259.md",
+    "lang": "de",
+    "lang_name": "Deutsch",
+    "mode": "standard",
+    "word_count": 18899,
+    "date": "2026-06-09",
+    "sources": 42
+  },
+  {
+    "title": "Actitud de los consumidores argentinos ante la inflación y el debate sobre la dolarización",
+    "path": "reports/es/Actitud de los consumidores argentinos ante la inflación y el debate sobre la dolarización-20260609-022124.md",
+    "lang": "es",
+    "lang_name": "Español",
+    "mode": "standard",
+    "word_count": 20293,
+    "date": "2026-06-09",
+    "sources": 45
+  },
+  {
+    "title": "भारतीय कृषि क्षेत्र और खाद्य प्रसंस्करण उद्योग 2026: संरचना, चुनौतियाँ और विकास की संभावनाएँ",
+    "path": "reports/hi/भारतीय कृषि और खाद्य प्रसंस्करण 2026-20260609-154211.md",
+    "lang": "hi",
+    "lang_name": "हिन्दी",
+    "mode": "standard",
+    "word_count": 12540,
+    "date": "2026-06-09",
+    "sources": 19
+  },
+  {
+    "title": "Ekonomi Digital Indonesia 2026: Pertumbuhan E-Commerce, Tantangan Regulasi, dan Masa Depan Pasar",
+    "path": "reports/id/Ekonomi Digital Indonesia 2026- Pertumbuhan E-Commerce, Tantangan Regulasi, dan Masa Depan Pasar-20260609-154104.md",
+    "lang": "id",
+    "lang_name": "Bahasa Indonesia",
+    "mode": "quick",
+    "word_count": 16996,
+    "date": "2026-06-09",
+    "sources": 36
+  },
+  {
+    "title": "A Study of U.S. Consumer Brand Loyalty and Trade-Down Behavior Amid Inflation",
+    "path": "reports/en/A Study of U.S. Consumer Brand Loyalty and Trade-Down Behavior Amid Inflation-20260609-022700.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "deep",
+    "word_count": 38363,
+    "date": "2026-06-09",
+    "sources": 89
+  },
+  {
+    "title": "Autonomous Vehicle Regulations and Safety Standards Across Major Markets 2026",
+    "path": "reports/en/Autonomous Vehicle Regulations and Safety Standards Across Major Markets 2026-20260609-200221.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 18437,
+    "date": "2026-06-09",
+    "sources": 56
+  },
+  {
+    "title": "Cross-border E-commerce Logistics Trends in Southeast Asia 2026",
+    "path": "reports/en/Cross-border E-commerce Logistics Trends in Southeast Asia 2026-20260609-165623.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 17325,
+    "date": "2026-06-09",
+    "sources": 34
+  },
+  {
+    "title": "Edge Computing Market Growth & Telco Infrastructure Investment 2026",
+    "path": "reports/en/Edge Computing Market Growth & Telco Infrastructure Investment 2026-20260609-203228.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 17689,
+    "date": "2026-06-09",
+    "sources": 44
+  },
+  {
+    "title": "Electric Vehicle Battery Supply Chain and Raw Material Geopolitics 2026",
+    "path": "reports/en/Electric Vehicle Battery Supply Chain and Raw Material Geopolitics 2026-20260609-171947.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 20277,
+    "date": "2026-06-09",
+    "sources": 48
+  },
+  {
+    "title": "GenAI Enterprise Adoption Trends & ROI Measurement in 2026",
+    "path": "reports/en/GenAI Enterprise Adoption Trends & ROI Measurement in 2026-20260609-174525.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 22066,
+    "date": "2026-06-09",
+    "sources": 50
+  },
+  {
+    "title": "Global AI Chip Market Landscape and Competitive Dynamics 2026",
+    "path": "reports/en/Global AI Chip Market Landscape and Competitive Dynamics 2026-20260609-170008.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 15865,
+    "date": "2026-06-09",
+    "sources": 28
+  },
+  {
+    "title": "Global Data Center Energy Consumption and Sustainable Cooling Technologies 2026",
+    "path": "reports/en/Global Data Center Energy Consumption and Sustainable Cooling Technologies 2026-20260609-193210.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 16212,
+    "date": "2026-06-09",
+    "sources": 41
+  },
+  {
+    "title": "Quantum Computing: Progress and Timeline to Commercial Viability (2026)",
+    "path": "reports/en/Quantum Computing- Progress and Timeline to Commercial Viability (2026)-20260609-201425.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 17185,
+    "date": "2026-06-09",
+    "sources": 48
+  },
+  {
+    "title": "日本の若者における終身雇用制と転職意識の変化に関する研究",
+    "path": "reports/ja/日本の若者における終身雇用制と転職意識の変化に関する研究-20260609-014317.md",
+    "lang": "ja",
+    "lang_name": "日本語",
+    "mode": "standard",
+    "word_count": 15366,
+    "date": "2026-06-09",
+    "sources": 32
+  },
+  {
+    "title": "Analyse de l'attitude des salariés français envers la semaine de quatre jours - motivations, freins et perspectives",
+    "path": "reports/fr/Analyse de l'attitude des salariés français envers la semaine de quatre jours - motivations, freins et perspectives-20260609-012315.md",
+    "lang": "fr",
+    "lang_name": "Français",
+    "mode": "quick",
+    "word_count": 14219,
+    "date": "2026-06-09",
+    "sources": 27
+  },
+  {
+    "title": "2026年AI眼镜行业深度研究",
+    "path": "reports/zh/2026年AI眼镜行业深度研究-20260608-152603.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 10167,
+    "date": "2026-06-08",
+    "sources": 16
+  },
+  {
+    "title": "2026年中国宠物家居行业深度研究报告",
+    "path": "reports/zh/2026年中国宠物家居行业深度研究报告-20260608-122655.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 22110,
+    "date": "2026-06-08",
+    "sources": 11
+  },
+  {
+    "title": "2026年全球内存行业深度研究报告",
+    "path": "reports/zh/2026年全球内存行业深度研究报告-20260608-022747.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 36576,
+    "date": "2026-06-08",
+    "sources": 85
+  },
+  {
+    "title": "한국 반도체 산업의 글로벌 경쟁력 분석",
+    "path": "reports/ko/한국 반도체 산업의 글로벌 경쟁력 분석-20260608-171550.md",
+    "lang": "ko",
+    "lang_name": "한국어",
+    "mode": "quick",
+    "word_count": 14213,
+    "date": "2026-06-08",
+    "sources": 45
+  },
+  {
+    "title": "Quantum Computing Market Outlook 2026",
+    "path": "reports/en/Quantum Computing Market Outlook 2026-20260608-200801.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "deep",
+    "word_count": 36715,
+    "date": "2026-06-08",
+    "sources": 85
+  },
+  {
+    "title": "日本のアニメ産業のグローバル市場戦略",
+    "path": "reports/ja/日本のアニメ産業のグローバル市場戦略-20260608-193922.md",
+    "lang": "ja",
+    "lang_name": "日本語",
+    "mode": "quick",
+    "word_count": 10057,
+    "date": "2026-06-08",
+    "sources": 20
+  },
+  {
+    "title": "2026 中国外卖行业深度研究报告：存量博弈与新增长极",
+    "path": "reports/zh/2026 中国外卖行业深度研究报告：存量博弈与新增长极-20260607-193119.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 10794,
+    "date": "2026-06-07",
+    "sources": 14
+  },
+  {
+    "title": "星座学历史与实践用途：系统梳理与当代审视",
+    "path": "reports/zh/星座学历史与实践用途：系统梳理与当代审视-20260607-060823.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 12469,
+    "date": "2026-06-07",
+    "sources": 22
+  },
+  {
+    "title": "红楼梦IP四十年：从87版电视剧到AI续写的价值演化",
+    "path": "reports/zh/红楼梦IP四十年：从87版电视剧到AI续写的价值演化-20260607-225125.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 30587,
+    "date": "2026-06-07",
+    "sources": 40
+  },
+  {
+    "title": "红楼梦人物关系网络深度研究报告",
+    "path": "reports/zh/红楼梦人物关系网络深度研究报告-20260607-070208.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 21642,
+    "date": "2026-06-07",
+    "sources": 6
+  },
+  {
+    "title": "2026年AI短剧行业前瞻：技术驱动、市场格局与趋势研判",
+    "path": "reports/zh/2026年AI短剧行业前瞻-20260606-132433.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 10800,
+    "date": "2026-06-06",
+    "sources": 62
+  },
+  {
+    "title": "2026年中国低空经济行业研究报告",
+    "path": "reports/zh/2026年中国低空经济-20260606-133718.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "standard",
+    "word_count": 42700,
+    "date": "2026-06-06",
+    "sources": 78
+  },
+  {
+    "title": "2026年中国新能源汽车行业展望",
+    "path": "reports/zh/2026年中国新能源汽车行业展望-20260606-223210.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 15200,
+    "date": "2026-06-06",
+    "sources": 57
+  },
+  {
+    "title": "2026年中国高校排名深度分析-20260606-150108.md",
+    "path": "reports/zh/2026年中国高校排名深度分析-20260606-150108.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 14400,
+    "date": "2026-06-06",
+    "sources": 36
+  },
+  {
+    "title": "2026年副业搞钱：趋势、赛道与实战全指南",
+    "path": "reports/zh/2026年副业搞钱-20260606-135808.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 14400,
+    "date": "2026-06-06",
+    "sources": 53
+  },
+  {
+    "title": "Linux Do 社区深度调研报告",
+    "path": "reports/zh/Linux-Do-社区深度调研报告-20260606-011010.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "standard",
+    "word_count": 19200,
+    "date": "2026-06-06",
+    "sources": 20
+  },
+  {
+    "title": "蜜雪冰城（2097.HK）2026年深度研究报告",
+    "path": "reports/zh/蜜雪冰城2026深度研究报告-20260606-182018.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 26300,
+    "date": "2026-06-06",
+    "sources": 9
+  },
+  {
+    "title": "2026全球半导体行业深度调研报告",
+    "path": "reports/zh/2026全球半导体行业调研-20260605-161206.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "standard",
+    "word_count": 17600,
+    "date": "2026-06-05",
+    "sources": 24
+  },
+  {
+    "title": "2026年印度极端高温：气候危机下的健康、经济与适应性挑战",
+    "path": "reports/zh/2026年印度极端高温-20260605-172304.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 47800,
+    "date": "2026-06-05",
+    "sources": 39
+  },
+  {
+    "title": "2026年英雄联盟海克斯大乱斗综合调研与技巧指南",
+    "path": "reports/zh/2026年英雄联盟海克斯大乱斗综合调研与技巧指南-20260605-173118.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 33500,
+    "date": "2026-06-05",
+    "sources": 43
+  },
+  {
+    "title": "2026苏超赛事市场调研与文旅价值分析",
+    "path": "reports/zh/2026苏超赛事市场调研与文旅价值分析-20260605-172208.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 35300,
+    "date": "2026-06-05",
+    "sources": 44
+  },
+  {
+    "title": "社恐内向男生快速建立亲密关系实用指南",
+    "path": "reports/zh/社恐内向男生快速建立亲密关系实用指南-20260605-180305.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 2900,
+    "date": "2026-06-05",
+    "sources": 44
+  }
+]
