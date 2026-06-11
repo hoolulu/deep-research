@@ -50,6 +50,9 @@ def check_encoding(filepath: str) -> dict:
         if pattern in text:
             lines = [i + 1 for i, line in enumerate(text.split('\n')) if pattern in line]
             issues.append(f"Mojibake pattern '{pattern}' at lines {lines[:3]}")
+    qmark_lines = [i + 1 for i, line in enumerate(text.split('\n')) if re.search(r'\?{3,}', line)]
+    if qmark_lines:
+        issues.append(f"CP936 question-mark corruption at lines {qmark_lines[:5]}")
     return {"passed": len(issues) == 0, "issues": issues}
 
 
@@ -257,6 +260,12 @@ def check_datapool(filepath: str, mode: str) -> dict:
                     issues.append(f"Record {i} fact {j}: {mode} mode should have 'cur'")
                 if 'conf' not in fact:
                     issues.append(f"Record {i} fact {j}: {mode} mode should have 'conf'")
+    for i, rec in enumerate(records):
+        for j, fact in enumerate(rec.get('facts') or []):
+            for field in ('src', 'title', 'ctx'):
+                val = str(fact.get(field, ''))
+                if re.search(r'\?{3,}', val) or '\ufffd' in val:
+                    issues.append(f"Record {i} fact {j}: mojibake in '{field}'")
     all_srcs = set()
     total_facts = 0
     for rec in records:

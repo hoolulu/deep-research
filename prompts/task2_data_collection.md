@@ -338,7 +338,7 @@ Step 6 — 输出数据池 + 数据质检
 ☐ 每子问题 ≥ 1 条事实或 gap 说明
 ☐ priority=high 子问题 facts ≥ 2 条
 ☐ **来源可信度检查**：逐条检查 priority=high 的 fact 来源。域名后缀 .edu/.gov/.org 或知名研究机构标记可信，自媒体/企业来源标记存疑。
-☐ **乱码检查**：扫描 facts[].ctx 字段，检查替换字符（\ufffd）或 GBK→UTF-8 Mojibake。
+☐ **乱码检查**：扫描 facts[] 中 `src`、`title`、`ctx` 等所有文本字段，检查替换字符（\ufffd）、GBK→UTF-8 Mojibake 以及连续 3+ 问号（`???`）。
 ☐ **跨事实一致性**：同一指标跨子问题差值 > 20% 且口径不明 → 记录。
 ☐ **Adversarial 检查**（仅 priority=high facts）：
     ☐ **数值量级**：检查有无亿/billion 差 10x、万/million 混淆等量级错误
