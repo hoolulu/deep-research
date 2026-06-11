@@ -62,7 +62,7 @@ People who need professional-grade research capabilities without relying on paid
 
 > Above ranges for standard mode. Actual times vary by topic complexity and data availability.
 
-📂 **[Browse all generated reports →](reports/)** — click to open and read.
+📂 **[Browse all reports →](https://hoolulu.github.io/deep-research/)** — filter, sort, and browse by language and depth.
 
 ### 📖 Featured Reports
 
@@ -234,7 +234,7 @@ Open with any Markdown reader (Typora / Obsidian / VS Code etc.).
 
 You can also specify a custom output path — ask AI to configure it.
 
-👉 **[Browse all generated reports](reports/)** — click to open and read.
+👉 **[Browse all reports](https://hoolulu.github.io/deep-research/)** — filter, sort, and browse the full library.
 
 ## 11. Cost
 
