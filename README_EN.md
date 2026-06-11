@@ -68,11 +68,11 @@ People who need professional-grade research capabilities without relying on paid
 
 | Report | Tags |
 |--------|------|
-| <a href="reports/en/Buy Now Pay Later Market Outlook 2026- Regulation, Profitability, and Gen Z Usage-20260610-163516.md" target="_blank">Buy Now Pay Later Market Outlook 2026</a> | Personal Finance · BNPL · Gen Z |
-| <a href="reports/en/GenAI Enterprise Adoption Trends & ROI Measurement in 2026-20260609-174525.md" target="_blank">GenAI Enterprise Adoption Trends & ROI 2026</a> | AI · Enterprise · ROI |
-| <a href="reports/en/Electric Vehicle Battery Supply Chain and Raw Material Geopolitics 2026-20260609-171947.md" target="_blank">Electric Vehicle Battery Supply Chain 2026</a> | EV · Geopolitics · Supply Chain |
-| <a href="reports/en/Cross-border E-commerce Logistics Trends in Southeast Asia 2026-20260609-165623.md" target="_blank">Cross-border E-commerce Logistics in SE Asia 2026</a> | E-commerce · Global Trade |
-| <a href="reports/en/Quantum Computing Market Outlook 2026-20260608-200801.md" target="_blank">Quantum Computing Market Outlook 2026</a> | Cutting-edge Tech · Future |
+| <a href="reports/zh/中国深空探测计划全景-20260612-050840.md" target="_blank">中国深空探测计划全景</a> | Space · Deep Exploration |
+| <a href="reports/zh/中国皇帝评价排行研究报告-20260612-045019.md" target="_blank">中国皇帝评价排行研究报告</a> | History · Rankings |
+| <a href="reports/zh/全球历史上十大帝国的兴衰周期：规律、路径与当代启示-20260612-042535.md" target="_blank">全球历史上十大帝国的兴衰周期</a> | History · Civilizations |
+| <a href="reports/zh/中国人口结构变迁历史：从高增长到深度转型-20260612-024352.md" target="_blank">中国人口结构变迁历史：从高增长到深度转型</a> | Demographics · Society |
+| <a href="reports/en/Shifts in the Global Population Center of Gravity-20260612-042858.md" target="_blank">Shifts in the Global Population Center of Gravity</a> | Demographics · Geopolitics |
 
 Click a report title to open and read it in a new window.
 
