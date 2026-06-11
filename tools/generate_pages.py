@@ -134,32 +134,33 @@ def gen_favicon():
 
 
 def main():
-    api_mode = '--api' in sys.argv
+    use_fallback = '--fallback' in sys.argv
     reports = []
-    if api_mode:
-        print('Fetching via GitHub API...')
-        tree = _api_get('git/trees/main?recursive=1')
-        items = [i for i in tree.get('tree', [])
-                 if i['path'].startswith('reports/') and i['path'].endswith('.md')]
-        for item in items:
+
+    # Walk reports/ directory (checkout may have skipped long filenames)
+    for root, dirs, files in os.walk(REPORTS_DIR):
+        for fname in sorted(files):
+            if not fname.endswith('.md'):
+                continue
+            path = os.path.join(root, fname)
             try:
-                resp = _api_get(f'contents/{item["path"]}')
-                text = base64.b64decode(resp['content']).decode('utf-8')
-                reports.append(parse_content(text, item['path']))
-                print(f'  {item["path"]}')
-            except Exception as e:
-                print(f'  SKIP {item["path"]}: {e}')
-    else:
-        for root, dirs, files in os.walk(REPORTS_DIR):
-            for fname in sorted(files):
-                if not fname.endswith('.md'):
-                    continue
-                path = os.path.join(root, fname)
-                try:
-                    with open(path, encoding='utf-8') as f:
-                        reports.append(parse_content(f.read(), path))
-                except Exception as e:
-                    print(f'  SKIP {fname}: {e}')
+                with open(path, encoding='utf-8') as f:
+                    reports.append(parse_content(f.read(), path))
+            except (FileNotFoundError, OSError) as e:
+                if use_fallback:
+                    # File not on disk (too long filename) — fetch via API
+                    rel = os.path.relpath(path, REPORTS_DIR).lstrip('./')
+                    full_path = f'reports/{rel}'
+                    try:
+                        resp = _api_get(f'contents/{full_path}')
+                        text = base64.b64decode(resp['content']).decode('utf-8')
+                        reports.append(parse_content(text, full_path))
+                        print(f'  API fallback: {full_path}')
+                    except Exception as e2:
+                        print(f'  BOTH FAILED {fname}: {e2}')
+                else:
+                    print(f'  SKIP (not found): {fname}')
+
     reports.sort(key=lambda r: r['date'], reverse=True)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     with open(os.path.join(OUTPUT_DIR, 'reports.json'), 'w', encoding='utf-8') as f:

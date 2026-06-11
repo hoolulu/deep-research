@@ -13,18 +13,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Sparse checkout: exclude reports/ to avoid ext4 255-byte filename limit
-      - run: |
-          git init .
-          git remote add origin https://github.com/${{ github.repository }}
-          git config core.sparseCheckout true
-          echo '/*' > .git/info/sparse-checkout
-          echo '!reports/*' >> .git/info/sparse-checkout
-          git pull origin main
+      - uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-      - run: python tools/generate_pages.py --api
+      - run: python tools/generate_pages.py --fallback
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
