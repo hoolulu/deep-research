@@ -422,3 +422,39 @@ def qa_report(filepath: str, mode: str, target_year: int, lang: str = "zh") -> d
         "checks": results,
         "failures": failures,
     }
+
+
+# ── Chapter Depth Balance ────────────────────────────────────────────────
+
+
+def check_depth_balance(chapters_dir: str, chapter_count: int,
+                        threshold: float = 0.5) -> dict:
+    """Check if any chapter is significantly shorter than average.
+    threshold=0.5 means flag if a chapter < 50% of average line count.
+    Language-agnostic — pure line count comparison."""
+    issues = []
+    lengths = []
+    for i in range(1, chapter_count + 1):
+        path = os.path.join(chapters_dir, f"chapter-{i}.md")
+        try:
+            with open(path, 'r', encoding='utf-8-sig') as f:
+                lines = f.readlines()
+            lengths.append((i, len(lines)))
+        except FileNotFoundError:
+            lengths.append((i, 0))
+            issues.append(f"Chapter {i}: file not found")
+
+    if not lengths:
+        return {"passed": False, "issues": ["No chapter files found"]}
+
+    avg = sum(n for _, n in lengths) / len(lengths)
+    thin = [(i, n) for i, n in lengths if n < avg * threshold and n > 0]
+    for i, n in thin:
+        issues.append(
+            f"Chapter {i}: {n} lines ({n/avg:.0%} of avg {avg:.0f} lines) "
+            f"— below {threshold:.0%} threshold"
+        )
+
+    return {"passed": len(issues) == 0, "issues": issues,
+            "chapters": [{"num": i, "lines": n} for i, n in lengths],
+            "average": round(avg, 1)}

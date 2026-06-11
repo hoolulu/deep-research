@@ -132,22 +132,35 @@ repository: https://github.com/hoolulu/deep-research
      → **读取 `profiles.json` 获取当前模式的 `max_chars`**，计算 `per_chapter_chars = max_chars ÷ chapters.length`
      → 从 data-pool.json 提取所有唯一 (src, yr) 组合，按首次出现顺序预分配引用编号 [1], [2], [3]...，写入 {TMPDIR}/citation_map.json
      → 读取 `{PROMPTSDIR}/task3_chapter_agent.md` 模板
+     → **根据 $LANG 裁剪 prompt 中的多语言段落**：
+       - prompt 中的 `[LANG_en]` 段落：仅当 $LANG=en 时保留，其他语言删除
+       - prompt 中的 `[LANG_zh]` 段落：仅当 $LANG=zh 时保留，其他语言删除
+       - 删除标记文本本身（`[LANG_en]` `[/LANG_en]` 占位符行）
+       - 无标记的段落全部语言通用，保留
      → **平台检测并选择撰写模式**：
        - 执行 `uname -s` 检测操作系统
        - 输出包含 "Darwin" → macOS → 设 `$PLATFORM_MODE=serial`
        - 否则 → 其他平台 → 设 `$PLATFORM_MODE=parallel`
        - 向用户报告平台和采用的撰写模式（使用 $LANG 语言）
-       - **章节 agent 不做任何工具调用**（不跑 prepare-chapter、validate、manifest），只写文件
+        - **章节 agent 不做任何工具调用**（不跑 prepare-chapter、validate、manifest、word-count），只写文件
 
-     → [serial mode — macOS omo workaround] 逐一串行撰写：
-       - For N = 1 to chapters.length:
-         - 读取 outline.chapters[N] 的 title、sections
-         - 从 data-pool.json 中筛选该章 sub_questions 对应的事实条目
-         - **将事实直接嵌入 prompt**：每条事实前标注预分配的 `[N]` 编号
-         - 调用 task(run_in_background=false) 同步等待该章完成
-         - 用 `read` 确认 {TMPDIR}/chapters/chapter-{N}.md 存在且非空
-         - todowrite 标记该章 completed
-       - 向用户报告所有章节完成（使用 $LANG 语言）
+     → [serial mode — 严格串行] 一次只写一章（依赖进度文件防续对话并行）：
+        - 读取 {TMPDIR}/serial_progress.txt：
+          - 文件不存在或为空 → 从第 1 章开始
+          - 内容为 "N"（数字） → 从第 N+1 章开始
+          - 如果 N ≥ chapters.length → 所有章节已完成，进入 Task 4
+        - 当前章编号 = 上一步确定的值（命名为 C）
+        - 只写这一章：
+          - 读取 outline.chapters[C] 的 title、sections
+          - 从 data-pool.json 中筛选该章 sub_questions 对应的事实条目
+          - **将事实直接嵌入 prompt**：每条事实前标注预分配的 `[C]` 编号
+          - 调用 task(run_in_background=false) 同步等待该章完成
+          - 用 `read` 确认 {TMPDIR}/chapters/chapter-{C}.md 存在且非空
+        - 完成后用 `write` 工具创建/更新 {TMPDIR}/serial_progress.txt，写入 C
+        - todowrite 标记该章 completed
+        - 如果 C < chapters.length → 结束 response，等待用户继续
+        - 如果 C ≥ chapters.length → 删除 serial_progress.txt，进入 Task 4
+        → **严禁一次发起多章 task() 调用，严禁使用 run_in_background=true**
 
      → [parallel mode — 非 macOS] 并行派发：
        - 初始化空列表 task_ids = []
@@ -176,12 +189,13 @@ repository: https://github.com/hoolulu/deep-research
        - 向用户报告最终章节完成情况（使用 $LANG 语言）
      8. ══ Task 4 — 验证 + 装配 + QA（**主 agent 直接执行**） ══
     → **Step 0 — 清理残留**：删除 reports/ 目录下所有 0 字节文件（前次装配失败的空壳）；创建 reports/$LANG/ 子目录（如果不存在）
-    → **Step 1 — 批量验证**：`python {TOOLSDIR}/dr_tools.py validate-all-chapters --chapters-dir {TMPDIR}/chapters/ --chapters {chapter_count}`，内部 ThreadPoolExecutor 并行验证所有章节。从输出 JSON 的 `failed_chapters` 中找到失败章节，逐个重新生成（重新派发章节 agent → 重新验证该章）。
-    → Step 1 或 Step 2 失败时，**先删除本次已写入的产物**（报告文件、中间文件等），再重新执行对应步骤，避免残留文件干扰下次运行
+     → **Step 1 — 批量验证**：`python {TOOLSDIR}/dr_tools.py validate-all-chapters --chapters-dir {TMPDIR}/chapters/ --chapters {chapter_count}`，内部 ThreadPoolExecutor 并行验证所有章节。从输出 JSON 的 `failed_chapters` 中找到失败章节，逐个重新生成（重新派发章节 agent → 重新验证该章）。
+     → **Step 1b — 章节深度均衡检查**：`python {TOOLSDIR}/dr_tools.py depth-balance --chapters-dir {TMPDIR}/chapters/ --chapters {chapter_count}`。如果某章行数 < 平均值的 50%，标记告警（not blocking，仅提示）。
+     → Step 1 或 Step 2 失败时，**先删除本次已写入的产物**（报告文件、中间文件等），再重新执行对应步骤，避免残留文件干扰下次运行
     → **Step 2 — 装配**：`python {TOOLSDIR}/dr_tools.py assemble-report --outline {TMPDIR}/outline.json --chapters-dir {TMPDIR}/chapters/ --datapool {TMPDIR}/data-pool.json --mode {depth_mode} --target-year {target_year} --output reports/$LANG/ --lang $LANG`
     → **Step 3 — 数据受限处理**：读取 {TMPDIR}/task2_manifest.json 的 `data_limited` 字段。如果为 true，在报告标题后插入数据说明声明，**使用 $LANG 语言**。
     → **Step 4 — 引用处理**：`python {TOOLSDIR}/dr_tools.py convert-citations --datapool {TMPDIR}/data-pool.json "$REPORT" --lang $LANG`（从 data-pool 构建参考章节，验证正文 `[N]` 引用均有对应条目）
-    → **Step 5 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year} --lang $LANG`，读取 JSON 输出的 passed + line_count + word_count 字段
+     → **Step 5 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year} --lang $LANG`，解析 JSON 输出，从 `checks.word_count.count` 取字数，从 `checks.word_count.limit` 取上限
     → todowrite 标记完成
     → ⏱ **强制计算总耗时**（读取 start_time.txt + 当前时间算差值）
     → 从 outline.json + task2_manifest.json + qa-report 中提取数据，使用 $LANG 语言汇报最终结果。
@@ -201,8 +215,8 @@ repository: https://github.com/hoolulu/deep-research
       | 来源 | sources | ソース | 출처 | sources | Quellen | fuentes | sources |
       | 事实 | facts | 事実 | 사실 | faits | Fakten | datos | facts |
       | 独立域名 | domains | ドメイン | 도메인 | domaines | Domains | dominios | domains |
-      | 行 | lines | 行 | 줄 | lignes | Zeilen | líneas | lines |
-      | 字 | words | 語 | 단어 | mots | Wörter | palabras | words |
+| 行 | lines | 行 | 줄 | lignes | Zeilen | líneas | lines |
+| 字 | chars | 語 | 단어 | mots | Wörter | palabras | chars |
       | 分钟 | min | 分 | 분 | min | Min. | min | min |
       | 生成时间 | Generated | 生成時刻 | 생성 시간 | Généré le | Erzeugt | Generado | Generated |
       | 搜索 | Search | 検索 | 검색 | Recherche | Suche | Búsqueda | Search |

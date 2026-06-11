@@ -8,6 +8,7 @@ from dr_check import (
     check_headers, check_chapter_numbers, check_metadata,
     check_toc, check_tail, year_density, check_datapool,
     validate_chapter, validate_all_chapters, qa_report,
+    check_depth_balance,
 )
 from dr_gen import (
     extract_sources, generate_toc, generate_metadata,
@@ -87,6 +88,10 @@ def main():
     p.add_argument('--chapters-dir', required=True)
     p.add_argument('--chapters', type=int, required=True)
     p.add_argument('--expected-sections', type=int, default=0)
+    p = sub.add_parser('depth-balance', help='Check chapter depth balance')
+    p.add_argument('--chapters-dir', required=True)
+    p.add_argument('--chapters', type=int, required=True)
+    p.add_argument('--threshold', type=float, default=0.5, help='Min ratio vs average (default: 0.5)')
     p = sub.add_parser('qa-report', help='Full report quality check')
     p.add_argument('file')
     p.add_argument('--mode', choices=['quick', 'standard', 'deep'], required=True)
@@ -190,6 +195,10 @@ def main():
         sys.exit(0)
     elif args.command == 'validate-all-chapters':
         result = validate_all_chapters(args.chapters_dir, args.chapters, args.expected_sections)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        sys.exit(0 if result['passed'] else 1)
+    elif args.command == 'depth-balance':
+        result = check_depth_balance(args.chapters_dir, args.chapters, args.threshold)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         sys.exit(0 if result['passed'] else 1)
     elif args.command == 'qa-report':
