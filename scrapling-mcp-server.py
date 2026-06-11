@@ -100,45 +100,19 @@ def _fetch_single(url: str, timeout: int, method: str) -> dict:
             result["content"] = response.html_content
             result["success"] = True
         elif method == "stealthy":
-            import threading
-            sf_result = {}
-            def _stealthy_fetch():
-                try:
-                    fetcher = scrapling.StealthyFetcher()
-                    resp = fetcher.fetch(url)
-                    sf_result["content"] = resp.html_content
-                    sf_result["success"] = True
-                except Exception as e:
-                    sf_result["error"] = f"{type(e).__name__}: {e}"
-                    sf_result["success"] = False
-            t = threading.Thread(target=_stealthy_fetch)
-            t.start()
-            t.join(timeout=timeout)
-            if sf_result.get("success"):
-                result["content"] = sf_result["content"]
+            try:
+                resp = scrapling.StealthyFetcher.fetch(url, headless=True, timeout=timeout * 1000)
+                result["content"] = resp.html_content
                 result["success"] = True
-            else:
-                result["error"] = sf_result.get("error", "stealthy fetch timeout or failed")
+            except Exception as e:
+                result["error"] = f"{type(e).__name__}: {e}"
         elif method == "dynamic":
-            import threading
-            df_result = {}
-            def _dynamic_fetch():
-                try:
-                    fetcher = scrapling.DynamicFetcher()
-                    resp = fetcher.fetch(url)
-                    df_result["content"] = resp.html_content
-                    df_result["success"] = True
-                except Exception as e:
-                    df_result["error"] = f"{type(e).__name__}: {e}"
-                    df_result["success"] = False
-            t = threading.Thread(target=_dynamic_fetch)
-            t.start()
-            t.join(timeout=timeout)
-            if df_result.get("success"):
-                result["content"] = df_result["content"]
+            try:
+                resp = scrapling.DynamicFetcher.fetch(url, headless=True, timeout=timeout * 1000)
+                result["content"] = resp.html_content
                 result["success"] = True
-            else:
-                result["error"] = df_result.get("error", "dynamic fetch timeout or failed")
+            except Exception as e:
+                result["error"] = f"{type(e).__name__}: {e}"
     except Exception as e:
         result["error"] = f"{type(e).__name__}: {e}"
     return result
