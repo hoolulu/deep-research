@@ -40,7 +40,8 @@
 | **参考来源行** | 元数据后另起一行 `> **参考来源/References**：{主要来源} 等/et al. · 共引用 N 个来源/Total N sources`，字段按语言自动适配 | 阶段5 QA 检查 |
 | **报告尾部** | 末尾固定包含参考来源章节（语言对应，如 `## 参考来源`/`## References`）和免责声明（语言对应，如 `## 免责声明`/`## Disclaimer`） | 阶段5 QA 检查末尾 20 行 |
 | **TOC 标题唯一** | 报告有且仅有一个 TOC 标题（语言对应，如 `## 目录`/`## Table of Contents`/`## 목차`） | 阶段5 QA `python dr_tools.py check-toc --lang $LANG` |
-| **乱码零容忍** | data-pool.json 和最终报告均不得含替换字符（\ufffd）或典型 Mojibake 模式 | Task 2 Step 6 + 阶段5 QA grep |
+| **乱码零容忍** | data-pool.json 和最终报告均不得含替换字符（\ufffd）或典型 Mojibake 模式或 `???` 连续问号 | Task 2 Step 6 + 阶段5 QA grep |
+| **纯文本公式** | 报告不得使用 LaTeX/math 语法（`$...$` 等），全部用纯文本表达 | 阶段4 prompt + 阶段5 验收 |
 | **路径核验** | 最终报告必须保存在 skill 默认目录或用户自定义目录，两者之一 | 阶段5 QA 检查 |
 | **编码洁净** | 所有中间文件（outline.json / data-pool.json / chapter-*.md）必须使用 UTF-8 无 BOM 编码写入，不得出现替换字符（\ufffd）或 GBK→UTF-8 Mojibake。子 agent 写入前自行校验，不得遗留到主 agent | 阶段1/2/3/5 各输出环节 |
 | **清理** | 调研结束后删除 TMPDIR | 阶段5 Step 4 |

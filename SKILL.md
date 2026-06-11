@@ -42,6 +42,7 @@ repository: https://github.com/hoolulu/deep-research
 | 13 | **篇幅达标** | 见项目根目录 [`profiles.json`](profiles.json)。所有模式限制以 `profiles.json` 为准，修改后重启软件即全局生效。 |
 | 14 | **四段式结构** | 顺序固定为：报告标题 → 元数据块（含六字段 + 参考来源行） → `## 目录` → 正文各章 → 尾部（参考来源 + 免责声明） |
 | 15 | **编码洁净** | 所有中间文件（outline.json / data-pool.json / chapter-*.md）必须使用 **UTF-8 无 BOM** 编码写入，不得出现替换字符（\ufffd）或 GBK→UTF-8 Mojibake。子 agent 在写入前必须自行验证编码洁净，不得将编码问题遗留到主 agent |
+| 16 | **纯文本公式** | 报告中不得使用 LaTeX/math 公式语法（`$...$`、`$$...$$`、`\[...\]` 等）。公式必须用纯文本或 Unicode 符号表达，确保复制到任何编辑器都不产生渲染问题 |
 
 ### 时间锚定规则
 
