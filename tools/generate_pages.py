@@ -87,6 +87,17 @@ def gen_html(reports):
     now = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
     repo = os.environ.get('GITHUB_REPOSITORY', 'hoolulu/deep-research')
     base = f'https://github.com/{repo}/blob/main'
+    
+    lang_counts = {}
+    for r in reports:
+        lang_counts[r['lang']] = lang_counts.get(r['lang'], 0) + 1
+    lang_order = sorted(lang_counts.items(), key=lambda x: (0 if x[0] == 'zh' else 1 if x[0] == 'en' else 2, -x[1]))
+    
+    chips = ''
+    for code, cnt in lang_order:
+        name = LANG_NAMES.get(code, code)
+        chips += f'<button class="lc" data-lc="{code}" onclick="fc(this)">{name} <span class="lcn">{cnt}</span></button>'
+    
     seen = set()
     lo = ''.join(f'<option value="{c}">{n}</option>' for c, n in LANG_NAMES.items() if (c in seen or seen.add(c) is None) and any(r['lang'] == c for r in reports))
     mo = ''.join(f'<option value="{m}">{MODE_LABELS.get(m,m.title())}</option>' for m in sorted(set(r['mode'] for r in reports)))
@@ -105,11 +116,14 @@ th{{padding:8px 12px;text-align:left;font-weight:600;border-bottom:1px solid var
 td{{padding:8px 12px;border-bottom:1px solid var(--bm);vertical-align:middle}}tbody tr{{transition:background .1s}}tbody tr:hover{{background:#f3f4f6}}tr:last-child td{{border-bottom:none}}
 .n{{color:var(--muted);font-size:12px;width:30px;text-align:right}}.tc a{{color:var(--accent);text-decoration:none;font-weight:500}}.tc a:hover{{text-decoration:underline}}.m{{font-family:var(--fm);font-size:12px;color:var(--muted);white-space:nowrap}}
 .mb{{display:inline-block;padding:2px 7px;font-size:11px;font-weight:600;border-radius:20px;line-height:1.4;white-space:nowrap}}.mb-quick{{color:var(--green);background:#dafbe1}}.mb-standard{{color:var(--accent);background:#ddf4ff}}.mb-deep{{color:var(--orange);background:#fff8c5}}
+.lc{{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;margin:0 4px 8px 0;font-size:13px;font-weight:500;border:1px solid var(--border);border-radius:20px;background:var(--bg);color:var(--fg);cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}}.lc:hover{{border-color:var(--accent);color:var(--accent);background:#f3f8ff}}.lc.s{{border-color:var(--accent);color:#fff;background:var(--accent)}}.lcn{{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 5px;font-size:11px;font-weight:600;border-radius:10px;background:var(--canvas);color:var(--muted)}}
+.pm{{font-size:12px;color:var(--muted);font-weight:400}}.pm a{{color:var(--accent);text-decoration:none}}
 .hidden{{display:none!important}}.ft{{margin-top:16px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}}.ft a{{color:var(--accent);text-decoration:none}}.ft a:hover{{text-decoration:underline}}
-@media(max-width:700px){{.w{{padding:16px 8px}}.tb{{flex-direction:column}}.sw{{min-width:100%}}thead{{display:none}}tbody tr{{display:block;padding:12px;border-bottom:1px solid var(--bm)}}td{{display:block;padding:3px 0;border:none}}td.n{{display:none}}td.tc{{font-size:15px;margin-bottom:4px}}td::before{{content:attr(data-l);font-size:11px;color:var(--muted);display:inline-block;width:60px;font-weight:500}}}}
+@media(max-width:700px){{.w{{padding:16px 8px}}.lcw{{margin-bottom:8px}}.tb{{flex-direction:column}}.sw{{min-width:100%}}thead{{display:none}}tbody tr{{display:block;padding:12px;border-bottom:1px solid var(--bm)}}td{{display:block;padding:3px 0;border:none}}td.n{{display:none}}td.tc{{font-size:15px;margin-bottom:4px}}td::before{{content:attr(data-l);font-size:11px;color:var(--muted);display:inline-block;width:60px;font-weight:500}}}}
 </style></head><body><div class="w">
 <div class="hd"><svg width="36" height="36" viewBox="0 0 36 36"><rect width="36" height="36" rx="8" fill="#0969da"/><text x="18" y="25" text-anchor="middle" font-size="20" font-weight="bold" fill="white" font-family="sans-serif">DR</text></svg><h1><a href=".">Deep Research Reports</a></h1></div>
-<p class="st">Browse all generated reports — filter by language, depth, or keywords</p>
+<p class="st">Browse all generated reports — filter by language, depth, or keywords<br><span class="pm">Powered by <a href="https://github.com/hoolulu/deep-research" target="_blank">deep-research</a> &mdash; One command. Ten minutes. Deep professional reports.</span></p>
+<div class="lcw">{chips}</div>
 <div class="tb">
 <div class="sw"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.68 11.74a6 6 0 1 1 1.06-1.06l3.04 3.04a.75.75 0 1 1-1.06 1.06l-3.04-3.04z" fill="currentColor"/><circle cx="7" cy="7" r="5.25" stroke="currentColor" stroke-width="1.5" fill="none"/></svg><input type="text" id="q" placeholder="Search reports&hellip;" oninput="f()" autocomplete="off"></div>
 <select class="fs" id="l" onchange="f()"><option value="">All languages</option>{lo}</select>
@@ -121,7 +135,8 @@ td{{padding:8px 12px;border-bottom:1px solid var(--bm);vertical-align:middle}}tb
 </div>
 <script>
 var D=[];(function(){{var r=document.getElementById('b');for(var i=0;i<r.children.length;i++)D.push(r.children[i]);}})();
-function f(){{var q=document.getElementById('q').value.toLowerCase(),l=document.getElementById('l').value,m=document.getElementById('m').value,c=0;for(var i=0;i<D.length;i++){{var x=D[i];var ok=(!l||x.dataset.lang==l)&&(!m||x.dataset.mode==m)&&(!q||x.querySelector('a').textContent.toLowerCase().indexOf(q)>=0);x.classList.toggle('hidden',!ok);if(ok)c++;}}document.getElementById('c').textContent=c+' reports';}}
+function f(){{document.querySelectorAll('.lc').forEach(function(x){{x.classList.remove('s')}});var q=document.getElementById('q').value.toLowerCase(),l=document.getElementById('l').value,m=document.getElementById('m').value,c=0;for(var i=0;i<D.length;i++){{var x=D[i];var ok=(!l||x.dataset.lang==l)&&(!m||x.dataset.mode==m)&&(!q||x.querySelector('a').textContent.toLowerCase().indexOf(q)>=0);x.classList.toggle('hidden',!ok);if(ok)c++;}}document.getElementById('c').textContent=c+' reports';}}
+function fc(b){{var l=document.getElementById('l');var all=document.querySelectorAll('.lc');all.forEach(function(x){{x.classList.toggle('s',x===b)}});l.value=b.dataset.lc;f();}}
 var sd={{}};
 function s(k){{var h=event.currentTarget;sd[k]=sd[k]==='asc'?'desc':'asc';document.querySelectorAll('thead th').forEach(function(t){{t.classList.remove('s')}});h.classList.add('s');var d=sd[k];h.querySelector('.si').innerHTML=d==='asc'?'&#8593;':'&#8595;';D.sort(function(a,b){{var va,vb,ca=a.children[k+1],cb=b.children[k+1];if(k===0){{va=a.querySelector('a').textContent;vb=b.querySelector('a').textContent;}}else if(k===3){{va=p(ca.textContent);vb=p(cb.textContent);}}else if(k===4){{va=parseInt(ca.textContent)||0;vb=parseInt(cb.textContent)||0;}}else{{va=ca.textContent;vb=cb.textContent;}}var c=typeof va==='number'?va-vb:String(va).localeCompare(String(vb));return d==='asc'?c:-c;}});var tb=document.getElementById('b');for(var i=0;i<D.length;i++)tb.appendChild(D[i]);f();}}
 function p(s){{var m=s.match(/([\\d.]+)([wk]?)/);if(!m)return 0;var n=parseFloat(m[1]);if(m[2]==='w')return n*10000;if(m[2]==='k')return n*1000;return n||0;}}
