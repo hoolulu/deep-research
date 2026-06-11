@@ -1,5 +1,75 @@
 [
   {
+    "title": "流浪地球背后的真实科学：太阳膨胀、引力弹弓与比邻星",
+    "path": "reports/zh/流浪地球背后的真实科学：太阳膨胀、引力弹弓与比邻星-20260611-153813.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 23635,
+    "date": "2026-06-11",
+    "sources": 77
+  },
+  {
+    "title": "火星移民的工程现实：从 SpaceX 到 ISRU 到辐射防护",
+    "path": "reports/zh/火星移民的工程现实：从 SpaceX 到 ISRU 到辐射防护-20260611-164652.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 38356,
+    "date": "2026-06-11",
+    "sources": 95
+  },
+  {
+    "title": "郑和下西洋：为什么中国在 15 世纪放弃了海洋？",
+    "path": "reports/zh/郑和下西洋：为什么中国在 15 世纪放弃了海洋？-20260611-154808.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 28829,
+    "date": "2026-06-11",
+    "sources": 54
+  },
+  {
+    "title": "How the Black Death Reshaped Europe's Economy: Labor Shortages, Wage Growth, and Feudalism's End",
+    "path": "reports/en/How the Black Death Reshaped Europe's Economy- Labor Shortages, Wage Growth, and Feudalism's End-20260611-173826.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 18853,
+    "date": "2026-06-11",
+    "sources": 47
+  },
+  {
+    "title": "The Economic History of Salt: From Roman Soldier Salaries to Chemical Industry",
+    "path": "reports/en/The Economic History of Salt- From Roman Soldier Salaries to Chemical Industry-20260611-170938.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "deep",
+    "word_count": 34431,
+    "date": "2026-06-11",
+    "sources": 59
+  },
+  {
+    "title": "The Fall of Constantinople 1453: Technology, Tactics, and the End of an Era",
+    "path": "reports/en/The Fall of Constantinople 1453- Technology, Tactics, and the End of an Era-20260611-144747.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "deep",
+    "word_count": 53269,
+    "date": "2026-06-11",
+    "sources": 57
+  },
+  {
+    "title": "The Great Filter: Where Is Everybody? — The Fermi Paradox and Its Possible Resolutions",
+    "path": "reports/en/The Great Filter- Where Is Everybody- — The Fermi Paradox and Its Possible Resolutions-20260611-145642.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "deep",
+    "word_count": 49717,
+    "date": "2026-06-11",
+    "sources": 71
+  },
+  {
     "title": "2026年AI编程助手工具发展趋势报告",
     "path": "reports/zh/2026年AI编程助手工具发展趋势报告-20260610-120939.md",
     "lang": "zh",
