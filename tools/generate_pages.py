@@ -85,13 +85,16 @@ def fmt(n):
 
 def gen_html(reports):
     now = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
+    repo = os.environ.get('GITHUB_REPOSITORY', 'hoolulu/deep-research')
+    base = f'https://github.com/{repo}/blob/main'
     seen = set()
     lo = ''.join(f'<option value="{c}">{n}</option>' for c, n in LANG_NAMES.items() if (c in seen or seen.add(c) is None) and any(r['lang'] == c for r in reports))
     mo = ''.join(f'<option value="{m}">{MODE_LABELS.get(m,m.title())}</option>' for m in sorted(set(r['mode'] for r in reports)))
     rows = ''
     for i, r in enumerate(reports, 1):
         mc = r['mode'] if r['mode'] in MODE_LABELS else 'standard'
-        rows += f'<tr data-lang="{r["lang"]}" data-mode="{r["mode"]}"><td class="n">{i}</td><td class="tc"><a href="{r["path"]}" target="_blank">{r["title"]}</a></td><td>{r["lang_name"]}</td><td><span class="mb mb-{mc}">{MODE_LABELS.get(r["mode"],r["mode"].title())}</span></td><td class="m">{fmt(r["word_count"])}</td><td class="m">{r["sources"]}</td><td class="m">{r["date"]}</td></tr>'
+        url = f'{base}/{r["path"]}'
+        rows += f'<tr data-lang="{r["lang"]}" data-mode="{r["mode"]}"><td class="n">{i}</td><td class="tc"><a href="{url}" target="_blank">{r["title"]}</a></td><td>{r["lang_name"]}</td><td><span class="mb mb-{mc}">{MODE_LABELS.get(r["mode"],r["mode"].title())}</span></td><td class="m">{fmt(r["word_count"])}</td><td class="m">{r["sources"]}</td><td class="m">{r["date"]}</td></tr>'
     h = f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Deep Research Reports</title><link rel="icon" type="image/svg+xml" href="favicon.svg"><style>
 :root{{--fg:#1f2328;--bg:#fff;--canvas:#f6f8fa;--border:#d0d7de;--bm:#d8dee4;--accent:#0969da;--green:#1a7f37;--orange:#9a6700;--muted:#656d76;--radius:6px;--f:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif;--fm:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}}
