@@ -96,7 +96,6 @@ AI 编数字 → 看起来合理，但找不到来源。
 ④ 验收装配 — 批量 validate → assemble-report → convert-citations → qa-report
 ```
 
-> 两种模式共享第 ③④ 阶段。数据池格式完全一致，章节撰写和装配质检零改动。
 
 ## 五、搜索链路与内置资源
 

@@ -91,7 +91,6 @@ The pipeline runs in 4 automated stages:
 ④ Validate & assemble — Batch validate → assemble-report → convert-citations → qa-report
 ```
 
-> Both modes share stages ③④. The data pool format is identical — chapter writing and assembly QA are unchanged.
 
 ## 5. Search Pipeline & Built-in Resources
 
