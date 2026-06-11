@@ -68,11 +68,11 @@ People who need professional-grade research capabilities without relying on paid
 
 | Report | Tags |
 |--------|------|
-| <a href="reports/zh/中国深空探测计划全景-20260612-050840.md" target="_blank">中国深空探测计划全景</a> | Space · Deep Exploration |
-| <a href="reports/zh/中国皇帝评价排行研究报告-20260612-045019.md" target="_blank">中国皇帝评价排行研究报告</a> | History · Rankings |
-| <a href="reports/zh/全球历史上十大帝国的兴衰周期：规律、路径与当代启示-20260612-042535.md" target="_blank">全球历史上十大帝国的兴衰周期</a> | History · Civilizations |
-| <a href="reports/zh/中国人口结构变迁历史：从高增长到深度转型-20260612-024352.md" target="_blank">中国人口结构变迁历史：从高增长到深度转型</a> | Demographics · Society |
 | <a href="reports/en/Shifts in the Global Population Center of Gravity-20260612-042858.md" target="_blank">Shifts in the Global Population Center of Gravity</a> | Demographics · Geopolitics |
+| <a href="reports/en/The Great Filter- Where Is Everybody- — The Fermi Paradox and Its Possible Resolutions-20260611-145642.md" target="_blank">The Great Filter — The Fermi Paradox</a> | Science · Astronomy |
+| <a href="reports/en/The Fall of Constantinople 1453- Technology, Tactics, and the End of an Era-20260611-144747.md" target="_blank">The Fall of Constantinople 1453</a> | History · Military |
+| <a href="reports/en/The Economic History of Salt- From Roman Soldier Salaries to Chemical Industry-20260611-170938.md" target="_blank">The Economic History of Salt</a> | Economics · History |
+| <a href="reports/en/How the Black Death Reshaped Europe's Economy- Labor Shortages, Wage Growth, and Feudalism's End-20260611-173826.md" target="_blank">How the Black Death Reshaped Europe's Economy</a> | History · Economics |
 
 Click a report title to open and read it in a new window.
 
