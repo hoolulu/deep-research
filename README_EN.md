@@ -76,7 +76,19 @@ People who need professional-grade research capabilities without relying on paid
 
 Click a report title to open and read it in a new window.
 
-## 4. How It Works
+## 4. Cost
+
+| Component | Cost |
+|-----------|------|
+| **LLM (already using)** | **DeepSeek v4 Flash** baseline: quick ~100–150k tokens / < $0.03, standard ~150–300k / < $0.06, deep ~300–500k / < $0.10 |
+| **SearXNG search (author-deployed)** | Deployed on VPS, zero cost, unlimited usage |
+| **Scrapling fetching** | Runs locally, zero cost |
+| **Domestic sources** | Direct connection, zero cost, no proxy needed |
+| **OpenCode runtime** | MIT open source, zero cost |
+
+> Estimates based on DeepSeek v4 Flash ($0.14/1M input, $0.28/1M output, source: `https://api-docs.deepseek.com/quick_start/pricing`). Actual costs vary by cache hit rate and topic complexity.
+
+## 5. How It Works
 
 The pipeline runs in 4 automated stages:
 
@@ -92,7 +104,7 @@ The pipeline runs in 4 automated stages:
 ```
 
 
-## 5. Search Pipeline & Built-in Resources
+## 6. Search Pipeline & Built-in Resources
 
 All tools are built-in, no additional purchase needed. The system uses a **CLI built-in engine + SearXNG + quality-triggered reinforcement** strategy: CLI built-in search (Layer 0, auto-detected at runtime, e.g., OpenCode's Exa websearch) runs as primary along with SearXNG (Layer 1, author-deployed, 70+ engines incl. Baidu/Google/Brave) and sources.json (Layer 2, 30+ curated quality sources) — all searched in **parallel** — results are merged and deduplicated. Free source reinforcement (Layer 3) is triggered only when search result quality is insufficient (< 3 URLs per sub-question / outdated results / too few sources).
 
@@ -113,7 +125,7 @@ Layer 3 — Free source reinforcement (fallback)
 
 > The search reinforcement line can **dynamically discover** any website, not limited to the list above. All source URLs are ultimately batch-fetched by Scrapling.
 
-## 6. Report Highlights
+## 7. Report Highlights
 
 | Dimension | Description |
 |-----------|-------------|
@@ -124,7 +136,7 @@ Layer 3 — Free source reinforcement (fallback)
 | **Data anti-pitfall** | Auto-detects common data errors — wrong units, fabricated trends, misattributed sources |
 | **Paragraphs over padding** | 8-12 substantive paragraphs per chapter as core, tables can't pad the length |
 
-## 7. Three Depth Modes
+## 8. Three Depth Modes
 
 | Command | Purpose | Min chapters | Min paragraphs/chapter | Target chars | Est. time |
 |---------|---------|-------------|----------------------|--------------|-----------|
@@ -134,7 +146,7 @@ Layer 3 — Free source reinforcement (fallback)
 
 > Parameters in `profiles.json`, restart to apply. Char count excludes whitespace and Markdown syntax.
 
-## 8. Installation
+## 9. Installation
 
 ### 🧠 Method 1: AI Auto-Install (Recommended)
 
@@ -181,7 +193,7 @@ Adaptation notes: Multi-agent orchestration needs to map to each platform's nati
 
 > **Platform note**: OpenCode has native multi-agent orchestration (Task 1-4 architecture) — no additional plugins needed. Other tools (Claude Code, Cursor, Codex CLI) have their own native multi-agent frameworks and can adapt this skill's workflow directly. Offline mode only needs the LLM's file-reading capability — no search/scraping components required.
 
-## 9. Usage
+## 10. Usage
 
 After installation and restart, type in the chat:
 
@@ -221,18 +233,6 @@ Open with any Markdown reader (Typora / Obsidian / VS Code etc.).
 You can also specify a custom output path — ask AI to configure it.
 
 > 📂 **[Browse all reports →](https://hoolulu.github.io/deep-research/)** — filter, sort, and browse by language and depth.
-
-## 10. Cost
-
-| Component | Cost |
-|-----------|------|
-| **LLM (already using)** | **DeepSeek v4 Flash** baseline: quick ~100–150k tokens / < $0.03, standard ~150–300k / < $0.06, deep ~300–500k / < $0.10 |
-| **SearXNG search (author-deployed)** | Deployed on VPS, zero cost, unlimited usage |
-| **Scrapling fetching** | Runs locally, zero cost |
-| **Domestic sources** | Direct connection, zero cost, no proxy needed |
-| **OpenCode runtime** | MIT open source, zero cost |
-
-> Estimates based on DeepSeek v4 Flash ($0.14/1M input, $0.28/1M output, source: `https://api-docs.deepseek.com/quick_start/pricing`). Actual costs vary by cache hit rate and topic complexity.
 
 ## 11. FAQ
 
