@@ -73,7 +73,7 @@ repository: https://github.com/hoolulu/deep-research
 ══ Setup (必须先执行) ══
 
  → 创建一个带时间戳的临时目录作为 TMPDIR（例如 D:\TEMP\opencode\deep-research-YYYYMMDD-HHMMSS）
- → 同时确定 TOOLSDIR（本 skill 的 tools/ 目录）和 PROMPTSDIR（本 skill 的 prompts/ 目录）
+ → 同时确定 TOOLSDIR（本 skill 的 tools/ 目录）、PROMPTSDIR（本 skill 的 prompts/ 目录）、SKILLDIR（本 skill 的根目录）
  → 读取本 SKILL.md + RULES.md + TYPES.md
 
 ══ Step 0 — Language Detection (output nothing before detection) ══
@@ -172,11 +172,11 @@ repository: https://github.com/hoolulu/deep-research
        - todowrite 标记每章 completed
        - 向用户报告最终章节完成情况（使用 $LANG 语言）
      8. ══ Task 4 — 验证 + 装配 + QA（**主 agent 直接执行**） ══
-    → **Step 0 — 清理残留**：删除 reports/ 目录下所有 0 字节文件（前次装配失败的空壳）；创建 reports/$LANG/ 子目录（如果不存在）
+     → **Step 0 — 清理残留**：删除 {SKILLDIR}/reports/ 目录下所有 0 字节文件（前次装配失败的空壳）；创建 {SKILLDIR}/reports/$LANG/ 子目录（如果不存在）
      → **Step 1 — 批量验证**：`python {TOOLSDIR}/dr_tools.py validate-all-chapters --chapters-dir {TMPDIR}/chapters/ --chapters {chapter_count}`，内部 ThreadPoolExecutor 并行验证所有章节。从输出 JSON 的 `failed_chapters` 中找到失败章节，逐个重新生成（重新派发章节 agent → 重新验证该章）。
      → **Step 1b — 章节深度均衡检查**：`python {TOOLSDIR}/dr_tools.py depth-balance --chapters-dir {TMPDIR}/chapters/ --chapters {chapter_count}`。如果某章行数 < 平均值的 50%，标记告警（not blocking，仅提示）。
      → Step 1 或 Step 2 失败时，**先删除本次已写入的产物**（报告文件、中间文件等），再重新执行对应步骤，避免残留文件干扰下次运行
-    → **Step 2 — 装配**：`python {TOOLSDIR}/dr_tools.py assemble-report --outline {TMPDIR}/outline.json --chapters-dir {TMPDIR}/chapters/ --datapool {TMPDIR}/data-pool.json --mode {depth_mode} --target-year {target_year} --output reports/$LANG/ --lang $LANG`
+     → **Step 2 — 装配**：`python {TOOLSDIR}/dr_tools.py assemble-report --outline {TMPDIR}/outline.json --chapters-dir {TMPDIR}/chapters/ --datapool {TMPDIR}/data-pool.json --mode {depth_mode} --target-year {target_year} --output {SKILLDIR}/reports/$LANG/ --lang $LANG`
     → **Step 3 — 数据受限处理**：读取 {TMPDIR}/task2_manifest.json 的 `data_limited` 字段。如果为 true，在报告标题后插入数据说明声明，**使用 $LANG 语言**。
     → **Step 4 — 引用处理**：`python {TOOLSDIR}/dr_tools.py convert-citations --datapool {TMPDIR}/data-pool.json "$REPORT" --lang $LANG`（从 data-pool 构建参考章节，验证正文 `[N]` 引用均有对应条目）
      → **Step 5 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year} --lang $LANG`，解析 JSON 输出，从 `checks.word_count.count` 取字数，从 `checks.word_count.limit` 取上限
@@ -246,7 +246,7 @@ repository: https://github.com/hoolulu/deep-research
       其中：
       - `{outline.chapters[0].description}` = 从 outline.json 读取第 1 章（核心观点）的 description 字段，作为观点速览摘要
       - `{gen_time}` = 读取 {TMPDIR}/start_time.txt 中的任务开始时间，格式化为 `YYYY-MM-DD HH:mm:ss`
-      - `{REPORT}` 仅输出最终报告路径（`reports/{LANG}/xxx.md`），不包含任何 TMPDIR 中间路径
+       - `{REPORT}` 仅输出最终报告路径（`{SKILLDIR}/reports/{LANG}/xxx.md`），不包含任何 TMPDIR 中间路径
       - `{search_desc}` = 按搜索策略拼接规则生成，所有中文词根据 $LANG 翻译
       - `{data_quality_badge}` = 按数据质量徽标规则生成
     → todowrite 全部完成
@@ -316,7 +316,7 @@ repository: https://github.com/hoolulu/deep-research
 最终报告保存路径按以下优先级判定：
 
 1. **用户自定义路径** — 如果用户显式指定了输出目录（如 `D:\Reports\`），使用指定路径
-2. **Skill 默认路径** — `reports/`（`~/.opencode/skills/deep-research/reports/`）
+2. **Skill 默认路径** — `{SKILLDIR}/reports/`（skill 根目录下的 reports/）
 
 装配阶段（Step 3）根据实际使用的路径写入，文件名格式不变：`<主题>-YYYYMMDD-HHmmss.md`。
 
