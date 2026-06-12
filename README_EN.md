@@ -134,19 +134,7 @@ Layer 3 — Free source reinforcement (fallback)
 
 > Parameters in `profiles.json`, restart to apply. Char count excludes whitespace and Markdown syntax.
 
-## 8. Screenshot
-
-<img width="1532" height="836" alt="Screenshot 2026-06-09 at 11-28-17" src="https://github.com/user-attachments/assets/736b0113-f054-4dba-b018-e656a51a9fb4" />
-
-<img width="1532" height="932" alt="Screenshot 2026-06-09 at 11-30-13" src="https://github.com/user-attachments/assets/a88cbf27-7b6c-4ea3-8b51-424f48bf9906" />
-
-<img width="1524" height="846" alt="Screenshot 2026-06-09 at 11-30-55" src="https://github.com/user-attachments/assets/ef10865d-3a72-4658-ac9c-28b2221e77f5" />
-
-<img width="1528" height="840" alt="Screenshot 2026-06-09 at 11-32-13" src="https://github.com/user-attachments/assets/506e91eb-1d5d-4312-aceb-9280d357e264" />
-
-<img width="1438" height="842" alt="Screenshot 2026-06-09 at 11-35-03" src="https://github.com/user-attachments/assets/75acd450-9349-4024-923d-f9b14ea601dd" />
-
-## 9. Installation
+## 8. Installation
 
 ### 🧠 Method 1: AI Auto-Install (Recommended)
 
@@ -193,7 +181,7 @@ Adaptation notes: Multi-agent orchestration needs to map to each platform's nati
 
 > **Platform note**: OpenCode has native multi-agent orchestration (Task 1-4 architecture) — no additional plugins needed. Other tools (Claude Code, Cursor, Codex CLI) have their own native multi-agent frameworks and can adapt this skill's workflow directly. Offline mode only needs the LLM's file-reading capability — no search/scraping components required.
 
-## 10. Usage
+## 9. Usage
 
 After installation and restart, type in the chat:
 
@@ -234,7 +222,7 @@ You can also specify a custom output path — ask AI to configure it.
 
 > 📂 **[Browse all reports →](https://hoolulu.github.io/deep-research/)** — filter, sort, and browse by language and depth.
 
-## 11. Cost
+## 10. Cost
 
 | Component | Cost |
 |-----------|------|
@@ -246,7 +234,7 @@ You can also specify a custom output path — ask AI to configure it.
 
 > Estimates based on DeepSeek v4 Flash ($0.14/1M input, $0.28/1M output, source: `https://api-docs.deepseek.com/quick_start/pricing`). Actual costs vary by cache hit rate and topic complexity.
 
-## 12. FAQ
+## 11. FAQ
 
 **1. Search quotas? How to ensure uninterrupted searching?**
 
@@ -305,6 +293,18 @@ preserving platform-specific changes.
 **5. Is my data safe?**
 
 All processing is done locally. No data is collected or uploaded.
+
+## 12. Screenshot
+
+<img width="1532" height="836" alt="Screenshot 2026-06-09 at 11-28-17" src="https://github.com/user-attachments/assets/736b0113-f054-4dba-b018-e656a51a9fb4" />
+
+<img width="1532" height="932" alt="Screenshot 2026-06-09 at 11-30-13" src="https://github.com/user-attachments/assets/a88cbf27-7b6c-4ea3-8b51-424f48bf9906" />
+
+<img width="1524" height="846" alt="Screenshot 2026-06-09 at 11-30-55" src="https://github.com/user-attachments/assets/ef10865d-3a72-4658-ac9c-28b2221e77f5" />
+
+<img width="1528" height="840" alt="Screenshot 2026-06-09 at 11-32-13" src="https://github.com/user-attachments/assets/506e91eb-1d5d-4312-aceb-9280d357e264" />
+
+<img width="1438" height="842" alt="Screenshot 2026-06-09 at 11-35-03" src="https://github.com/user-attachments/assets/75acd450-9349-4024-923d-f9b14ea601dd" />
 
 ## License
 
