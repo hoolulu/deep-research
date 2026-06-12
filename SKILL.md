@@ -179,8 +179,9 @@ repository: https://github.com/hoolulu/deep-research
      → **Step 2 — 装配**：`python {TOOLSDIR}/dr_tools.py assemble-report --outline {TMPDIR}/outline.json --chapters-dir {TMPDIR}/chapters/ --datapool {TMPDIR}/data-pool.json --mode {depth_mode} --target-year {target_year} --output {SKILLDIR}/reports/$LANG/ --lang $LANG`
     → **Step 3 — 数据受限处理**：读取 {TMPDIR}/task2_manifest.json 的 `data_limited` 字段。如果为 true，在报告标题后插入数据说明声明，**使用 $LANG 语言**。
     → **Step 4 — 引用处理**：`python {TOOLSDIR}/dr_tools.py convert-citations --datapool {TMPDIR}/data-pool.json "$REPORT" --lang $LANG`（从 data-pool 构建参考章节，验证正文 `[N]` 引用均有对应条目）
-     → **Step 5 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year} --lang $LANG`，解析 JSON 输出，从 `checks.word_count.count` 取字数，从 `checks.word_count.limit` 取上限
-    → todowrite 标记完成
+      → **Step 5 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year} --lang $LANG`，解析 JSON 输出，从 `checks.word_count.count` 取字数，从 `checks.word_count.limit` 取上限
+     → **Step 6 — 更新本地报告列表页**：`python {TOOLSDIR}/generate_pages.py --local`（刷新 reports-browser/index.html，将 reports/ 下所有报告打包为嵌入 JS 的可浏览页面）
+     → todowrite 标记完成
     → ⏱ **强制计算总耗时**（读取 start_time.txt + 当前时间算差值）
     → 从 outline.json + task2_manifest.json + qa-report 中提取数据，使用 $LANG 语言汇报最终结果。
 
@@ -239,8 +240,9 @@ repository: https://github.com/hoolulu/deep-research
       | 📋 <Plan词> | {outline.title} · {outline.chapter_count} <章词> · {outline.depth_mode} |
       | 🎯 <Insight词> | {outline.chapters[0].description} |
       | 📡 <Data词> | {task2_manifest.source_count} <来源词> · {task2_manifest.unique_domains} <独立域名词> · {task2_manifest.fact_count} <事实词> · <搜索词>：{search_desc} · {task2_manifest.fetch_method} · {data_quality_badge} |
-      | 📄 <Report词> | {REPORT} |
-      |       | {qa_report.line_count} <行词> · {qa_report.word_count} <字词> · ⏱ {totalMin} <分钟词> · <生成时间词>：{gen_time} |
+       | 📄 <Report词> | {REPORT} |
+       | 🌐 <浏览器词/Report List> | {SKILLDIR}/reports-browser/index.html |
+       |       | {qa_report.line_count} <行词> · {qa_report.word_count} <字词> · ⏱ {totalMin} <分钟词> · <生成时间词>：{gen_time} |
       ```
 
       其中：

@@ -88,7 +88,15 @@ python {TOOLSDIR}/dr_tools.py year-density <报告> --target-year N # 年份
 字数超标 → 用 `word-count` 获取精确字数，对比 `profiles.json` 中当前模式的 `max_chars`。**不阻塞**，在 manifest 中标记 `word_count_exceeded: true` 即可，最终汇报时一并显示。
 其他项不达标 → 局部补刀（单章重写，最多 1 次）。
 
-## Step 4 — 清理
+## Step 4 — 生成本地报告列表页
+
+QA 通过后，运行以下命令更新本地报告浏览器页面（将 reports/ 下所有报告打包为 JS 数据，生成可离线浏览的列表页）：
+
+```bash
+python {TOOLSDIR}/generate_pages.py --local
+```
+
+## Step 5 — 清理
 
 ☐ 清理中间文件：`rm -rf {TMPDIR}/chapters/ {TMPDIR}/task*_manifest.json {TMPDIR}/outline.json {TMPDIR}/data-pool.json {TMPDIR}/start_time.txt {TMPDIR}/cautions.json`（Unix）或 `Remove-Item -Recurse -Force`（Windows）
 ☐ 确认 tool-output/ 中无残留临时文件

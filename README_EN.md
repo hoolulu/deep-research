@@ -294,6 +294,15 @@ preserving platform-specific changes.
 
 All processing is done locally. No data is collected or uploaded.
 
+**6. How do I view my generated reports?**
+
+After each research run, the AI outputs both the report file path and the local report browser page path.
+
+- **Report file**: `{SKILLDIR}/reports/{LANG}/xxx.md` — open with any Markdown reader
+- **Local report browser page**: `{SKILLDIR}/reports-browser/index.html` — **open directly in your browser** (works with file:// protocol). All reports are displayed in a table with search, language/depth filtering, sorting, and click-to-preview in a modal
+
+You can also manually refresh the browser page anytime by running `python tools/generate_pages.py --local` in the skill directory.
+
 ## 12. Screenshot
 
 <img width="1532" height="836" alt="Screenshot 2026-06-09 at 11-28-17" src="https://github.com/user-attachments/assets/736b0113-f054-4dba-b018-e656a51a9fb4" />

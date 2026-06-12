@@ -306,6 +306,15 @@ OpenCode 用户：
 
 所有处理在本地完成。不收集、不上传任何用户数据。
 
+**6. 如何查看我生成的报告？**
+
+每次调研完成后，AI 会输出报告文件路径和本地报告列表页路径。
+
+- **报告文件**：`{SKILLDIR}/reports/{LANG}/xxx.md`，直接用 Markdown 阅读器打开
+- **本地报告列表页**：`{SKILLDIR}/reports-browser/index.html`，**直接用浏览器打开**（支持 file:// 协议），所有报告以表格形式展示，支持搜索、按语言/深度筛选、排序，点击标题在弹窗中预览渲染后的内容
+
+你也可以随时手动刷新列表页：在 skill 目录执行 `python tools/generate_pages.py --local`，生成的 `reports-browser/index.html` 即包含所有现有报告。
+
 ## 十二、运行截图
 
 <img width="1532" height="836" alt="Screenshot 2026-06-09 at 11-28-17" src="https://github.com/user-attachments/assets/736b0113-f054-4dba-b018-e656a51a9fb4" />
