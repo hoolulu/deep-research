@@ -4,7 +4,7 @@
 
 ## 输入
 - 主题：[用户提供的主题]
-- 模式：[quick / standard / deep]
+- 模式：{MODE}
 - 输出路径：{TMPDIR}/outline.json
 
 ## 重要：模式传递

@@ -105,10 +105,16 @@ repository: https://github.com/hoolulu/deep-research
     → 离线模式 + 有路径 → {TMPDIR}/offline_mode.txt，`offline_mode=true`，向用户报告单行说明
     → 离线模式 + 无路径 → 回复用户询问路径，不继续
     → 正常模式 → `offline_mode=false`
+
+   → **模式解析**：从清洗后的主题中提取调研模式
+     - 主题末尾是 ` -quick` → `$DEPTH_MODE=quick`，去除该后缀
+     - 主题末尾是 ` -deep` → `$DEPTH_MODE=deep`，去除该后缀
+     - 无上述后缀 → `$DEPTH_MODE=standard`（默认）
+
  2. 记录任务开始时间到 {TMPDIR}/start_time.txt
  3. todowrite 创建进度条目（使用 $LANG 语言）
   4. ══ Task 1 — 分析主题 + 生成大纲 ══
-     → 读取 {PROMPTSDIR}/task1_outline.md，替换 {TMPDIR} {TOOLSDIR} {LANG} {CURRENT_YEAR}，注入 prompt
+     → 读取 {PROMPTSDIR}/task1_outline.md，替换 {TMPDIR} {TOOLSDIR} {LANG} {CURRENT_YEAR} {MODE}，注入 prompt
      → **只做变量替换，不添加语言、格式、报告结构等额外指令。语言已由 Step 0 判定为 $LANG 并在 prompt 中替换 {LANG}。**
      → 派发 task()，等待完成
      → 用 `read` 确认 {TMPDIR}/outline.json 存在
@@ -137,32 +143,10 @@ repository: https://github.com/hoolulu/deep-research
        - prompt 中的 `[LANG_zh]` 段落：仅当 $LANG=zh 时保留，其他语言删除
        - 删除标记文本本身（`[LANG_en]` `[/LANG_en]` 占位符行）
        - 无标记的段落全部语言通用，保留
-     → **平台检测并选择撰写模式**：
-       - 执行 `uname -s` 检测操作系统
-       - 输出包含 "Darwin" → macOS → 设 `$PLATFORM_MODE=serial`
-       - 否则 → 其他平台 → 设 `$PLATFORM_MODE=parallel`
-       - 向用户报告平台和采用的撰写模式（使用 $LANG 语言）
+      → **撰写模式**：所有平台统一使用并行模式撰写章节
         - **章节 agent 不做任何工具调用**（不跑 prepare-chapter、validate、manifest、word-count），只写文件
 
-     → [serial mode — 严格串行] 一次只写一章（依赖进度文件防续对话并行）：
-        - 读取 {TMPDIR}/serial_progress.txt：
-          - 文件不存在或为空 → 从第 1 章开始
-          - 内容为 "N"（数字） → 从第 N+1 章开始
-          - 如果 N ≥ chapters.length → 所有章节已完成，进入 Task 4
-        - 当前章编号 = 上一步确定的值（命名为 C）
-        - 只写这一章：
-          - 读取 outline.chapters[C] 的 title、sections
-          - 从 data-pool.json 中筛选该章 sub_questions 对应的事实条目
-          - **将事实直接嵌入 prompt**：每条事实前标注预分配的 `[C]` 编号
-          - 调用 task(run_in_background=false) 同步等待该章完成
-          - 用 `read` 确认 {TMPDIR}/chapters/chapter-{C}.md 存在且非空
-        - 完成后用 `write` 工具创建/更新 {TMPDIR}/serial_progress.txt，写入 C
-        - todowrite 标记该章 completed
-        - 如果 C < chapters.length → 结束 response，等待用户继续
-        - 如果 C ≥ chapters.length → 删除 serial_progress.txt，进入 Task 4
-        → **严禁一次发起多章 task() 调用，严禁使用 run_in_background=true**
-
-     → [parallel mode — 非 macOS] 并行派发：
+      → **并行派发章节**：
        - 初始化空列表 task_ids = []
        - For N = 1 to chapters.length:
          - 读取 outline.chapters[N] 的 title、sections
