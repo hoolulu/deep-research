@@ -6,7 +6,7 @@
 
 > **Current version:** [View updates](https://github.com/hoolulu/deep-research/commits/main)
 >
-> 📂 **[Browse all reports →](https://hoolulu.github.io/deep-research/)** — filter, sort, and browse by language and depth.
+> 📂 **[Browse all sample reports →](https://hoolulu.github.io/deep-research/)** — filter, sort, and browse by language and depth.
 
 ---
 
@@ -232,7 +232,7 @@ Open with any Markdown reader (Typora / Obsidian / VS Code etc.).
 
 You can also specify a custom output path — ask AI to configure it.
 
-> 📂 **[Browse all reports →](https://hoolulu.github.io/deep-research/)** — filter, sort, and browse by language and depth.
+> 📂 **[Browse all sample reports →](https://hoolulu.github.io/deep-research/)** — filter, sort, and browse by language and depth.
 
 ## 11. FAQ
 
