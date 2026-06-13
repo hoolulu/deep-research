@@ -20,7 +20,7 @@
 | 🌍 **19 种语言**        | 主题用什么语言写，报告就用什么语言出，自动检测                           |
 | 🔧 **非 OpenCode 独占** | Claude Code、Cursor、Codex CLI、Windsurf、Cline 等均可适配 |
 | 📁 **本地文件调研**        | 也可支持本地 PDF/DOCX/TXT/MD，不联网，AI 自动解析               |
-| 🖥️ **本地报告浏览页**     | 所有报告生成后自动刷新为本地浏览器页面：`reports-browser/index.html`，支持搜索/筛选/预览 |
+| 🖥️ **本地报告浏览页**     | 每次报告生成后自动刷新为本地浏览器页面<br>`reports-browser/index.html`<br>支持搜索、筛选、语言/深度筛选、排序、弹窗预览 |
 
 
 

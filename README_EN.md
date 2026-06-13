@@ -19,7 +19,7 @@
 | 🌍 **19 languages** | Auto-detects topic language, generates report in the same language |
 | 🔧 **Not OpenCode-exclusive** | Adaptable for Claude Code, Cursor, Codex CLI, Windsurf, Cline and more |
 | 📁 **Local file research** | Also supports PDF/DOCX/TXT/MD, no internet needed, auto-parsed |
-| 🖥️ **Local report browser** | Auto-refreshed after each run: `reports-browser/index.html`, with search/filter/preview |
+| 🖥️ **Local report browser** | Auto-refreshed as a local browser page after each run<br>`reports-browser/index.html`<br>Search, filter by language/depth, sort, preview in modal |
 
 | Command | Output |
 |---------|--------|
