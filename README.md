@@ -13,25 +13,25 @@
 ### ✨ 一分钟看懂
 
 
-|                      |                                                   |
-| -------------------- | ------------------------------------------------- |
-| 🎯 **一个命令**          | `/research 你的主题` → 全自动调研，无需人工干预                   |
-| ⏱ **十分钟出报告**         | quick 模式约 8–12 分钟，standard 约 10–15 分钟             |
-| 🌍 **19 种语言**        | 主题用什么语言写，报告就用什么语言出，自动检测                           |
-| 🔧 **非 OpenCode 独占** | Claude Code、Cursor、Codex CLI、Windsurf、Cline 等均可适配 |
-| 📁 **本地文件调研**        | 也可支持本地 PDF/DOCX/TXT/MD，不联网，AI 自动解析               |
-| 🖥️ **本地报告浏览页**     | 每次报告生成后自动刷新为本地浏览器页面<br>`reports-browser/index.html`<br>支持搜索、筛选、语言/深度筛选、排序、弹窗预览 |
+<table width="100%">
+<tr><td width="180"><b>🎯 一个命令</b></td><td><code>/research 你的主题</code> → 全自动调研，无需人工干预</td></tr>
+<tr><td><b>⏱ 十分钟出报告</b></td><td>quick 模式约 8–12 分钟，standard 约 10–15 分钟</td></tr>
+<tr><td><b>🌍 19 种语言</b></td><td>主题用什么语言写，报告就用什么语言出，自动检测</td></tr>
+<tr><td><b>🔧 非 OpenCode 独占</b></td><td>Claude Code、Cursor、Codex CLI、Windsurf、Cline 等均可适配</td></tr>
+<tr><td><b>📁 本地文件调研</b></td><td>也可支持本地 PDF/DOCX/TXT/MD，不联网，AI 自动解析</td></tr>
+<tr><td><b>🖥️ 本地报告浏览页</b></td><td>每次报告生成后自动刷新为本地浏览器页面<br><code>reports-browser/index.html</code>，支持搜索/筛选/排序/弹窗预览</td></tr>
+</table>
 
 
 
-| 命令                                                      | 说明               |
-| ------------------------------------------------------- | ---------------- |
-| `/research 中国新能源汽车产业发展现状`                               | 中文报告             |
-| `/research Competitive landscape of AI cloud computing` | English report   |
-| `/research Анализ рынка нефти и газа в России`          | Отчёт на русском |
-| `/research 日本のアニメ産業のグローバル市場戦略`                          | 日本語レポート          |
-| `/research 한국 반도체 산업의 글로벌 경쟁력 분석`                       | 한국어 보고서          |
-| `本地资料调研，详细命令见 FAQ`                                 | 离线模式，读本地文件       |
+<table width="100%">
+<tr><td width="400"><code>/research 中国新能源汽车产业发展现状</code></td><td>中文报告</td></tr>
+<tr><td><code>/research Competitive landscape of AI cloud computing</code></td><td>English report</td></tr>
+<tr><td><code>/research Анализ рынка нефти и газа в России</code></td><td>Отчёт на русском</td></tr>
+<tr><td><code>/research 日本のアニメ産業のグローバル市場戦略</code></td><td>日本語レポート</td></tr>
+<tr><td><code>/research 한국 반도체 산업의 글로벌 경쟁력 분석</code></td><td>한국어 보고서</td></tr>
+<tr><td><code>本地资料调研，详细命令见 FAQ</code></td><td>离线模式，读本地文件</td></tr>
+</table>
 
 > 是全程以设定语言与你交互，并搜索目标语言的资料，不是简单的翻译输出。
 

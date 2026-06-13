@@ -12,23 +12,23 @@
 
 ### ✨ At a Glance
 
-| | |
-|---|---|
-| 🎯 **One command** | `/research <topic>` → fully automated research, zero manual intervention |
-| ⏱ **Report in ~10 min** | quick mode ~8–12 min, standard ~10–15 min |
-| 🌍 **19 languages** | Auto-detects topic language, generates report in the same language |
-| 🔧 **Not OpenCode-exclusive** | Adaptable for Claude Code, Cursor, Codex CLI, Windsurf, Cline and more |
-| 📁 **Local file research** | Also supports PDF/DOCX/TXT/MD, no internet needed, auto-parsed |
-| 🖥️ **Local report browser** | Auto-refreshed as a local browser page after each run<br>`reports-browser/index.html`<br>Search, filter by language/depth, sort, preview in modal |
+<table width="100%">
+<tr><td width="180"><b>🎯 One command</b></td><td><code>/research &lt;topic&gt;</code> → fully automated research, zero manual intervention</td></tr>
+<tr><td><b>⏱ Report in ~10 min</b></td><td>quick mode ~8–12 min, standard ~10–15 min</td></tr>
+<tr><td><b>🌍 19 languages</b></td><td>Auto-detects topic language, generates report in the same language</td></tr>
+<tr><td><b>🔧 Not OpenCode-exclusive</b></td><td>Adaptable for Claude Code, Cursor, Codex CLI, Windsurf, Cline and more</td></tr>
+<tr><td><b>📁 Local file research</b></td><td>Also supports PDF/DOCX/TXT/MD, no internet needed, auto-parsed</td></tr>
+<tr><td><b>🖥️ Local report browser</b></td><td>Auto-refreshed as a local browser page after each run<br><code>reports-browser/index.html</code> — search, filter, sort, preview</td></tr>
+</table>
 
-| Command | Output |
-|---------|--------|
-| `/research 中国新能源汽车产业发展现状` | 中文报告 |
-| `/research Competitive landscape of AI cloud computing` | English report |
-| `/research Анализ рынка нефти и газа в России` | Отчёт на русском |
-| `/research 日本のアニメ産業のグローバル市場戦略` | 日本語レポート |
-| `/research 한국 반도체 산업의 글로벌 경쟁력 분석` | 한국어 보고서 |
-| `local file research, see FAQ for prompts` | offline mode, read local files |
+<table width="100%">
+<tr><td width="400"><code>/research 中国新能源汽车产业发展现状</code></td><td>中文报告</td></tr>
+<tr><td><code>/research Competitive landscape of AI cloud computing</code></td><td>English report</td></tr>
+<tr><td><code>/research Анализ рынка нефти и газа в России</code></td><td>Отчёт на русском</td></tr>
+<tr><td><code>/research 日本のアニメ産業のグローバル市場戦略</code></td><td>日本語レポート</td></tr>
+<tr><td><code>/research 한국 반도체 산업의 글로벌 경쟁력 분석</code></td><td>한국어 보고서</td></tr>
+<tr><td><code>local file research, see FAQ for prompts</code></td><td>offline mode, read local files</td></tr>
+</table>
 
 > It interacts with you entirely in the language you set and searches for materials in that target language — not a simple translation pipeline.
 
