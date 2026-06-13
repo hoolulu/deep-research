@@ -5,12 +5,15 @@ Local mode:  python tools/generate_pages.py
 API mode:    python tools/generate_pages.py --api
                (fetches files via GitHub API, no git checkout needed)
 """
-import os, json, re, sys, base64, urllib.request
+import os, json, re, sys, base64, urllib.request, pathlib
 from datetime import datetime, timezone
 
-REPORTS_DIR = 'reports'
-OUTPUT_DIR = 'gh-pages'
-LOCAL_OUTPUT_DIR = 'reports-browser'
+# 锚定脚本所在 skill 根目录，使 reports/ 解析不依赖 CWD
+_SKILL_DIR = pathlib.Path(__file__).resolve().parent.parent
+
+REPORTS_DIR = str(_SKILL_DIR / 'reports')
+OUTPUT_DIR = str(_SKILL_DIR / 'gh-pages')
+LOCAL_OUTPUT_DIR = str(_SKILL_DIR / 'reports-browser')
 
 LANG_NAMES = {
     'zh': '中文', 'en': 'English', 'ja': '日本語', 'ko': '한국어',
@@ -40,7 +43,12 @@ def parse_content(content: str, path: str) -> dict:
     """Parse a report's markdown content into metadata dict."""
     t = re.search(r'^# (.+)', content)
     title = t.group(1).strip() if t else os.path.basename(path)
-    rel = path.replace('\\', '/')
+    # Convert absolute path to relative (reports/LANG/filename.md)
+    full_path = pathlib.Path(path).resolve()
+    try:
+        rel = str(full_path.relative_to(_SKILL_DIR)).replace('\\', '/')
+    except ValueError:
+        rel = full_path.as_posix()
     lang = rel.split('/')[1] if rel.startswith('reports/') else 'en'
     d = re.search(r'(\d{4})(\d{2})(\d{2})', path)
     date = f'{d.group(1)}-{d.group(2)}-{d.group(3)}' if d else ''
@@ -113,7 +121,7 @@ def gen_html(reports, local=False, out_dir=None):
         for i, r in enumerate(reports):
             if i >= int(os.environ.get('EMBED_MAX', '999')):
                 break
-            path = os.path.join('reports', r['path'][len('reports/'):])
+            path = _SKILL_DIR / r['path']  # r['path'] 已是相对 skill 根的路径
             try:
                 with open(path, encoding='utf-8') as f:
                     contents[str(i)] = f.read()
