@@ -15,8 +15,9 @@ from dr_gen import (
     generate_refs, map_chapters,
     write_json, write_md,
     prepare_chapter, assemble_report, convert_citations,
-    detect_engine,
+    detect_engine, generate_confidence_section,
 )
+from lang_config import get_lang_config
 
 
 def _exit(result: dict):
@@ -133,6 +134,14 @@ def main():
     p.add_argument('filepath')
     p = sub.add_parser('write-md', help='Read markdown from stdin, write UTF-8 no BOM')
     p.add_argument('filepath')
+
+    # ── Confidence section ──
+    p = sub.add_parser('generate-confidence-section',
+                       help='Generate and insert confidence assessment into report')
+    p.add_argument('--datapool', required=True)
+    p.add_argument('--manifest', required=True)
+    p.add_argument('--report', required=True, help='Path to assembled report (in-place update)')
+    p.add_argument('--lang', default='zh', help='Language code')
 
     # ── Chapter skeleton + Report assembly ──
     p = sub.add_parser('prepare-chapter', help='Generate chapter skeleton with pre-matched facts')
@@ -257,6 +266,63 @@ def main():
     elif args.command == 'detect-engine':
         result = detect_engine()
         print(json.dumps(result, ensure_ascii=False, indent=2))
+        sys.exit(0)
+
+    # ── Dispatch: confidence section ──
+    elif args.command == 'generate-confidence-section':
+        result = generate_confidence_section(
+            datapool_path=args.datapool, manifest_path=args.manifest, lang=args.lang)
+        if not result['passed']:
+            _exit(result)
+        section = result['section']
+
+        report_path = args.report
+        try:
+            with open(report_path, 'r', encoding='utf-8-sig') as f:
+                content = f.read()
+        except Exception as e:
+            _exit({'passed': False, 'issues': [f"Failed to read report: {e}"]})
+
+        cfg = get_lang_config(args.lang)
+        conf_heading = cfg.get('confidence_heading', '## Confidence Assessment')
+        refs_marker = cfg['refs_prefix']
+
+        # Skip if confidence section already exists
+        if conf_heading in content:
+            print(f"Confidence section already present, skipping: {report_path}")
+            sys.exit(0)
+
+        # Insert confidence section before the references section
+        pos = content.find(f'\n{refs_marker}')
+        if pos == -1:
+            pos = content.find(refs_marker)
+        if pos == -1:
+            _exit({'passed': False,
+                   'issues': [f"References marker '{refs_marker}' not found in report"]})
+
+        new_content = content[:pos] + '\n\n' + section + '\n\n---\n\n' + content[pos:]
+
+        tmp = report_path + '.tmp'
+        try:
+            with open(tmp, 'w', encoding='utf-8', newline='\n') as f:
+                f.write(new_content)
+            import os
+            os.replace(tmp, report_path)
+        except Exception as e:
+            _exit({'passed': False, 'issues': [f"Write failed: {e}"]})
+
+        enc_check = __import__('dr_check', fromlist=['check_encoding']).check_encoding(report_path)
+        if not enc_check['passed']:
+            _exit(enc_check)
+
+        print(f"Confidence section inserted: {report_path}")
+
+        sumd = result.get('summary', {})
+        print(f"CONFIDENCE: coverage={sumd.get('coverage','unknown')}"
+              f"|high_pct={sumd.get('high_pct',0)}"
+              f"|actual_pct={sumd.get('actual_pct',0)}"
+              f"|data_limited={str(sumd.get('data_limited',False)).lower()}"
+              f"|verdict={sumd.get('verdict_label','unknown')}")
         sys.exit(0)
 
     # ── Dispatch: skeleton + assembly ──

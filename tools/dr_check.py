@@ -185,6 +185,7 @@ def check_tail(filepath: str, lang: str = "zh") -> dict:
     issues = []
     refs_title = cfg['check']['tail_refs']
     disc_title = cfg['check']['tail_disclaimer']
+    conf_title = cfg['check'].get('tail_confidence')
 
     accepted_refs = [refs_title, "## 数据来源"]
     for title in accepted_refs:
@@ -194,6 +195,8 @@ def check_tail(filepath: str, lang: str = "zh") -> dict:
         issues.append(f"Tail section '{refs_title}' not found")
     if disc_title not in content:
         issues.append(f"'{disc_title}' not found")
+    if conf_title and conf_title not in content:
+        issues.append(f"Confidence section '{conf_title}' not found")
     return {"passed": len(issues) == 0, "issues": issues}
 
 

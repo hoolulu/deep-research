@@ -630,3 +630,202 @@ def assemble_report(outline_path: str, chapters_dir: str,
         "word_count": total_wc,
         "issues": issues,
     }
+
+
+# ── Confidence Assessment Section ────────────────────────────────────────
+
+AUTHORITY_KEYWORDS = [
+    'gov', 'edu', 'org', 'university', 'institute', 'academy',
+    '统计局', '科学院', '教育部', '发改委', '央行', '人民银行',
+    'world bank', 'imf', 'oecd', 'who', 'united nations',
+    'national bureau', 'ministry', 'commission', '研究中心', '研究院',
+    '基金会', '基金', 'association',
+]
+
+MEDIA_KEYWORDS = [
+    'news', '媒体', '新闻', '报道', 'blog', '自媒体', '公众号',
+    'times', 'post', 'herald', 'tribune', '记者', '日报', '晚报',
+    '晨报', 'weekly', 'magazine', '广播', '电视台',
+]
+
+
+def _classify_source(src: str) -> str:
+    """Classify a source as 'authoritative', 'media', or 'industry'."""
+    s = src.lower().strip()
+    if not s:
+        return 'industry'
+    for kw in AUTHORITY_KEYWORDS:
+        if kw in s:
+            return 'authoritative'
+    for kw in MEDIA_KEYWORDS:
+        if kw in s:
+            return 'media'
+    return 'industry'
+
+
+def generate_confidence_section(datapool_path: str, manifest_path: str,
+                                lang: str = 'zh') -> dict:
+    """Generate the Confidence Assessment markdown section from data-pool + manifest.
+    
+    Returns dict with 'passed' (bool), 'section' (str, markdown), 'issues' (list).
+    """
+    issues = []
+    try:
+        with open(datapool_path, 'r', encoding='utf-8-sig') as f:
+            pool = json.load(f)
+    except Exception as e:
+        return {'passed': False, 'section': '',
+                'issues': [f"Failed to read data-pool: {e}"]}
+
+    try:
+        with open(manifest_path, 'r', encoding='utf-8-sig') as f:
+            manifest = json.load(f)
+    except Exception as e:
+        return {'passed': False, 'section': '',
+                'issues': [f"Failed to read manifest: {e}"]}
+
+    records = pool if isinstance(pool, list) else [pool]
+
+    # ── Aggregate stats ──
+    total_facts = 0
+    conf_counts = {'high': 0, 'medium': 0, 'low': 0}
+    type_counts = {'actual': 0, 'estimate': 0, 'forecast': 0}
+    src_class_counts = {'authoritative': 0, 'industry': 0, 'media': 0}
+    controversies_total = 0
+
+    for rec in records:
+        for fact in rec.get('facts') or []:
+            total_facts += 1
+            c = fact.get('conf', '')
+            if c in conf_counts:
+                conf_counts[c] += 1
+            t = fact.get('data_type', '')
+            if t in type_counts:
+                type_counts[t] += 1
+            src_class_counts[_classify_source(fact.get('src', ''))] += 1
+        controversies_total += len(rec.get('controversies') or [])
+
+    # ── Coverage from manifest ──
+    coverage_list = manifest.get('coverage') or []
+    adequate = sum(1 for c in coverage_list if c.get('status') == 'adequate')
+    insufficient = sum(1 for c in coverage_list if c.get('status') == 'insufficient')
+    total_subq = len(coverage_list)
+    data_limited = manifest.get('data_limited', False)
+    unique_domains = manifest.get('unique_domains', 0)
+
+    # ── Build lines ──
+    cfg = get_lang_config(lang)
+    heading = cfg.get('confidence_heading', '## Confidence Assessment')
+    lines = [heading, '']
+
+    # Source quality
+    auth = src_class_counts['authoritative']
+    ind = src_class_counts['industry']
+    med = src_class_counts['media']
+    lines.append(f"**{'来源质量' if lang == 'zh' else 'Source Quality'}**："
+                 f"{'权威来源' if lang == 'zh' else 'Authoritative'} {auth} 条 · "
+                 f"{'行业来源' if lang == 'zh' else 'Industry'} {ind} 条 · "
+                 f"{'媒体来源' if lang == 'zh' else 'Media'} {med} 条")
+    lines.append('')
+
+    # Data type distribution
+    act = type_counts['actual']
+    est = type_counts['estimate']
+    fct = type_counts['forecast']
+    if total_facts > 0:
+        act_pct = round(act / total_facts * 100)
+        est_pct = round(est / total_facts * 100)
+        fct_pct = round(fct / total_facts * 100)
+    else:
+        act_pct = est_pct = fct_pct = 0
+    label_actual = '已公布' if lang == 'zh' else 'Actual'
+    label_est = '估算' if lang == 'zh' else 'Estimate'
+    label_fcst = '预测' if lang == 'zh' else 'Forecast'
+    lines.append(f"**{'数据类型' if lang == 'zh' else 'Data Type'}**："
+                 f"{label_actual} {act}条({act_pct}%) · "
+                 f"{label_est} {est}条({est_pct}%) · "
+                 f"{label_fcst} {fct}条({fct_pct}%)")
+    lines.append('')
+
+    # Confidence distribution
+    high = conf_counts['high']
+    medium = conf_counts['medium']
+    low = conf_counts['low']
+    if total_facts > 0:
+        high_pct = round(high / total_facts * 100)
+    else:
+        high_pct = 0
+    label_high = '高置信' if lang == 'zh' else 'High'
+    label_med = '中等' if lang == 'zh' else 'Medium'
+    label_low = '低置信' if lang == 'zh' else 'Low'
+    lines.append(f"**{'置信度分布' if lang == 'zh' else 'Confidence Distribution'}**："
+                 f"{label_high} {high}条({high_pct}%) · "
+                 f"{label_med} {medium}条 · "
+                 f"{label_low} {low}条")
+    lines.append('')
+
+    # Coverage
+    if total_subq > 0:
+        label_adequate = '充足' if lang == 'zh' else 'Adequate'
+        label_insuff = '不足' if lang == 'zh' else 'Insufficient'
+        lines.append(f"**{'覆盖度' if lang == 'zh' else 'Coverage'}**："
+                     f"{total_subq}{'个子问题中 ' if lang == 'zh' else ' sub-questions — '}"
+                     f"{adequate} {label_adequate}、{insufficient} {label_insuff}")
+        lines.append('')
+
+    # Controversies
+    if controversies_total > 0:
+        label_cont = '存在' if lang == 'zh' else ''
+        label_cont2 = '处跨源数据差异，已在正文对应章节并排呈现' if lang == 'zh' else ' instances of cross-source data discrepancies, presented side-by-side in relevant chapters'
+        lines.append(f"**{'跨源矛盾' if lang == 'zh' else 'Cross-source Discrepancies'}**："
+                     f"{label_cont}{controversies_total}{label_cont2}")
+        lines.append('')
+
+    # Data limitation
+    if data_limited:
+        label_limited = '有（部分子问题数据覆盖不足，结论需谨慎参考）' if lang == 'zh' else 'Yes (some sub-questions have insufficient coverage — conclusions should be treated with caution)'
+    else:
+        label_limited = '无' if lang == 'zh' else 'None'
+    lines.append(f"**{'数据限制' if lang == 'zh' else 'Data Limitations'}**：{label_limited}")
+    lines.append('')
+
+    # Overall assessment
+    total_weight = 0
+    if total_facts > 0:
+        # Score: high_ratio*40 + actual_ratio*30 + coverage_ratio*20 + (not data_limited)*10
+        score = (high / total_facts) * 40 + (act / total_facts) * 30
+        if total_subq > 0:
+            score += (adequate / total_subq) * 20
+        if not data_limited:
+            score += 10
+
+        if score >= 70:
+            verdict = ('数据来源多元且覆盖全面，高置信来源占比较高，已公布数据占主导，调研数据质量充足'
+                       if lang == 'zh'
+                       else 'Data sources are diverse with comprehensive coverage. High-confidence sources dominate and actual data prevails. Research data quality is adequate.')
+            verdict_label = cfg.get('verdict_labels', {}).get('reliable', 'Reliable')
+        elif score >= 40:
+            verdict = ('数据整体可信，但部分数据为估算或预测值，结论需结合具体语境参考'
+                       if lang == 'zh'
+                       else 'Data is generally reliable, though some data points are estimates or forecasts. Conclusions should be considered in context.')
+            verdict_label = cfg.get('verdict_labels', {}).get('moderate', 'Moderate')
+        else:
+            verdict = ('数据受限明显，估算和预测占比较高，结论不确定性较大，需谨慎使用'
+                       if lang == 'zh'
+                       else 'Significant data limitations: estimates and forecasts dominate. Conclusions carry high uncertainty and should be used with caution.')
+            verdict_label = cfg.get('verdict_labels', {}).get('caution', 'Caution')
+        lines.append(f"**{'评估意见' if lang == 'zh' else 'Assessment'}**：{verdict}")
+        lines.append('')
+
+    section = '\n'.join(lines)
+
+    # Summary for machine-readable output
+    coverage_summary = manifest.get('coverage_summary', 'unknown')
+    summary = {
+        'coverage': coverage_summary,
+        'high_pct': high_pct if total_facts > 0 else 0,
+        'actual_pct': act_pct if total_facts > 0 else 0,
+        'data_limited': data_limited,
+        'verdict_label': verdict_label if total_facts > 0 else ('无数据' if lang == 'zh' else 'No data'),
+    }
+    return {'passed': True, 'section': section, 'issues': issues, 'summary': summary}
