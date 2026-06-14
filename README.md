@@ -25,6 +25,7 @@
 
 
 <table width="100%">
+<tr><th>命令</th><th>说明</th></tr>
 <tr><td width="400"><code>/research 中国新能源汽车产业发展现状</code></td><td>中文报告</td></tr>
 <tr><td><code>/research Competitive landscape of AI cloud computing</code></td><td>English report</td></tr>
 <tr><td><code>/research Анализ рынка нефти и газа в России</code></td><td>Отчёт на русском</td></tr>
