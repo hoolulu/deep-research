@@ -573,7 +573,7 @@ def assemble_report(outline_path: str, chapters_dir: str,
     total_wc = wc_func(output_path) if os.path.exists(output_path) else 0
     if total_wc == 0:
         total_wc = len(re.sub(r'\s+', '', full_report))
-    reading_time = max(1, round(total_wc / 600))
+    reading_time = max(1, round(total_wc / 800))
 
     meta = generate_metadata(
         word_count=total_wc, reading_time=reading_time,
