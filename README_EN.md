@@ -176,8 +176,8 @@ Please read the https://github.com/hoolulu/deep-research project, auto-install p
    - **Claude Code** → Register as a slash command (Hook)
    - **Cursor** → Adapt per platform (custom commands / Agent rules)
    - Other tools: check for skill/command mechanisms first, then pick the best fit
-4. Translate the multi-agent chain architecture (outline → data collection → parallel writing → assembly+QA) to the current tool's equivalent, preserving the sequential dependencies between stages
-5. If multiple CLI tools are installed, **only configure the current tool** — do not affect other CLI tools on this machine.
+4. Translate the multi-agent chain architecture (outline → data collection → parallel writing → assembly+QA) to the current tool's equivalent
+5. If multiple CLI tools are installed, only configure the current tool — do not affect other CLI tools on this machine.
 
 Confirm each step, then read VERSION and summarize.
 ```
@@ -289,7 +289,7 @@ Compare the latest https://github.com/hoolulu/deep-research with your local vers
 identify new features and fixes,
 apply them one by one to your local adapted version,
 preserving platform-specific changes.
-If multiple CLI tools are installed, **only configure the current tool** — do not affect other CLI tools on this machine.
+If multiple CLI tools are installed, only configure the current tool — do not affect other CLI tools on this machine.
 ```
 
 **5. Is my data safe?**
