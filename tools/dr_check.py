@@ -256,8 +256,6 @@ def check_datapool(filepath: str, mode: str) -> dict:
             if mode == 'quick':
                 if 'cur' in fact:
                     issues.append(f"Record {i} fact {j}: quick mode should not have 'cur'")
-                if 'conf' in fact:
-                    issues.append(f"Record {i} fact {j}: quick mode should not have 'conf'")
             else:
                 if 'cur' not in fact:
                     issues.append(f"Record {i} fact {j}: {mode} mode should have 'cur'")

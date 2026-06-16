@@ -663,6 +663,42 @@ def _classify_source(src: str) -> str:
     return 'industry'
 
 
+def _source_text(fact: dict) -> str:
+    parts = [fact.get('src', ''), fact.get('url', ''), fact.get('title', '')]
+    return ' '.join(str(p) for p in parts if p).lower()
+
+
+def _infer_confidence(fact: dict) -> str:
+    """Return high/medium/low; use explicit conf when present."""
+    conf = (fact.get('conf') or '').strip().lower()
+    if conf in ('high', 'medium', 'low'):
+        return conf
+    src_class = _classify_source(_source_text(fact))
+    if src_class == 'authoritative':
+        return 'high'
+    if src_class == 'media':
+        return 'medium'
+    # arxiv / doi / peer-reviewed hints in URL or title
+    text = _source_text(fact)
+    if any(k in text for k in ('arxiv', 'doi.org', 'nature.com', 'science.org',
+                               'iopscience', 'springer', 'ieee', 'nasa', 'esa')):
+        return 'high'
+    return 'medium'
+
+
+def _infer_data_type(fact: dict) -> str:
+    """Return actual/estimate/forecast; use explicit data_type when present."""
+    dtype = (fact.get('data_type') or '').strip().lower()
+    if dtype in ('actual', 'estimate', 'forecast'):
+        return dtype
+    text = ' '.join(str(fact.get(k, '')) for k in ('ctx', 'met', 'title')).lower()
+    if any(k in text for k in ('预测', 'forecast', 'projected', 'projection', '预计到', '有望达到')):
+        return 'forecast'
+    if any(k in text for k in ('估算', '预估', '预计', 'estimate', '约', '大约', '左右')):
+        return 'estimate'
+    return 'actual'
+
+
 def generate_confidence_section(datapool_path: str, manifest_path: str,
                                 lang: str = 'zh') -> dict:
     """Generate the Confidence Assessment markdown section from data-pool + manifest.
@@ -692,18 +728,24 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
     type_counts = {'actual': 0, 'estimate': 0, 'forecast': 0}
     src_class_counts = {'authoritative': 0, 'industry': 0, 'media': 0}
     controversies_total = 0
+    explicit_conf = 0
+    explicit_dtype = 0
 
     for rec in records:
         for fact in rec.get('facts') or []:
             total_facts += 1
-            c = fact.get('conf', '')
-            if c in conf_counts:
-                conf_counts[c] += 1
-            t = fact.get('data_type', '')
-            if t in type_counts:
-                type_counts[t] += 1
-            src_class_counts[_classify_source(fact.get('src', ''))] += 1
+            if (fact.get('conf') or '').strip().lower() in conf_counts:
+                explicit_conf += 1
+            if (fact.get('data_type') or '').strip().lower() in type_counts:
+                explicit_dtype += 1
+            c = _infer_confidence(fact)
+            conf_counts[c] += 1
+            t = _infer_data_type(fact)
+            type_counts[t] += 1
+            src_class_counts[_classify_source(_source_text(fact))] += 1
         controversies_total += len(rec.get('controversies') or [])
+
+    quick_mode = total_facts > 0 and explicit_conf == 0
 
     # ── Coverage from manifest ──
     coverage_list = manifest.get('coverage') or []
@@ -789,8 +831,14 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
     lines.append(f"**{'数据限制' if lang == 'zh' else 'Data Limitations'}**：{label_limited}")
     lines.append('')
 
+    if quick_mode:
+        note = ('注：部分事实未显式标注 conf/data_type，以上置信度与数据类型由来源与上下文自动推断'
+                if lang == 'zh'
+                else 'Note: some facts lack explicit conf/data_type fields; confidence and data types above are inferred from sources and context.')
+        lines.append(note)
+        lines.append('')
+
     # Overall assessment
-    total_weight = 0
     if total_facts > 0:
         # Score: high_ratio*40 + actual_ratio*30 + coverage_ratio*20 + (not data_limited)*10
         score = (high / total_facts) * 40 + (act / total_facts) * 30
@@ -798,6 +846,8 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
             score += (adequate / total_subq) * 20
         if not data_limited:
             score += 10
+
+        est_fcst_ratio = (est + fct) / total_facts if total_facts else 0
 
         if score >= 70:
             verdict = ('数据来源多元且覆盖全面，高置信来源占比较高，已公布数据占主导，调研数据质量充足'
@@ -809,10 +859,15 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
                        if lang == 'zh'
                        else 'Data is generally reliable, though some data points are estimates or forecasts. Conclusions should be considered in context.')
             verdict_label = cfg.get('verdict_labels', {}).get('moderate', 'Moderate')
-        else:
+        elif est_fcst_ratio >= 0.4:
             verdict = ('数据受限明显，估算和预测占比较高，结论不确定性较大，需谨慎使用'
                        if lang == 'zh'
                        else 'Significant data limitations: estimates and forecasts dominate. Conclusions carry high uncertainty and should be used with caution.')
+            verdict_label = cfg.get('verdict_labels', {}).get('caution', 'Caution')
+        else:
+            verdict = ('数据覆盖或来源质量有限，高置信与已公布数据占比较低，结论需谨慎使用'
+                       if lang == 'zh'
+                       else 'Data coverage or source quality is limited; high-confidence and published data ratios are low. Use conclusions with caution.')
             verdict_label = cfg.get('verdict_labels', {}).get('caution', 'Caution')
         lines.append(f"**{'评估意见' if lang == 'zh' else 'Assessment'}**：{verdict}")
         lines.append('')
