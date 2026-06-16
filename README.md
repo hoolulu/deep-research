@@ -20,6 +20,7 @@
 <tr><td style="white-space: nowrap;"><b>🔧 非 OpenCode 独占</b></td><td>Claude Code、Cursor、Codex CLI、Windsurf、Cline 等均可适配</td></tr>
 <tr><td style="white-space: nowrap;"><b>📁 本地文件调研</b></td><td>也可支持本地 PDF/DOCX/TXT/MD，不联网，AI 自动解析</td></tr>
 <tr><td style="white-space: nowrap;"><b>🖥️ 本地报告浏览页</b></td><td>每次报告生成后自动刷新为本地浏览器页面<br><code>reports-browser/index.html</code>，支持搜索/筛选/排序/弹窗预览</td></tr>
+<tr><td style="white-space: nowrap;"><b>📄 PDF/DOCX 导出</b></td><td>浏览页弹窗预览中可导出 PDF、DOCX 格式，浏览器端直接转换下载，无需服务端支持</td></tr>
 </table>
 
 

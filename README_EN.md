@@ -19,6 +19,7 @@
 <tr><td style="white-space: nowrap;"><b>🔧 Not OpenCode-exclusive</b></td><td>Adaptable for Claude Code, Cursor, Codex CLI, Windsurf, Cline and more</td></tr>
 <tr><td style="white-space: nowrap;"><b>📁 Local file research</b></td><td>Also supports PDF/DOCX/TXT/MD, no internet needed, auto-parsed</td></tr>
 <tr><td style="white-space: nowrap;"><b>🖥️ Local report browser</b></td><td>Auto-refreshed as a local browser page after each run<br><code>reports-browser/index.html</code> — search, filter, sort, preview</td></tr>
+<tr><td style="white-space: nowrap;"><b>📄 PDF/DOCX export</b></td><td>Export reports as PDF or DOCX from the preview modal — fully client-side, no server required</td></tr>
 </table>
 
 <table width="100%">
