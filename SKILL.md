@@ -204,21 +204,6 @@ repository: https://github.com/hoolulu/deep-research
         - 写出到 `{TMPDIR}/llm_assessment.txt`
         - 用 `edit` 工具将评估意见插入到报告可信评估区的 `**{综合评级标签}**` 行之后（追加 "**{评估意见标签}**：\n\n{文本}"），然后用 `read` 确认插入正确
         - `{综合评级标签}` 和 `{评估意见标签}` 使用语言映射表中的翻译
-     → **Step 2d — 简报摘要**：使用 outline.json 各章的 `description`（核心判断字段）在 LLM 上下文内直接生成简报摘要。
-        - 输出必须使用 $LANG 语言，**整段连贯叙述**，不拆分章节标签
-        - 简报摘要所有内容在同一 `>` 区块内，**行与行之间无空行**
-        - 每行为一句或两句自然衔接，避免"首先/其次"等衔接词
-        - 不重复逐项明细中的具体数字，只写最关键的 3-5 个数据
-        - 篇幅控制在 3-5 行（header + blank + 3-5 content lines）
-        - 使用 `edit` 工具将简报摘要区块插入到报告文件 `## 目录` 与第一个章节标题之间，格式为：
-          ```markdown
-          > **{简报摘要标签}**：
-          > 第一句核心背景。第二句市场判断。
-          > 第三句竞争格局。第四句关键变化。
-          > 第五句展望或风险总结。
-          ```
-        - `{简报摘要标签}` 使用语言映射表中的翻译
-        - 用 `read` 确认插入正确
      → **Step 3 — 数据受限处理**：读取 {TMPDIR}/task2_manifest.json 的 `data_limited` 字段。如果为 true，在报告标题后插入数据说明声明，**使用 $LANG 语言**。
     → **Step 4 — 引用处理**：`python {TOOLSDIR}/dr_tools.py convert-citations --datapool {TMPDIR}/data-pool.json "$REPORT" --lang $LANG`（从 data-pool 构建参考章节，验证正文 `[N]` 引用均有对应条目）
       → **Step 5 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year} --lang $LANG`，解析 JSON 输出，从 `checks.word_count.count` 取字数，从 `checks.word_count.limit` 取上限
@@ -254,7 +239,6 @@ repository: https://github.com/hoolulu/deep-research
 | 统计 | Stats | 統計 | 통계 | Statistiques | Statistiken | Estadísticas | Stats |
 | 综合评级 | Rating | 総合評価 | 종합 평가 | Note globale | Gesamtbewertung | Calificación general | Rating |
 | 评估意见 | Assessment | 評価意見 | 평가 의견 | Avis d'évaluation | Bewertung | Opinión de evaluación | Assessment |
-| 简报摘要 | Briefing | ブリーフィング | 브리핑 요약 | Bref | Kurzbericht | Resumen | Briefing |
 | 耗时 | Duration | 所要時間 | 소요 시간 | Durée | Dauer | Duración | Duration |
       | 免费源补强 | free fallback | 無料補強 | 무료 보강 | sources gratuites | kostenlose Quellen | fuentes gratuitas | free fallback |
       | 本地文件 | local files | ローカル | 로컬 파일 | fichiers locaux | lokale Dateien | archivos locales | local files |
