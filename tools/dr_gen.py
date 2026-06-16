@@ -640,6 +640,10 @@ AUTHORITY_KEYWORDS = [
     'world bank', 'imf', 'oecd', 'who', 'united nations',
     'national bureau', 'ministry', 'commission', '研究中心', '研究院',
     '基金会', '基金', 'association',
+    # Academic / journal signals
+    'arxiv', 'doi.org', 'pnas', 'nature.com', 'science.org',
+    'springer', 'iopscience', 'ieee', 'nasa', 'esa',
+    'un.org', 'who.int', 'worldbank',
 ]
 
 MEDIA_KEYWORDS = [
@@ -697,6 +701,69 @@ def _infer_data_type(fact: dict) -> str:
     if any(k in text for k in ('估算', '预估', '预计', 'estimate', '约', '大约', '左右')):
         return 'estimate'
     return 'actual'
+
+
+def _build_verdict(stats: dict, lang: str = 'zh') -> str:
+    """Return dynamic assessment opinion citing actual stats."""
+    if lang == 'zh':
+        parts = []
+        fact = f'共 {stats["total_facts"]} 条事实'
+        if stats['total_facts'] > 0:
+            fact += f'，高置信占 {stats["high_pct"]}%'
+        fact += f'，已公布 {stats["act_pct"]}% · 估算 {stats["est_pct"]}% · 预测 {stats["fct_pct"]}%'
+        if stats['total_subq'] > 0:
+            fact += f'。{stats["total_subq"]} 个子问题中 {stats["adequate"]} 个覆盖充足'
+        parts.append(fact)
+
+        j = []
+        act, est_fcst = stats['act_pct'], stats['est_pct'] + stats['fct_pct']
+        high = stats['high_pct']
+
+        if act >= 60 and high >= 70:
+            j.append('已公布数据占主导，整体可信度高')
+        elif act < 30 and stats.get('academic_src_pct', 0) > 50:
+            j.append('史料重建/估算占比高属该类题目常态')
+        elif act < 40 and est_fcst >= 50:
+            j.append('估算与预测占比较高，结论需结合具体语境')
+        elif 40 <= act < 60:
+            j.append('已公布与估算并存，宜作参考性结论')
+        else:
+            j.append('数据类型分布均衡，整体可信')
+
+        if stats['data_limited']:
+            j.append('部分子问题数据覆盖不足')
+        if high < 50:
+            j.append('高置信来源偏少')
+        parts.append('；'.join(j))
+    else:
+        parts = []
+        fact = f'{stats["total_facts"]} facts'
+        if stats['total_facts'] > 0:
+            fact += f', {stats["high_pct"]}% high-confidence'
+        fact += f' — {stats["act_pct"]}% actual / {stats["est_pct"]}% estimate / {stats["fct_pct"]}% forecast'
+        if stats['total_subq'] > 0:
+            fact += f'. {stats["adequate"]}/{stats["total_subq"]} sub-questions adequately covered'
+        parts.append(fact)
+
+        j = []
+        if stats['act_pct'] >= 60 and stats['high_pct'] >= 70:
+            j.append('Actual data dominates — overall reliability is high')
+        elif stats['act_pct'] < 30 and stats.get('academic_src_pct', 0) > 50:
+            j.append('Reconstructed/estimated data is expected for this topic type')
+        elif stats['act_pct'] < 40 and (stats['est_pct'] + stats['fct_pct']) >= 50:
+            j.append('Estimates and forecasts are significant — interpret in context')
+        elif 40 <= stats['act_pct'] < 60:
+            j.append('Mix of actual and estimated data — suitable as reference')
+        else:
+            j.append('Balanced data type distribution — generally reliable')
+
+        if stats['data_limited']:
+            j.append('Partial data coverage is limited')
+        if stats['high_pct'] < 50:
+            j.append('Low proportion of high-confidence sources')
+        parts.append('; '.join(j))
+
+    return '\n\n'.join(parts)
 
 
 def generate_confidence_section(datapool_path: str, manifest_path: str,
@@ -760,17 +827,22 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
     heading = cfg.get('confidence_heading', '## Confidence Assessment')
     lines = [heading, '']
 
-    # Source quality
+    # ── 1. Source type (粗分) ──
     auth = src_class_counts['authoritative']
     ind = src_class_counts['industry']
     med = src_class_counts['media']
-    lines.append(f"**{'来源质量' if lang == 'zh' else 'Source Quality'}**："
-                 f"{'权威来源' if lang == 'zh' else 'Authoritative'} {auth} 条 · "
-                 f"{'行业来源' if lang == 'zh' else 'Industry'} {ind} 条 · "
-                 f"{'媒体来源' if lang == 'zh' else 'Media'} {med} 条")
+    academic_src_pct = round(auth / total_facts * 100) if total_facts > 0 else 0
+    label_src = '来源类型（粗分）' if lang == 'zh' else 'Source Type'
+    label_auth = '学术/机构' if lang == 'zh' else 'Academic'
+    label_ind = '行业' if lang == 'zh' else 'Industry'
+    label_med = '媒体' if lang == 'zh' else 'Media'
+    lines.append(f"**{label_src}**："
+                 f"{label_auth} {auth} 条 · "
+                 f"{label_ind} {ind} 条 · "
+                 f"{label_med} {med} 条")
     lines.append('')
 
-    # Data type distribution
+    # ── 2. Data type (MANDATORY — never omitted) ──
     act = type_counts['actual']
     est = type_counts['estimate']
     fct = type_counts['forecast']
@@ -789,7 +861,7 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
                  f"{label_fcst} {fct}条({fct_pct}%)")
     lines.append('')
 
-    # Confidence distribution
+    # ── 3. Confidence distribution ──
     high = conf_counts['high']
     medium = conf_counts['medium']
     low = conf_counts['low']
@@ -806,7 +878,7 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
                  f"{label_low} {low}条")
     lines.append('')
 
-    # Coverage
+    # ── 4. Coverage ──
     if total_subq > 0:
         label_adequate = '充足' if lang == 'zh' else 'Adequate'
         label_insuff = '不足' if lang == 'zh' else 'Insufficient'
@@ -815,15 +887,7 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
                      f"{adequate} {label_adequate}、{insufficient} {label_insuff}")
         lines.append('')
 
-    # Controversies
-    if controversies_total > 0:
-        label_cont = '存在' if lang == 'zh' else ''
-        label_cont2 = '处跨源数据差异，已在正文对应章节并排呈现' if lang == 'zh' else ' instances of cross-source data discrepancies, presented side-by-side in relevant chapters'
-        lines.append(f"**{'跨源矛盾' if lang == 'zh' else 'Cross-source Discrepancies'}**："
-                     f"{label_cont}{controversies_total}{label_cont2}")
-        lines.append('')
-
-    # Data limitation
+    # ── 5. Data limitation ──
     if data_limited:
         label_limited = '有（部分子问题数据覆盖不足，结论需谨慎参考）' if lang == 'zh' else 'Yes (some sub-questions have insufficient coverage — conclusions should be treated with caution)'
     else:
@@ -831,6 +895,58 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
     lines.append(f"**{'数据限制' if lang == 'zh' else 'Data Limitations'}**：{label_limited}")
     lines.append('')
 
+    # ── 6. Controversies (conditional) ──
+    if controversies_total > 0:
+        label_cont = '存在' if lang == 'zh' else ''
+        label_cont2 = '处跨源数据差异，已在正文对应章节并排呈现' if lang == 'zh' else ' instances of cross-source data discrepancies, presented side-by-side in relevant chapters'
+        lines.append(f"**{'跨源矛盾' if lang == 'zh' else 'Cross-source Discrepancies'}**："
+                     f"{label_cont}{controversies_total}{label_cont2}")
+        lines.append('')
+
+    # ── 7. Score & rating ──
+    if total_facts > 0:
+        score = (high / total_facts) * 40 + (act / total_facts) * 30
+        if total_subq > 0:
+            score += (adequate / total_subq) * 20
+        if not data_limited:
+            score += 10
+        score = round(score)
+
+        if score >= 75:
+            label_verdict = '结论可靠' if lang == 'zh' else 'Reliable'
+        elif score >= 50:
+            label_verdict = '基本可信' if lang == 'zh' else 'Moderate'
+        else:
+            label_verdict = '谨慎参考' if lang == 'zh' else 'Caution'
+
+        rating_label = '综合评级' if lang == 'zh' else 'Rating'
+        lines.append(f"**{rating_label}**：{label_verdict}（{score}/100）")
+        lines.append('')
+
+        # ── 8. Dynamic assessment opinion ──
+        verdict = _build_verdict({
+            'total_facts': total_facts,
+            'high_pct': high_pct,
+            'act_pct': act_pct,
+            'est_pct': est_pct,
+            'fct_pct': fct_pct,
+            'adequate': adequate,
+            'total_subq': total_subq,
+            'data_limited': data_limited,
+            'score': score,
+            'verdict_label': label_verdict,
+            'academic_src_pct': academic_src_pct,
+        }, lang)
+        assessment_label = '评估意见' if lang == 'zh' else 'Assessment'
+        lines.append(f"**{assessment_label}**：")
+        lines.append('')
+        lines.append(verdict)
+        lines.append('')
+    else:
+        score = 0
+        label_verdict = '无数据' if lang == 'zh' else 'No data'
+
+    # ── Quick-mode note (last, conditional) ──
     if quick_mode:
         note = ('注：部分事实未显式标注 conf/data_type，以上置信度与数据类型由来源与上下文自动推断'
                 if lang == 'zh'
@@ -838,49 +954,17 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
         lines.append(note)
         lines.append('')
 
-    # Overall assessment
-    if total_facts > 0:
-        # Score: high_ratio*40 + actual_ratio*30 + coverage_ratio*20 + (not data_limited)*10
-        score = (high / total_facts) * 40 + (act / total_facts) * 30
-        if total_subq > 0:
-            score += (adequate / total_subq) * 20
-        if not data_limited:
-            score += 10
-
-        est_fcst_ratio = (est + fct) / total_facts if total_facts else 0
-
-        if score >= 70:
-            verdict = ('数据来源多元且覆盖全面，高置信来源占比较高，已公布数据占主导，调研数据质量充足'
-                       if lang == 'zh'
-                       else 'Data sources are diverse with comprehensive coverage. High-confidence sources dominate and actual data prevails. Research data quality is adequate.')
-            verdict_label = cfg.get('verdict_labels', {}).get('reliable', 'Reliable')
-        elif score >= 40:
-            verdict = ('数据整体可信，但部分数据为估算或预测值，结论需结合具体语境参考'
-                       if lang == 'zh'
-                       else 'Data is generally reliable, though some data points are estimates or forecasts. Conclusions should be considered in context.')
-            verdict_label = cfg.get('verdict_labels', {}).get('moderate', 'Moderate')
-        elif est_fcst_ratio >= 0.4:
-            verdict = ('数据受限明显，估算和预测占比较高，结论不确定性较大，需谨慎使用'
-                       if lang == 'zh'
-                       else 'Significant data limitations: estimates and forecasts dominate. Conclusions carry high uncertainty and should be used with caution.')
-            verdict_label = cfg.get('verdict_labels', {}).get('caution', 'Caution')
-        else:
-            verdict = ('数据覆盖或来源质量有限，高置信与已公布数据占比较低，结论需谨慎使用'
-                       if lang == 'zh'
-                       else 'Data coverage or source quality is limited; high-confidence and published data ratios are low. Use conclusions with caution.')
-            verdict_label = cfg.get('verdict_labels', {}).get('caution', 'Caution')
-        lines.append(f"**{'评估意见' if lang == 'zh' else 'Assessment'}**：{verdict}")
-        lines.append('')
-
     section = '\n'.join(lines)
 
-    # Summary for machine-readable output
+    # ── Machine-readable summary ──
     coverage_summary = manifest.get('coverage_summary', 'unknown')
     summary = {
         'coverage': coverage_summary,
         'high_pct': high_pct if total_facts > 0 else 0,
         'actual_pct': act_pct if total_facts > 0 else 0,
+        'est_pct': est_pct if total_facts > 0 else 0,
         'data_limited': data_limited,
-        'verdict_label': verdict_label if total_facts > 0 else ('无数据' if lang == 'zh' else 'No data'),
+        'verdict_label': label_verdict if total_facts > 0 else ('无数据' if lang == 'zh' else 'No data'),
+        'score': score,
     }
     return {'passed': True, 'section': section, 'issues': issues, 'summary': summary}

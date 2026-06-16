@@ -195,8 +195,18 @@ def check_tail(filepath: str, lang: str = "zh") -> dict:
         issues.append(f"Tail section '{refs_title}' not found")
     if disc_title not in content:
         issues.append(f"'{disc_title}' not found")
-    if conf_title and conf_title not in content:
-        issues.append(f"Confidence section '{conf_title}' not found")
+    if conf_title:
+        if conf_title not in content:
+            issues.append(f"Confidence section '{conf_title}' not found")
+        else:
+            # Verify data type row exists within confidence section
+            start = content.index(conf_title) + len(conf_title)
+            after = content[start:]
+            next_heading = after.find('\n## ')
+            block = after[:next_heading] if next_heading != -1 else after
+            has_data_type_pct = bool(re.search(r'\w+\s*\d+[条]?\(\d+%\)', block))
+            if not has_data_type_pct:
+                issues.append(f"Confidence section missing data-type row (e.g. '**数据类型**' / '**Data Type**')")
     return {"passed": len(issues) == 0, "issues": issues}
 
 

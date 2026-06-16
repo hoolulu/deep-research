@@ -260,7 +260,7 @@ repository: https://github.com/hoolulu/deep-research
        | 📡 <Data词> | {task2_manifest.source_count} <来源词> · {task2_manifest.unique_domains} <独立域名词> · {task2_manifest.fact_count} <事实词> · <搜索词>：{search_desc} · {task2_manifest.fetch_method} |
        | 📄 <Report词> | {REPORT} |
        | 🌐 <浏览器词/Report List> | {SKILLDIR}/reports-browser/index.html |
-       | ✅ <可信评估词> | <覆盖_{coverage_summary}> · 高置信{conf_high_pct}% · 已公布{conf_actual_pct}% · {data_quality_badge} → **{conf_verdict}** |
+       | ✅ <可信评估词> | <覆盖_{coverage_summary}> · 高置信{conf_high_pct}% · 已公布{conf_actual_pct}% · {conf_score}/100 · {data_quality_badge} → **{conf_verdict}** |
        | 📊 <统计词> | {qa_report.line_count} <行词> · {qa_report.word_count} <字词> · <耗时词>⏱ {totalMin} <分钟词> · <生成时间词>：{gen_time} |
       ```
 
@@ -271,7 +271,7 @@ repository: https://github.com/hoolulu/deep-research
       - `{search_desc}` = 按搜索策略拼接规则生成，所有中文词根据 $LANG 翻译
        - `{data_quality_badge}` = 按数据质量徽标规则生成
        - `<覆盖_{coverage_summary}>` = 从 `task2_manifest.coverage_summary` 读取（adequate/partial/insufficient），用语言映射表中"覆盖充足/部分覆盖/覆盖不足"行对应翻译替换
-       - `{conf_high_pct}`、`{conf_actual_pct}`、`{conf_verdict}` = 从 `generate-confidence-section` 输出的 `CONFIDENCE: coverage=...|high_pct=N|actual_pct=N|data_limited=...|verdict=...` 行解析
+       - `{conf_high_pct}`、`{conf_actual_pct}`、`{conf_verdict}`、`{conf_score}` = 从 `generate-confidence-section` 输出的 `CONFIDENCE: coverage=...|high_pct=N|actual_pct=N|est_pct=N|score=N|verdict=...|data_limited=...` 行解析
     → todowrite 全部完成
 
 **禁止**：主 agent 不得在 Task 调度之间自行执行搜索引擎调用或数据处理。搜索/抓取归 Task 2，大纲生成归 Task 1，章节撰写归 Task 3，装配验证归 Task 4。Task 间的 handoff 文件读取（outline.json、task2_manifest.json 等）不受此限。

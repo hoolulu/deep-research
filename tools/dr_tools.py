@@ -321,8 +321,10 @@ def main():
         print(f"CONFIDENCE: coverage={sumd.get('coverage','unknown')}"
               f"|high_pct={sumd.get('high_pct',0)}"
               f"|actual_pct={sumd.get('actual_pct',0)}"
-              f"|data_limited={str(sumd.get('data_limited',False)).lower()}"
-              f"|verdict={sumd.get('verdict_label','unknown')}")
+              f"|est_pct={sumd.get('est_pct',0)}"
+              f"|score={sumd.get('score',0)}"
+              f"|verdict={sumd.get('verdict_label','unknown')}"
+              f"|data_limited={str(sumd.get('data_limited',False)).lower()}")
         sys.exit(0)
 
     # ── Dispatch: skeleton + assembly ──
