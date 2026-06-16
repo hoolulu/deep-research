@@ -190,8 +190,21 @@ repository: https://github.com/hoolulu/deep-research
      → Step 1 或 Step 2 失败时，**先删除本次已写入的产物**（报告文件、中间文件等），再重新执行对应步骤，避免残留文件干扰下次运行
      → **Step 2 — 装配**：`python {TOOLSDIR}/dr_tools.py assemble-report --outline {TMPDIR}/outline.json --chapters-dir {TMPDIR}/chapters/ --datapool {TMPDIR}/data-pool.json --mode {depth_mode} --target-year {target_year} --output {SKILLDIR}/reports/$LANG/ --lang $LANG`
     → **$REPORT 提取**：从装配输出中提取 `Report assembled: ...` 行中冒号后的第一个路径，设为 `$REPORT` 变量
-    → **Step 2b — 可信评估**：`python {TOOLSDIR}/dr_tools.py generate-confidence-section --datapool {TMPDIR}/data-pool.json --manifest {TMPDIR}/task2_manifest.json --report "$REPORT" --lang $LANG`
-    → **Step 3 — 数据受限处理**：读取 {TMPDIR}/task2_manifest.json 的 `data_limited` 字段。如果为 true，在报告标题后插入数据说明声明，**使用 $LANG 语言**。
+     → **Step 2b — 可信评估(数据层)**：`python {TOOLSDIR}/dr_tools.py generate-confidence-section --datapool {TMPDIR}/data-pool.json --manifest {TMPDIR}/task2_manifest.json --report "$REPORT" --lang $LANG`
+       从输出中解析 `CONFIDENCE:` 行获取 `conf_coverage`、`conf_total_facts`、`conf_high_pct`、`conf_medium_pct`、`conf_low_pct`、`conf_actual_pct`、`conf_est_pct`、`conf_fct_pct`、`conf_auth_pct`、`conf_data_limited`、`conf_controversies`、`conf_adequate_subq`、`conf_total_subq`、`conf_score` 共 14 个变量。
+     → **Step 2c — 可信评估(LLM判断)**：使用上一步的 14 个统计变量 + 报告标题（从 outline.json 读取）在 LLM 上下文内直接生成定性评估意见。
+        - 输出必须使用 $LANG 语言，2-4 句，纯定性判断，不重复逐项明细中的具体数字
+        - **语气校准（重要）**：本工具是开源信息综合项目，非付费研究报告。评估意见应遵循以下原则：
+          - **总分决定基调**：score≥75 → 正面肯定为主；50-74 → 中性平衡；<50 → 温和提醒
+          - **不说"缺陷""不足""未能"等负面措辞** → 改为"可进一步关注的方面""仍有补充空间"
+          - **不说"无法获取""受限于"** → 改为"部分高频量化指标因商业敏感性未纳入公开讨论范围"
+          - **不自我贬低**：不出现"门槛高""可信度大打折扣"等损害报告公信力的表述
+          - **正面收尾**：最后一句必须是肯定整体参考价值的结论
+          - **定位准确**：强调"综合公开信息形成的参考判断"而非"严谨学术研究"
+        - 写出到 `{TMPDIR}/llm_assessment.txt`
+        - 用 `edit` 工具将评估意见插入到报告可信评估区的 `**{综合评级标签}**` 行之后（追加 "**{评估意见标签}**：\n\n{文本}"），然后用 `read` 确认插入正确
+        - `{综合评级标签}` 和 `{评估意见标签}` 使用语言映射表中的翻译
+     → **Step 3 — 数据受限处理**：读取 {TMPDIR}/task2_manifest.json 的 `data_limited` 字段。如果为 true，在报告标题后插入数据说明声明，**使用 $LANG 语言**。
     → **Step 4 — 引用处理**：`python {TOOLSDIR}/dr_tools.py convert-citations --datapool {TMPDIR}/data-pool.json "$REPORT" --lang $LANG`（从 data-pool 构建参考章节，验证正文 `[N]` 引用均有对应条目）
       → **Step 5 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year} --lang $LANG`，解析 JSON 输出，从 `checks.word_count.count` 取字数，从 `checks.word_count.limit` 取上限
      → **Step 6 — 更新本地报告列表页**：`python {TOOLSDIR}/generate_pages.py --local`（刷新 reports-browser/index.html，将 reports/ 下所有报告打包为嵌入 JS 的可浏览页面）——需在 `{SKILLDIR}` 目录下执行，bash 命令须加 `workdir="{SKILLDIR}"` 参数
@@ -224,6 +237,8 @@ repository: https://github.com/hoolulu/deep-research
 | 可信评估 | Confidence | 信頼性評価 | 신뢰도 평가 | Évaluation de confiance | Vertrauensbewertung | Evaluación de confianza | Confidence |
 | 覆盖充足/部分覆盖/覆盖不足 | Full/Partial/Limited coverage | 完全/部分/不足カバー | 충분/부분/부족 | Couverture complète/partielle/limitée | Vollständige/Teilweise/Eingeschränkte Abdeckung | Cobertura completa/parcial/limitada | Adequate/Partial/Limited |
 | 统计 | Stats | 統計 | 통계 | Statistiques | Statistiken | Estadísticas | Stats |
+| 综合评级 | Rating | 総合評価 | 종합 평가 | Note globale | Gesamtbewertung | Calificación general | Rating |
+| 评估意见 | Assessment | 評価意見 | 평가 의견 | Avis d'évaluation | Bewertung | Opinión de evaluación | Assessment |
 | 耗时 | Duration | 所要時間 | 소요 시간 | Durée | Dauer | Duración | Duration |
       | 免费源补强 | free fallback | 無料補強 | 무료 보강 | sources gratuites | kostenlose Quellen | fuentes gratuitas | free fallback |
       | 本地文件 | local files | ローカル | 로컬 파일 | fichiers locaux | lokale Dateien | archivos locales | local files |
@@ -260,7 +275,7 @@ repository: https://github.com/hoolulu/deep-research
        | 📡 <Data词> | {task2_manifest.source_count} <来源词> · {task2_manifest.unique_domains} <独立域名词> · {task2_manifest.fact_count} <事实词> · <搜索词>：{search_desc} · {task2_manifest.fetch_method} |
        | 📄 <Report词> | {REPORT} |
        | 🌐 <浏览器词/Report List> | {SKILLDIR}/reports-browser/index.html |
-       | ✅ <可信评估词> | <覆盖_{coverage_summary}> · 高置信{conf_high_pct}% · 已公布{conf_actual_pct}% · {conf_score}/100 · {data_quality_badge} → **{conf_verdict}** |
+       | ✅ <可信评估词> | <覆盖_{coverage_summary}> · 高置信{conf_high_pct}% · 已公布{conf_actual_pct}% · {conf_score}/100 · {data_quality_badge} → {llm_verdict} |
        | 📊 <统计词> | {qa_report.line_count} <行词> · {qa_report.word_count} <字词> · <耗时词>⏱ {totalMin} <分钟词> · <生成时间词>：{gen_time} |
       ```
 
@@ -271,7 +286,8 @@ repository: https://github.com/hoolulu/deep-research
       - `{search_desc}` = 按搜索策略拼接规则生成，所有中文词根据 $LANG 翻译
        - `{data_quality_badge}` = 按数据质量徽标规则生成
        - `<覆盖_{coverage_summary}>` = 从 `task2_manifest.coverage_summary` 读取（adequate/partial/insufficient），用语言映射表中"覆盖充足/部分覆盖/覆盖不足"行对应翻译替换
-       - `{conf_high_pct}`、`{conf_actual_pct}`、`{conf_verdict}`、`{conf_score}` = 从 `generate-confidence-section` 输出的 `CONFIDENCE: coverage=...|high_pct=N|actual_pct=N|est_pct=N|score=N|verdict=...|data_limited=...` 行解析
+       - `{conf_high_pct}`、`{conf_actual_pct}`、`{conf_score}` = 从 Step 2b 的 `CONFIDENCE:` 行解析对应的字段
+       - `{llm_verdict}` = 读取 Step 2c 写入的 `{TMPDIR}/llm_assessment.txt` 完整内容
     → todowrite 全部完成
 
 **禁止**：主 agent 不得在 Task 调度之间自行执行搜索引擎调用或数据处理。搜索/抓取归 Task 2，大纲生成归 Task 1，章节撰写归 Task 3，装配验证归 Task 4。Task 间的 handoff 文件读取（outline.json、task2_manifest.json 等）不受此限。
