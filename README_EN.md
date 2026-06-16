@@ -1,6 +1,6 @@
 # deep-research Skill
 
-[🇨🇳 中文](README.md) · 🇬🇧 English
+<p align="center"><a href="README.md">中文</a> · <b>English</b></p>
 
 **Professional deep research report generation Skill · Supports 19 languages**
 

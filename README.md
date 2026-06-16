@@ -1,6 +1,6 @@
 # deep-research Skill
 
-🇨🇳 中文 · [🇬🇧 English](README_EN.md)
+<p align="center"><b>中文</b> · <a href="README_EN.md">English</a></p>
 
 **深度调研报告生成 Skill · 支持 19 种语言输出**
 
