@@ -20,14 +20,14 @@
 <tr><td style="white-space: nowrap;"><b>🔧 非 OpenCode 独占</b></td><td>Claude Code、Cursor、Codex CLI、Windsurf、Cline 等均可适配</td></tr>
 <tr><td style="white-space: nowrap;"><b>📁 本地文件调研</b></td><td>也可支持本地 PDF/DOCX/TXT/MD，不联网，AI 自动解析</td></tr>
 <tr><td style="white-space: nowrap;"><b>🖥️ 本地报告浏览页</b></td><td>每次报告生成后自动刷新为本地浏览器页面<br><code>reports-browser/index.html</code>，支持搜索/筛选/排序/弹窗预览</td></tr>
-<tr><td style="white-space: nowrap;"><b>📄 PDF/DOCX 导出</b></td><td>浏览页弹窗预览中可导出 PDF、DOCX 格式，浏览器端直接转换下载，无需服务端支持</td></tr>
+<tr><td style="white-space: nowrap;"><b>📄 PDF/DOCX 导出</b></td><td>本地浏览页弹窗中可导出 PDF、DOCX 格式，浏览器端直接转换下载</td></tr>
 </table>
 
 
 
 <table width="100%">
 <tr><th>命令</th><th>说明</th></tr>
-<tr><td width="400"><code>/research 中国新能源汽车产业发展现状</code></td><td>中文报告</td></tr>
+<tr><td style="white-space: nowrap;"><code>/research 中国新能源汽车产业发展现状</code></td><td>中文报告</td></tr>
 <tr><td><code>/research Competitive landscape of AI cloud computing</code></td><td>English report</td></tr>
 <tr><td><code>/research Анализ рынка нефти и газа в России</code></td><td>Отчёт на русском</td></tr>
 <tr><td><code>/research 日本のアニメ産業のグローバル市場戦略</code></td><td>日本語レポート</td></tr>
@@ -76,11 +76,11 @@
 
 | 报告主题 | 话题标签 |
 |---------|---------|
-| <a href="reports/zh/中国深空探测计划全景-20260612-050840.md" target="_blank">中国深空探测计划全景</a> | 航天 · 深空探索 |
-| <a href="reports/zh/中国皇帝评价排行研究报告-20260612-045019.md" target="_blank">中国皇帝评价排行研究报告</a> | 历史 · 人物评价 |
-| <a href="reports/zh/全球历史上十大帝国的兴衰周期：规律、路径与当代启示-20260612-042535.md" target="_blank">全球历史上十大帝国的兴衰周期</a> | 历史 · 文明兴衰 |
-| <a href="reports/zh/中国人口结构变迁历史：从高增长到深度转型-20260612-024352.md" target="_blank">中国人口结构变迁历史：从高增长到深度转型</a> | 人口 · 社会经济 |
-| <a href="reports/en/Shifts in the Global Population Center of Gravity-20260612-042858.md" target="_blank">Shifts in the Global Population Center of Gravity</a> | Demographics · Geopolitics |
+| <a href="reports/zh/长江三角洲与珠江三角洲：中国两大经济引擎的地理比较-20260615-112009.md" target="_blank">长江三角洲与珠江三角洲：中国两大经济引擎的地理比较</a> | 地理 · 经济 |
+| <a href="reports/zh/郑和下西洋：为什么中国在 15 世纪放弃了海洋？-20260611-154808.md" target="_blank">郑和下西洋：为什么中国在 15 世纪放弃了海洋？</a> | 历史 · 航海 |
+| <a href="reports/zh/玛雅文明崩溃之谜：干旱、战争还是生态超载？-20260612-105436.md" target="_blank">玛雅文明崩溃之谜：干旱、战争还是生态超载？</a> | 历史 · 文明 |
+| <a href="reports/zh/2026年中国新能源汽车行业展望-20260606-223210.md" target="_blank">2026年中国新能源汽车行业展望</a> | 汽车 · 产业 |
+| <a href="reports/zh/火星移民的工程现实：从 SpaceX 到 ISRU 到辐射防护-20260611-164652.md" target="_blank">火星移民的工程现实：从 SpaceX 到 ISRU 到辐射防护</a> | 航天 · 科技 |
 
 点击报告标题可在新窗口打开阅读。
 

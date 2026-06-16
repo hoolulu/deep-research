@@ -23,7 +23,7 @@
 </table>
 
 <table width="100%">
-<tr><td width="400"><code>/research 中国新能源汽车产业发展现状</code></td><td>中文报告</td></tr>
+<tr><td style="white-space: nowrap;"><code>/research 中国新能源汽车产业发展现状</code></td><td>中文报告</td></tr>
 <tr><td><code>/research Competitive landscape of AI cloud computing</code></td><td>English report</td></tr>
 <tr><td><code>/research Анализ рынка нефти и газа в России</code></td><td>Отчёт на русском</td></tr>
 <tr><td><code>/research 日本のアニメ産業のグローバル市場戦略</code></td><td>日本語レポート</td></tr>
@@ -70,11 +70,11 @@ People who need professional-grade research capabilities without relying on paid
 
 | Report | Tags |
 |--------|------|
-| <a href="reports/en/Shifts in the Global Population Center of Gravity-20260612-042858.md" target="_blank">Shifts in the Global Population Center of Gravity</a> | Demographics · Geopolitics |
-| <a href="reports/en/The Great Filter- Where Is Everybody- — The Fermi Paradox and Its Possible Resolutions-20260611-145642.md" target="_blank">The Great Filter — The Fermi Paradox</a> | Science · Astronomy |
-| <a href="reports/en/The Fall of Constantinople 1453- Technology, Tactics, and the End of an Era-20260611-144747.md" target="_blank">The Fall of Constantinople 1453</a> | History · Military |
-| <a href="reports/en/The Economic History of Salt- From Roman Soldier Salaries to Chemical Industry-20260611-170938.md" target="_blank">The Economic History of Salt</a> | Economics · History |
-| <a href="reports/en/How the Black Death Reshaped Europe's Economy- Labor Shortages, Wage Growth, and Feudalism's End-20260611-173826.md" target="_blank">How the Black Death Reshaped Europe's Economy</a> | History · Economics |
+| <a href="reports/en/Global AI Chip Market Landscape and Competitive Dynamics 2026-20260609-170008.md" target="_blank">Global AI Chip Market Landscape and Competitive Dynamics 2026</a> | AI · Semiconductors |
+| <a href="reports/en/The Feasibility of Mars Colonization- Radiation, Water Ice, Terraforming, and Global Mission Plans-20260612-163636.md" target="_blank">The Feasibility of Mars Colonization</a> | Space · Technology |
+| <a href="reports/en/Electric Vehicle Battery Supply Chain and Raw Material Geopolitics 2026-20260609-171947.md" target="_blank">Electric Vehicle Battery Supply Chain and Raw Material Geopolitics 2026</a> | Energy · Geopolitics |
+| <a href="reports/en/GenAI Enterprise Adoption Trends & ROI Measurement in 2026-20260609-174525.md" target="_blank">GenAI Enterprise Adoption Trends & ROI Measurement in 2026</a> | AI · Enterprise |
+| <a href="reports/en/Cross-border E-commerce Logistics Trends in Southeast Asia 2026-20260609-165623.md" target="_blank">Cross-border E-commerce Logistics Trends in Southeast Asia 2026</a> | E-commerce · Logistics |
 
 Click a report title to open and read it in a new window.
 
