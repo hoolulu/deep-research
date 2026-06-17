@@ -2,7 +2,7 @@
 
 <p align="center"><b>中文</b> · <a href="README_EN.md">English</a></p>
 
-**深度调研报告生成 Skill · 支持 19 种语言输出**
+**深度调研报告生成 Skill — 一个命令，十分钟，多语言，一份深度专业的调研报告**
 
 > **当前版本：** [查看更新](https://github.com/hoolulu/deep-research/commits/main)
 >

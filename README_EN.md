@@ -2,7 +2,7 @@
 
 <p align="center"><a href="README.md">中文</a> · <b>English</b></p>
 
-**Professional deep research report generation Skill · Supports 19 languages**
+**Professional deep research report generation Skill — One command, ten minutes, multi-language, one in-depth professional report**
 
 > **Current version:** [View updates](https://github.com/hoolulu/deep-research/commits/main)
 >
