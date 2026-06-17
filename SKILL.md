@@ -206,6 +206,7 @@ repository: https://github.com/hoolulu/deep-research
         - `{综合评级标签}` 和 `{评估意见标签}` 使用语言映射表中的翻译
      → **Step 3 — 数据受限处理**：读取 {TMPDIR}/task2_manifest.json 的 `data_limited` 字段。如果为 true，在报告标题后插入数据说明声明，**使用 $LANG 语言**。
     → **Step 4 — 引用处理**：`python {TOOLSDIR}/dr_tools.py convert-citations --datapool {TMPDIR}/data-pool.json "$REPORT" --lang $LANG`（从 data-pool 构建参考章节，验证正文 `[N]` 引用均有对应条目）
+    → **Step 4b — 货币符号转义**：`python {TOOLSDIR}/dr_tools.py escape-currency "$REPORT"`（将 `$` 转义为 `\$`，避免被知乎/Obsidian/Typora 等渲染器错误解析为 LaTeX math mode）
       → **Step 5 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year} --lang $LANG`，解析 JSON 输出，从 `checks.word_count.count` 取字数，从 `checks.word_count.limit` 取上限
      → **Step 6 — 更新本地报告列表页**：`python {TOOLSDIR}/generate_pages.py --local`（刷新 reports-browser/index.html，将 reports/ 下所有报告打包为嵌入 JS 的可浏览页面）——需在 `{SKILLDIR}` 目录下执行，bash 命令须加 `workdir="{SKILLDIR}"` 参数
      → todowrite 标记完成
@@ -343,6 +344,7 @@ repository: https://github.com/hoolulu/deep-research
 2. `assemble-report` → 生成报告
 3. `generate-confidence-section` → 可信评估（从 data-pool + manifest 聚合生成）
 4. `convert-citations` → 引用转换
+5. `escape-currency` → 货币符号转义
 4. `qa-report` → 质量检查
 
 **清理**：装配完成后主 agent 执行 `Remove-Item -Recurse -Force "{TMPDIR}"` 清理临时文件。

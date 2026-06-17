@@ -102,7 +102,7 @@ The pipeline runs in 4 automated stages:
          ↓
 ③ Serial writing — One chapter at a time synchronously, facts embedded directly in prompts, no tool calls
          ↓
-④ Validate & assemble — Batch validate → assemble-report → convert-citations → qa-report
+④ Validate & assemble — Batch validate → assemble-report → convert-citations → escape-currency → qa-report
 ```
 
 
