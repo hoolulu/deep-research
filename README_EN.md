@@ -23,6 +23,7 @@
 </table>
 
 <table width="100%">
+<tr><th>Command</th><th>Result</th></tr>
 <tr><td style="white-space: nowrap;"><code>/research 中国新能源汽车产业发展现状</code></td><td>中文报告</td></tr>
 <tr><td><code>/research Competitive landscape of AI cloud computing</code></td><td>English report</td></tr>
 <tr><td><code>/research Анализ рынка нефти и газа в России</code></td><td>Отчёт на русском</td></tr>
