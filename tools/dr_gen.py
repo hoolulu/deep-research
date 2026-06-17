@@ -899,3 +899,57 @@ def generate_confidence_section(datapool_path: str, manifest_path: str,
         'score': score,
     }
     return {'passed': True, 'section': section, 'issues': issues, 'summary': summary}
+
+
+def escape_currency(report_path: str) -> dict:
+    """Escape unescaped dollar signs to prevent LaTeX math mode rendering.
+
+    Platforms like Zhihu, Typora, Obsidian and GitHub with MathJax interpret
+    $ as inline math delimiter. This function escapes standalone $ used as
+    currency prefix, while skipping protected contexts.
+    """
+    with open(report_path, 'r', encoding='utf-8-sig') as f:
+        content = f.read()
+
+    changes = 0
+    protected = {}
+    counter = [0]
+
+    def _protect(pattern, template='__DOLLAR_SAFE_{}__', flags=0):
+        nonlocal content
+        def replacer(m):
+            counter[0] += 1
+            key = template.format(counter[0])
+            protected[key] = m.group(0)
+            return key
+        content = re.sub(pattern, replacer, content, flags=flags)
+
+    # Protect contexts where $ should NOT be escaped
+    _protect(r'```.*?```', '__CODE_BLOCK_{}__')           # fenced code blocks
+    _protect(r'`[^`]+`', '__INLINE_CODE_{}__')             # inline code
+    _protect(r'https?://[^\s\)]+', '__URL_{}__')            # URLs
+    _protect(r'<[^>]+>', '__HTML_TAG_{}__')                 # HTML tags (anchors etc.)
+    _protect(r'\[([^\[\]]*)\]\(([^)]*)\)', '__MD_LINK_{}__')  # markdown links
+    _protect(r'^\|[-:]+\|', '__TABLE_SEP_{}__', re.MULTILINE)  # table separators
+
+    # Strategy: escape ALL $ that are followed by a digit (currency pattern)
+    # while skipping those already escaped (\$)
+    def _escape_dollar(m):
+        nonlocal changes
+        changes += 1
+        return m.group(1) + '\\' + m.group(2)
+
+    # Match $ that is NOT preceded by backslash, and IS followed by a digit
+    content = re.sub(r'(^|[^\\])(\$)(?=\d)', _escape_dollar, content)
+
+    # Restore protected segments
+    for key, val in protected.items():
+        content = content.replace(key, val)
+
+    # Write back
+    tmp = report_path + '.tmp'
+    with open(tmp, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(content)
+    os.replace(tmp, report_path)
+
+    return {'passed': True, 'issues': [], 'changes': changes}

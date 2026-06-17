@@ -15,7 +15,7 @@ from dr_gen import (
     generate_refs, map_chapters,
     write_json, write_md,
     prepare_chapter, assemble_report, convert_citations,
-    detect_engine, generate_confidence_section,
+    detect_engine, generate_confidence_section, escape_currency,
 )
 from lang_config import get_lang_config
 
@@ -142,6 +142,10 @@ def main():
     p.add_argument('--manifest', required=True)
     p.add_argument('--report', required=True, help='Path to assembled report (in-place update)')
     p.add_argument('--lang', default='zh', help='Language code')
+
+    # ── Currency escaping ──
+    p = sub.add_parser('escape-currency', help='Escape dollar signs to prevent LaTeX math mode rendering')
+    p.add_argument('report', help='Path to report markdown file')
 
     # ── Chapter skeleton + Report assembly ──
     p = sub.add_parser('prepare-chapter', help='Generate chapter skeleton with pre-matched facts')
@@ -334,6 +338,12 @@ def main():
               f"|score={sumd.get('score',0)}"
               f"|verdict={sumd.get('verdict_label','unknown')}")
         sys.exit(0)
+
+    # ── Dispatch: escape-currency ──
+    elif args.command == 'escape-currency':
+        result = escape_currency(args.report)
+        print(f"Escaped {result['changes']} dollar signs in: {args.report}")
+        _exit(result)
 
     # ── Dispatch: skeleton + assembly ──
     elif args.command == 'prepare-chapter':
