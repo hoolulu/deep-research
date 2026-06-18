@@ -1,5 +1,35 @@
 [
   {
+    "title": "2026年固态硬盘（SSD）价格走势研究与展望",
+    "path": "reports/zh/2026年固态硬盘（SSD）价格走势研究与展望-20260618-165447.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "quick",
+    "word_count": 17548,
+    "date": "2026-06-18",
+    "sources": 20
+  },
+  {
+    "title": "中国夫妻亲密关系变迁：无性婚姻、性压抑与婚姻模式趋势",
+    "path": "reports/zh/中国夫妻亲密关系变迁：无性婚姻、性压抑与婚姻模式趋势-20260618-115823.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 68794,
+    "date": "2026-06-18",
+    "sources": 54
+  },
+  {
+    "title": "太空经济发展方向深度研究报告：2026年全球格局、产业赛道与战略前瞻",
+    "path": "reports/zh/太空经济发展方向深度研究报告：2026年全球格局、产业赛道与战略前瞻-20260618-171053.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 56692,
+    "date": "2026-06-18",
+    "sources": 49
+  },
+  {
     "title": "2026年中国白酒行业深度分析",
     "path": "reports/zh/2026年中国白酒行业深度分析-20260617-042500.md",
     "lang": "zh",
@@ -110,16 +140,6 @@
     "sources": 44
   },
   {
-    "title": "아모레퍼시픽/LG생활건강 글로벌 전략 2026: K-뷰티 양대 강자의 해외 시장 경쟁 구도와 전망",
-    "path": "reports/ko/아모레퍼시픽-LG생활건강 글로벌 전략 2026- K-뷰티 양대 강자의 해외 시장 경쟁 구도와 전망-20260614-180437.md",
-    "lang": "ko",
-    "lang_name": "한국어",
-    "mode": "standard",
-    "word_count": 31958,
-    "date": "2026-06-14",
-    "sources": 73
-  },
-  {
     "title": "2026年中国在线招聘行业竞争分析",
     "path": "reports/zh/2026年中国在线招聘行业竞争分析-20260614-173127.md",
     "lang": "zh",
@@ -160,6 +180,16 @@
     "sources": 65
   },
   {
+    "title": "아모레퍼시픽/LG생활건강 글로벌 전략 2026: K-뷰티 양대 강자의 해외 시장 경쟁 구도와 전망",
+    "path": "reports/ko/아모레퍼시픽-LG생활건강 글로벌 전략 2026- K-뷰티 양대 강자의 해외 시장 경쟁 구도와 전망-20260614-180437.md",
+    "lang": "ko",
+    "lang_name": "한국어",
+    "mode": "standard",
+    "word_count": 31958,
+    "date": "2026-06-14",
+    "sources": 73
+  },
+  {
     "title": "2026年高考全面分析报告",
     "path": "reports/zh/2026年高考全面分析报告-20260613-194350.md",
     "lang": "zh",
@@ -168,36 +198,6 @@
     "word_count": 21823,
     "date": "2026-06-13",
     "sources": 47
-  },
-  {
-    "title": "Shifts in the Global Population Center of Gravity",
-    "path": "reports/en/Shifts in the Global Population Center of Gravity-20260612-042858.md",
-    "lang": "en",
-    "lang_name": "English",
-    "mode": "standard",
-    "word_count": 41256,
-    "date": "2026-06-12",
-    "sources": 42
-  },
-  {
-    "title": "The Feasibility of Mars Colonization: Radiation, Water Ice, Terraforming, and Global Mission Plans",
-    "path": "reports/en/The Feasibility of Mars Colonization- Radiation, Water Ice, Terraforming, and Global Mission Plans-20260612-163636.md",
-    "lang": "en",
-    "lang_name": "English",
-    "mode": "standard",
-    "word_count": 39252,
-    "date": "2026-06-12",
-    "sources": 31
-  },
-  {
-    "title": "The Nile, Yellow River, and Ganges: Geopolitics and Ecological Crises of River Civilizations",
-    "path": "reports/en/The Nile, Yellow River, and Ganges- Geopolitics and Ecological Crises of River Civilizations-20260612-144248.md",
-    "lang": "en",
-    "lang_name": "English",
-    "mode": "standard",
-    "word_count": 43331,
-    "date": "2026-06-12",
-    "sources": 23
   },
   {
     "title": "中国人口结构变迁历史：从高增长到深度转型",
@@ -280,6 +280,66 @@
     "sources": 59
   },
   {
+    "title": "Shifts in the Global Population Center of Gravity",
+    "path": "reports/en/Shifts in the Global Population Center of Gravity-20260612-042858.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "standard",
+    "word_count": 41256,
+    "date": "2026-06-12",
+    "sources": 42
+  },
+  {
+    "title": "The Feasibility of Mars Colonization: Radiation, Water Ice, Terraforming, and Global Mission Plans",
+    "path": "reports/en/The Feasibility of Mars Colonization- Radiation, Water Ice, Terraforming, and Global Mission Plans-20260612-163636.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "standard",
+    "word_count": 39252,
+    "date": "2026-06-12",
+    "sources": 31
+  },
+  {
+    "title": "The Nile, Yellow River, and Ganges: Geopolitics and Ecological Crises of River Civilizations",
+    "path": "reports/en/The Nile, Yellow River, and Ganges- Geopolitics and Ecological Crises of River Civilizations-20260612-144248.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "standard",
+    "word_count": 43331,
+    "date": "2026-06-12",
+    "sources": 23
+  },
+  {
+    "title": "流浪地球背后的真实科学：太阳膨胀、引力弹弓与比邻星",
+    "path": "reports/zh/流浪地球背后的真实科学：太阳膨胀、引力弹弓与比邻星-20260611-153813.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 23635,
+    "date": "2026-06-11",
+    "sources": 77
+  },
+  {
+    "title": "火星移民的工程现实：从 SpaceX 到 ISRU 到辐射防护",
+    "path": "reports/zh/火星移民的工程现实：从 SpaceX 到 ISRU 到辐射防护-20260611-164652.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 38356,
+    "date": "2026-06-11",
+    "sources": 95
+  },
+  {
+    "title": "郑和下西洋：为什么中国在 15 世纪放弃了海洋？",
+    "path": "reports/zh/郑和下西洋：为什么中国在 15 世纪放弃了海洋？-20260611-154808.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "deep",
+    "word_count": 28829,
+    "date": "2026-06-11",
+    "sources": 54
+  },
+  {
     "title": "How the Black Death Reshaped Europe's Economy: Labor Shortages, Wage Growth, and Feudalism's End",
     "path": "reports/en/How the Black Death Reshaped Europe's Economy- Labor Shortages, Wage Growth, and Feudalism's End-20260611-173826.md",
     "lang": "en",
@@ -318,56 +378,6 @@
     "word_count": 49717,
     "date": "2026-06-11",
     "sources": 71
-  },
-  {
-    "title": "流浪地球背后的真实科学：太阳膨胀、引力弹弓与比邻星",
-    "path": "reports/zh/流浪地球背后的真实科学：太阳膨胀、引力弹弓与比邻星-20260611-153813.md",
-    "lang": "zh",
-    "lang_name": "中文",
-    "mode": "deep",
-    "word_count": 23635,
-    "date": "2026-06-11",
-    "sources": 77
-  },
-  {
-    "title": "火星移民的工程现实：从 SpaceX 到 ISRU 到辐射防护",
-    "path": "reports/zh/火星移民的工程现实：从 SpaceX 到 ISRU 到辐射防护-20260611-164652.md",
-    "lang": "zh",
-    "lang_name": "中文",
-    "mode": "deep",
-    "word_count": 38356,
-    "date": "2026-06-11",
-    "sources": 95
-  },
-  {
-    "title": "郑和下西洋：为什么中国在 15 世纪放弃了海洋？",
-    "path": "reports/zh/郑和下西洋：为什么中国在 15 世纪放弃了海洋？-20260611-154808.md",
-    "lang": "zh",
-    "lang_name": "中文",
-    "mode": "deep",
-    "word_count": 28829,
-    "date": "2026-06-11",
-    "sources": 54
-  },
-  {
-    "title": "Buy Now Pay Later Market Outlook 2026: Regulation, Profitability, and Gen Z Usage",
-    "path": "reports/en/Buy Now Pay Later Market Outlook 2026- Regulation, Profitability, and Gen Z Usage-20260610-163516.md",
-    "lang": "en",
-    "lang_name": "English",
-    "mode": "quick",
-    "word_count": 13295,
-    "date": "2026-06-10",
-    "sources": 16
-  },
-  {
-    "title": "La consommation de vin en France : déclin générationnel ou renaissance ?",
-    "path": "reports/fr/La consommation de vin en France - déclin générationnel ou renaissance --20260610-012603.md",
-    "lang": "fr",
-    "lang_name": "Français",
-    "mode": "quick",
-    "word_count": 16769,
-    "date": "2026-06-10",
-    "sources": 48
   },
   {
     "title": "2026年AI编程助手工具发展趋势报告",
@@ -430,6 +440,116 @@
     "sources": 33
   },
   {
+    "title": "La consommation de vin en France : déclin générationnel ou renaissance ?",
+    "path": "reports/fr/La consommation de vin en France - déclin générationnel ou renaissance --20260610-012603.md",
+    "lang": "fr",
+    "lang_name": "Français",
+    "mode": "quick",
+    "word_count": 16769,
+    "date": "2026-06-10",
+    "sources": 48
+  },
+  {
+    "title": "Buy Now Pay Later Market Outlook 2026: Regulation, Profitability, and Gen Z Usage",
+    "path": "reports/en/Buy Now Pay Later Market Outlook 2026- Regulation, Profitability, and Gen Z Usage-20260610-163516.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "quick",
+    "word_count": 13295,
+    "date": "2026-06-10",
+    "sources": 16
+  },
+  {
+    "title": "Polski sektor usług IT i outsourcing 2026 — analiza rynku i perspektywy",
+    "path": "reports/pl/Polski sektor usług IT i outsourcing 2026 — analiza rynku i perspektywy-20260609-154115.md",
+    "lang": "pl",
+    "lang_name": "Polski",
+    "mode": "standard",
+    "word_count": 16033,
+    "date": "2026-06-09",
+    "sources": 36
+  },
+  {
+    "title": "Ngành sản xuất điện tử Việt Nam và cơ hội từ dịch chuyển chuỗi cung ứng 2026",
+    "path": "reports/vi/Ngành sản xuất điện tử Việt Nam và cơ hội từ dịch chuyển chuỗi cung ứng 2026-20260609-151221.md",
+    "lang": "vi",
+    "lang_name": "Tiếng Việt",
+    "mode": "standard",
+    "word_count": 13429,
+    "date": "2026-06-09",
+    "sources": 28
+  },
+  {
+    "title": "Svensk bio- och hälsoteknikmarknad 2026: Marknadsanalys, trender och framtidsutsikter",
+    "path": "reports/sv/Svensk bio- och hälsoteknikmarknad 2026- Marknadsanalys, trender och framtidsutsikter-20260609-154243.md",
+    "lang": "sv",
+    "lang_name": "Svenska",
+    "mode": "standard",
+    "word_count": 16085,
+    "date": "2026-06-09",
+    "sources": 33
+  },
+  {
+    "title": "日本の若者における終身雇用制と転職意識の変化に関する研究",
+    "path": "reports/ja/日本の若者における終身雇用制と転職意識の変化に関する研究-20260609-014317.md",
+    "lang": "ja",
+    "lang_name": "日本語",
+    "mode": "standard",
+    "word_count": 15366,
+    "date": "2026-06-09",
+    "sources": 32
+  },
+  {
+    "title": "Il mercato della moda di lusso italiano nel 2026: dimensioni, tendenze e prospettive",
+    "path": "reports/it/Il mercato della moda di lusso italiano nel 2026- dimensioni, tendenze e prospettive-20260609-151117.md",
+    "lang": "it",
+    "lang_name": "Italiano",
+    "mode": "standard",
+    "word_count": 20771,
+    "date": "2026-06-09",
+    "sources": 34
+  },
+  {
+    "title": "Исследование потребительской мотивации на рынке подержанной одежды и электроники в России",
+    "path": "reports/ru/Исследование потребительской мотивации на рынке подержанной одежды и электроники в России-20260609-011024.md",
+    "lang": "ru",
+    "lang_name": "Русский",
+    "mode": "standard",
+    "word_count": 16211,
+    "date": "2026-06-09",
+    "sources": 7
+  },
+  {
+    "title": "Предпочтения российской молодёжи в вопросах аренды и покупки недвижимости — комплексное исследование рынка",
+    "path": "reports/ru/Предпочтения российской молодёжи в вопросах аренды и покупки недвижимости — комплексное исследование рынка-20260609-010716.md",
+    "lang": "ru",
+    "lang_name": "Русский",
+    "mode": "standard",
+    "word_count": 32142,
+    "date": "2026-06-09",
+    "sources": 32
+  },
+  {
+    "title": "Atitude contraditória dos residentes portugueses face ao crescimento do turismo e à pressão no mercado de arrendamento local",
+    "path": "reports/pt/Atitude contraditória dos residentes portugueses face ao crescimento do turismo e à pressão no mercado de arrendamento local-20260609-021844.md",
+    "lang": "pt",
+    "lang_name": "Português",
+    "mode": "standard",
+    "word_count": 16849,
+    "date": "2026-06-09",
+    "sources": 19
+  },
+  {
+    "title": "2026年海克斯大乱斗强化符文系统深入分析",
+    "path": "reports/zh/2026年海克斯大乱斗强化符文系统深入分析-20260609-224917.md",
+    "lang": "zh",
+    "lang_name": "中文",
+    "mode": "standard",
+    "word_count": 12571,
+    "date": "2026-06-09",
+    "sources": 29
+  },
+  {
     "title": "تقييم قبول المواطنين الإماراتيين للخدمات الصحية عن بعد - العوامل المحفزة والعوائق",
     "path": "reports/ar/تقييم قبول المواطنين الإماراتيين للخدمات الصحية عن بعد - العوامل المحفزة والعوائق-20260609-021413.md",
     "lang": "ar",
@@ -438,6 +558,26 @@
     "word_count": 16717,
     "date": "2026-06-09",
     "sources": 27
+  },
+  {
+    "title": "De Nederlandse Halfgeleiderindustrie en het ASML-ecosysteem 2026",
+    "path": "reports/nl/De Nederlandse Halfgeleiderindustrie en het ASML-ecosysteem 2026-20260609-154326.md",
+    "lang": "nl",
+    "lang_name": "Nederlands",
+    "mode": "quick",
+    "word_count": 14714,
+    "date": "2026-06-09",
+    "sources": 20
+  },
+  {
+    "title": "भारतीय कृषि क्षेत्र और खाद्य प्रसंस्करण उद्योग 2026: संरचना, चुनौतियाँ और विकास की संभावनाएँ",
+    "path": "reports/hi/भारतीय कृषि और खाद्य प्रसंस्करण 2026-20260609-154211.md",
+    "lang": "hi",
+    "lang_name": "हिन्दी",
+    "mode": "standard",
+    "word_count": 12540,
+    "date": "2026-06-09",
+    "sources": 19
   },
   {
     "title": "Analyse der Entscheidungsmotive junger Deutscher zwischen dualer Ausbildung und Hochschulstudium",
@@ -458,6 +598,46 @@
     "word_count": 18899,
     "date": "2026-06-09",
     "sources": 42
+  },
+  {
+    "title": "직장 내 괴롭힘 금지법 시행 이후 직장 문화 변화에 대한 한국 직장인 평가",
+    "path": "reports/ko/직장 내 괴롭힘 금지법 시행 이후 직장 문화 변화에 대한 한국 직장인 평가-20260609-014147.md",
+    "lang": "ko",
+    "lang_name": "한국어",
+    "mode": "standard",
+    "word_count": 16727,
+    "date": "2026-06-09",
+    "sources": 20
+  },
+  {
+    "title": "Ekonomi Digital Indonesia 2026: Pertumbuhan E-Commerce, Tantangan Regulasi, dan Masa Depan Pasar",
+    "path": "reports/id/Ekonomi Digital Indonesia 2026- Pertumbuhan E-Commerce, Tantangan Regulasi, dan Masa Depan Pasar-20260609-154104.md",
+    "lang": "id",
+    "lang_name": "Bahasa Indonesia",
+    "mode": "quick",
+    "word_count": 16996,
+    "date": "2026-06-09",
+    "sources": 36
+  },
+  {
+    "title": "Analyse de l'attitude des salariés français envers la semaine de quatre jours - motivations, freins et perspectives",
+    "path": "reports/fr/Analyse de l'attitude des salariés français envers la semaine de quatre jours - motivations, freins et perspectives-20260609-012315.md",
+    "lang": "fr",
+    "lang_name": "Français",
+    "mode": "quick",
+    "word_count": 14219,
+    "date": "2026-06-09",
+    "sources": 27
+  },
+  {
+    "title": "Actitud de los consumidores argentinos ante la inflación y el debate sobre la dolarización",
+    "path": "reports/es/Actitud de los consumidores argentinos ante la inflación y el debate sobre la dolarización-20260609-022124.md",
+    "lang": "es",
+    "lang_name": "Español",
+    "mode": "standard",
+    "word_count": 20293,
+    "date": "2026-06-09",
+    "sources": 45
   },
   {
     "title": "A Study of U.S. Consumer Brand Loyalty and Trade-Down Behavior Amid Inflation",
@@ -550,136 +730,6 @@
     "sources": 48
   },
   {
-    "title": "Actitud de los consumidores argentinos ante la inflación y el debate sobre la dolarización",
-    "path": "reports/es/Actitud de los consumidores argentinos ante la inflación y el debate sobre la dolarización-20260609-022124.md",
-    "lang": "es",
-    "lang_name": "Español",
-    "mode": "standard",
-    "word_count": 20293,
-    "date": "2026-06-09",
-    "sources": 45
-  },
-  {
-    "title": "Analyse de l'attitude des salariés français envers la semaine de quatre jours - motivations, freins et perspectives",
-    "path": "reports/fr/Analyse de l'attitude des salariés français envers la semaine de quatre jours - motivations, freins et perspectives-20260609-012315.md",
-    "lang": "fr",
-    "lang_name": "Français",
-    "mode": "quick",
-    "word_count": 14219,
-    "date": "2026-06-09",
-    "sources": 27
-  },
-  {
-    "title": "भारतीय कृषि क्षेत्र और खाद्य प्रसंस्करण उद्योग 2026: संरचना, चुनौतियाँ और विकास की संभावनाएँ",
-    "path": "reports/hi/भारतीय कृषि और खाद्य प्रसंस्करण 2026-20260609-154211.md",
-    "lang": "hi",
-    "lang_name": "हिन्दी",
-    "mode": "standard",
-    "word_count": 12540,
-    "date": "2026-06-09",
-    "sources": 19
-  },
-  {
-    "title": "Ekonomi Digital Indonesia 2026: Pertumbuhan E-Commerce, Tantangan Regulasi, dan Masa Depan Pasar",
-    "path": "reports/id/Ekonomi Digital Indonesia 2026- Pertumbuhan E-Commerce, Tantangan Regulasi, dan Masa Depan Pasar-20260609-154104.md",
-    "lang": "id",
-    "lang_name": "Bahasa Indonesia",
-    "mode": "quick",
-    "word_count": 16996,
-    "date": "2026-06-09",
-    "sources": 36
-  },
-  {
-    "title": "Il mercato della moda di lusso italiano nel 2026: dimensioni, tendenze e prospettive",
-    "path": "reports/it/Il mercato della moda di lusso italiano nel 2026- dimensioni, tendenze e prospettive-20260609-151117.md",
-    "lang": "it",
-    "lang_name": "Italiano",
-    "mode": "standard",
-    "word_count": 20771,
-    "date": "2026-06-09",
-    "sources": 34
-  },
-  {
-    "title": "日本の若者における終身雇用制と転職意識の変化に関する研究",
-    "path": "reports/ja/日本の若者における終身雇用制と転職意識の変化に関する研究-20260609-014317.md",
-    "lang": "ja",
-    "lang_name": "日本語",
-    "mode": "standard",
-    "word_count": 15366,
-    "date": "2026-06-09",
-    "sources": 32
-  },
-  {
-    "title": "직장 내 괴롭힘 금지법 시행 이후 직장 문화 변화에 대한 한국 직장인 평가",
-    "path": "reports/ko/직장 내 괴롭힘 금지법 시행 이후 직장 문화 변화에 대한 한국 직장인 평가-20260609-014147.md",
-    "lang": "ko",
-    "lang_name": "한국어",
-    "mode": "standard",
-    "word_count": 16727,
-    "date": "2026-06-09",
-    "sources": 20
-  },
-  {
-    "title": "De Nederlandse Halfgeleiderindustrie en het ASML-ecosysteem 2026",
-    "path": "reports/nl/De Nederlandse Halfgeleiderindustrie en het ASML-ecosysteem 2026-20260609-154326.md",
-    "lang": "nl",
-    "lang_name": "Nederlands",
-    "mode": "quick",
-    "word_count": 14714,
-    "date": "2026-06-09",
-    "sources": 20
-  },
-  {
-    "title": "Polski sektor usług IT i outsourcing 2026 — analiza rynku i perspektywy",
-    "path": "reports/pl/Polski sektor usług IT i outsourcing 2026 — analiza rynku i perspektywy-20260609-154115.md",
-    "lang": "pl",
-    "lang_name": "Polski",
-    "mode": "standard",
-    "word_count": 16033,
-    "date": "2026-06-09",
-    "sources": 36
-  },
-  {
-    "title": "Atitude contraditória dos residentes portugueses face ao crescimento do turismo e à pressão no mercado de arrendamento local",
-    "path": "reports/pt/Atitude contraditória dos residentes portugueses face ao crescimento do turismo e à pressão no mercado de arrendamento local-20260609-021844.md",
-    "lang": "pt",
-    "lang_name": "Português",
-    "mode": "standard",
-    "word_count": 16849,
-    "date": "2026-06-09",
-    "sources": 19
-  },
-  {
-    "title": "Исследование потребительской мотивации на рынке подержанной одежды и электроники в России",
-    "path": "reports/ru/Исследование потребительской мотивации на рынке подержанной одежды и электроники в России-20260609-011024.md",
-    "lang": "ru",
-    "lang_name": "Русский",
-    "mode": "standard",
-    "word_count": 16211,
-    "date": "2026-06-09",
-    "sources": 7
-  },
-  {
-    "title": "Предпочтения российской молодёжи в вопросах аренды и покупки недвижимости — комплексное исследование рынка",
-    "path": "reports/ru/Предпочтения российской молодёжи в вопросах аренды и покупки недвижимости — комплексное исследование рынка-20260609-010716.md",
-    "lang": "ru",
-    "lang_name": "Русский",
-    "mode": "standard",
-    "word_count": 32142,
-    "date": "2026-06-09",
-    "sources": 32
-  },
-  {
-    "title": "Svensk bio- och hälsoteknikmarknad 2026: Marknadsanalys, trender och framtidsutsikter",
-    "path": "reports/sv/Svensk bio- och hälsoteknikmarknad 2026- Marknadsanalys, trender och framtidsutsikter-20260609-154243.md",
-    "lang": "sv",
-    "lang_name": "Svenska",
-    "mode": "standard",
-    "word_count": 16085,
-    "date": "2026-06-09",
-    "sources": 33
-  },
-  {
     "title": "รายงานการฟื้นตัวของอุตสาหกรรมการท่องเที่ยวไทยหลังโควิด 2026",
     "path": "reports/th/รายงานการฟื้นตัวของอุตสาหกรรมการท่องเที่ยวไทยหลังโควิด 2026-20260609-163559.md",
     "lang": "th",
@@ -700,36 +750,6 @@
     "sources": 48
   },
   {
-    "title": "Ngành sản xuất điện tử Việt Nam và cơ hội từ dịch chuyển chuỗi cung ứng 2026",
-    "path": "reports/vi/Ngành sản xuất điện tử Việt Nam và cơ hội từ dịch chuyển chuỗi cung ứng 2026-20260609-151221.md",
-    "lang": "vi",
-    "lang_name": "Tiếng Việt",
-    "mode": "standard",
-    "word_count": 13429,
-    "date": "2026-06-09",
-    "sources": 28
-  },
-  {
-    "title": "2026年海克斯大乱斗强化符文系统深入分析",
-    "path": "reports/zh/2026年海克斯大乱斗强化符文系统深入分析-20260609-224917.md",
-    "lang": "zh",
-    "lang_name": "中文",
-    "mode": "standard",
-    "word_count": 12571,
-    "date": "2026-06-09",
-    "sources": 29
-  },
-  {
-    "title": "Quantum Computing Market Outlook 2026",
-    "path": "reports/en/Quantum Computing Market Outlook 2026-20260608-200801.md",
-    "lang": "en",
-    "lang_name": "English",
-    "mode": "deep",
-    "word_count": 36715,
-    "date": "2026-06-08",
-    "sources": 85
-  },
-  {
     "title": "日本のアニメ産業のグローバル市場戦略",
     "path": "reports/ja/日本のアニメ産業のグローバル市場戦略-20260608-193922.md",
     "lang": "ja",
@@ -738,16 +758,6 @@
     "word_count": 10057,
     "date": "2026-06-08",
     "sources": 20
-  },
-  {
-    "title": "한국 반도체 산업의 글로벌 경쟁력 분석",
-    "path": "reports/ko/한국 반도체 산업의 글로벌 경쟁력 분석-20260608-171550.md",
-    "lang": "ko",
-    "lang_name": "한국어",
-    "mode": "quick",
-    "word_count": 14213,
-    "date": "2026-06-08",
-    "sources": 45
   },
   {
     "title": "2026年AI眼镜行业深度研究",
@@ -776,6 +786,26 @@
     "lang_name": "中文",
     "mode": "deep",
     "word_count": 36576,
+    "date": "2026-06-08",
+    "sources": 85
+  },
+  {
+    "title": "한국 반도체 산업의 글로벌 경쟁력 분석",
+    "path": "reports/ko/한국 반도체 산업의 글로벌 경쟁력 분석-20260608-171550.md",
+    "lang": "ko",
+    "lang_name": "한국어",
+    "mode": "quick",
+    "word_count": 14213,
+    "date": "2026-06-08",
+    "sources": 45
+  },
+  {
+    "title": "Quantum Computing Market Outlook 2026",
+    "path": "reports/en/Quantum Computing Market Outlook 2026-20260608-200801.md",
+    "lang": "en",
+    "lang_name": "English",
+    "mode": "deep",
+    "word_count": 36715,
     "date": "2026-06-08",
     "sources": 85
   },
