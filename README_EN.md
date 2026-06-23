@@ -12,7 +12,8 @@ Built for industry research, trend foresight, competitive scanning, policy analy
 
 > **Current version:** [View updates](https://github.com/hoolulu/deep-research/commits/main)
 >
-> 📂 **[Browse all sample reports →](https://hoolulu.github.io/deep-research/)** — filter, sort, and browse by language and depth.
+> 📂 **Browse all sample reports →** [H33研报· 深度调研报告集](https://www.h33.top)
+> — filter, sort, and browse by language and depth.
 
 ---
 

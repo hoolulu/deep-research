@@ -12,7 +12,8 @@
 
 > **当前版本：** [查看更新](https://github.com/hoolulu/deep-research/commits/main)
 >
-> 📂 **[浏览所有示例报告 →](https://hoolulu.github.io/deep-research/)** 可筛选、排序、按语言和类型浏览所有示例报告。
+> 📂 **浏览所有示例报告 →** [H33研报· 深度调研报告集](https://www.h33.top)
+> 可筛选、排序、按语言和类型浏览所有示例报告。
 
 ---
 
