@@ -184,11 +184,11 @@ repository: https://github.com/hoolulu/deep-research
        - todowrite 标记每章 completed
        - 向用户报告最终章节完成情况（使用 $LANG 语言）
      8. ══ Task 4 — 验证 + 装配 + QA（**主 agent 直接执行**） ══
-     → **Step 0 — 清理残留**：删除 {SKILLDIR}/reports/ 目录下所有 0 字节文件（前次装配失败的空壳）；创建 {SKILLDIR}/reports/$LANG/ 子目录（如果不存在）
+     → **Step 0 — 清理残留**：删除 D:\OpenCode\projects\h33-reports\reports\ 目录下所有 0 字节文件（前次装配失败的空壳）；创建 D:\OpenCode\projects\h33-reports\reports\$LANG\ 子目录（如果不存在）
      → **Step 1 — 批量验证**：`python {TOOLSDIR}/dr_tools.py validate-all-chapters --chapters-dir {TMPDIR}/chapters/ --chapters {chapter_count}`，内部 ThreadPoolExecutor 并行验证所有章节。从输出 JSON 的 `failed_chapters` 中找到失败章节，逐个重新生成（重新派发章节 agent → 重新验证该章）。
      → **Step 1b — 章节深度均衡检查**：`python {TOOLSDIR}/dr_tools.py depth-balance --chapters-dir {TMPDIR}/chapters/ --chapters {chapter_count}`。如果某章行数 < 平均值的 50%，标记告警（not blocking，仅提示）。
      → Step 1 或 Step 2 失败时，**先删除本次已写入的产物**（报告文件、中间文件等），再重新执行对应步骤，避免残留文件干扰下次运行
-     → **Step 2 — 装配**：`python {TOOLSDIR}/dr_tools.py assemble-report --outline {TMPDIR}/outline.json --chapters-dir {TMPDIR}/chapters/ --datapool {TMPDIR}/data-pool.json --mode {depth_mode} --target-year {target_year} --output {SKILLDIR}/reports/$LANG/ --lang $LANG`
+     → **Step 2 — 装配**：`python {TOOLSDIR}/dr_tools.py assemble-report --outline {TMPDIR}/outline.json --chapters-dir {TMPDIR}/chapters/ --datapool {TMPDIR}/data-pool.json --mode {depth_mode} --target-year {target_year} --output D:\OpenCode\projects\h33-reports\reports\$LANG\ --lang $LANG`
     → **$REPORT 提取**：从装配输出中提取 `Report assembled: ...` 行中冒号后的第一个路径，设为 `$REPORT` 变量
      → **Step 2b — 可信评估(数据层)**：`python {TOOLSDIR}/dr_tools.py generate-confidence-section --datapool {TMPDIR}/data-pool.json --manifest {TMPDIR}/task2_manifest.json --report "$REPORT" --lang $LANG`
        从输出中解析 `CONFIDENCE:` 行获取 `conf_coverage`、`conf_total_facts`、`conf_high_pct`、`conf_medium_pct`、`conf_low_pct`、`conf_actual_pct`、`conf_est_pct`、`conf_fct_pct`、`conf_auth_pct`、`conf_data_limited`、`conf_controversies`、`conf_adequate_subq`、`conf_total_subq`、`conf_score` 共 14 个变量。
@@ -283,7 +283,7 @@ repository: https://github.com/hoolulu/deep-research
       其中：
       - `{outline.chapters[0].description}` = 从 outline.json 读取第 1 章（核心观点）的 description 字段，作为观点速览摘要
       - `{gen_time}` = 读取 {TMPDIR}/start_time.txt 中的任务开始时间，格式化为 `YYYY-MM-DD HH:mm:ss`
-       - `{REPORT}` 仅输出最终报告路径（`{SKILLDIR}/reports/{LANG}/xxx.md`），不包含任何 TMPDIR 中间路径
+       - `{REPORT}` 仅输出最终报告路径（`D:\OpenCode\projects\h33-reports\reports\{LANG}\xxx.md`），不包含任何 TMPDIR 中间路径
       - `{search_desc}` = 按搜索策略拼接规则生成，所有中文词根据 $LANG 翻译
        - `{data_quality_badge}` = 按数据质量徽标规则生成
        - `<覆盖_{coverage_summary}>` = 从 `task2_manifest.coverage_summary` 读取（adequate/partial/insufficient），用语言映射表中"覆盖充足/部分覆盖/覆盖不足"行对应翻译替换
@@ -358,7 +358,7 @@ repository: https://github.com/hoolulu/deep-research
 最终报告保存路径按以下优先级判定：
 
 1. **用户自定义路径** — 如果用户显式指定了输出目录（如 `D:\Reports\`），使用指定路径
-2. **Skill 默认路径** — `{SKILLDIR}/reports/`（skill 根目录下的 reports/）
+2. **Skill 默认路径** — `D:\OpenCode\projects\h33-reports\reports\`（h33-reports 项目 reports/ 目录）
 
 装配阶段（Step 3）根据实际使用的路径写入，文件名格式不变：`<主题>-YYYYMMDD-HHmmss.md`。
 
