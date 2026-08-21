@@ -339,11 +339,11 @@ MIT
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=hoolulu%2Fdeep-research">
+<a href="https://star-history.dera.page/#hoolulu/deep-research&type=date">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=hoolulu/deep-research&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=hoolulu/deep-research&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=hoolulu/deep-research&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=hoolulu/deep-research&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=hoolulu/deep-research&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=hoolulu/deep-research&type=date&legend=top-left" />
  </picture>
 </a>
 
@@ -352,4 +352,3 @@ MIT
 **Created by [hoolulu](https://github.com/hoolulu)** · 项目地址：[github.com/hoolulu/deep-research](https://github.com/hoolulu/deep-research)
 
 > 社区讨论：[LINUX DO](https://linux.do/t/topic/2312664)
-
