@@ -1,8 +1,8 @@
 ---
 name: deep-research
 description: "Professional deep research report generation — multi-agent collaboration with parallel chapter writing, automatic latest-data targeting, multilingual output, and built-in quality checks."
-version: 3.0.0
-updated: 2026-06-08
+version: 5.1.0
+updated: 2026-08-27
 risk: medium
 author: hoolulu
 repository: https://github.com/hoolulu/deep-research

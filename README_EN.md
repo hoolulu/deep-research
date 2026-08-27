@@ -76,15 +76,17 @@ People who need professional-grade research capabilities without relying on paid
 
 ### 📖 Featured Reports
 
+> All sample reports have moved to [H33研报· 深度调研报告集](https://www.h33.top) — filter, sort, and browse by language and type. Some featured topics:
+
 | Report | Tags |
 |--------|------|
-| <a href="reports/en/Global AI Chip Market Landscape and Competitive Dynamics 2026-20260609-170008.md" target="_blank">Global AI Chip Market Landscape and Competitive Dynamics 2026</a> | AI · Semiconductors |
-| <a href="reports/en/The Feasibility of Mars Colonization- Radiation, Water Ice, Terraforming, and Global Mission Plans-20260612-163636.md" target="_blank">The Feasibility of Mars Colonization</a> | Space · Technology |
-| <a href="reports/en/Electric Vehicle Battery Supply Chain and Raw Material Geopolitics 2026-20260609-171947.md" target="_blank">Electric Vehicle Battery Supply Chain and Raw Material Geopolitics 2026</a> | Energy · Geopolitics |
-| <a href="reports/en/GenAI Enterprise Adoption Trends & ROI Measurement in 2026-20260609-174525.md" target="_blank">GenAI Enterprise Adoption Trends & ROI Measurement in 2026</a> | AI · Enterprise |
-| <a href="reports/en/Cross-border E-commerce Logistics Trends in Southeast Asia 2026-20260609-165623.md" target="_blank">Cross-border E-commerce Logistics Trends in Southeast Asia 2026</a> | E-commerce · Logistics |
+| <a href="https://www.h33.top" target="_blank">Global AI Chip Market Landscape and Competitive Dynamics 2026</a> | AI · Semiconductors |
+| <a href="https://www.h33.top" target="_blank">The Feasibility of Mars Colonization</a> | Space · Technology |
+| <a href="https://www.h33.top" target="_blank">Electric Vehicle Battery Supply Chain and Raw Material Geopolitics 2026</a> | Energy · Geopolitics |
+| <a href="https://www.h33.top" target="_blank">GenAI Enterprise Adoption Trends & ROI Measurement in 2026</a> | AI · Enterprise |
+| <a href="https://www.h33.top" target="_blank">Cross-border E-commerce Logistics Trends in Southeast Asia 2026</a> | E-commerce · Logistics |
 
-Click a report title to open and read it in a new window.
+Click a report title to jump to the H33 report collection and search for the topic.
 
 ## 4. Cost
 
