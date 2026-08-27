@@ -23,7 +23,7 @@ Built for industry research, trend foresight, competitive scanning, policy analy
 <tr><td style="white-space: nowrap; width: 1%;"><b>🎯 One command</b></td><td><code>/research &lt;topic&gt;</code> → fully automated research, zero manual intervention</td></tr>
 <tr><td style="white-space: nowrap;"><b>⏱ Report in ~10 min</b></td><td>quick mode ~8–12 min, standard ~10–15 min</td></tr>
 <tr><td style="white-space: nowrap;"><b>🌍 19 languages</b></td><td>Auto-detects topic language, generates report in the same language</td></tr>
-<tr><td style="white-space: nowrap;"><b>🔧 Not OpenCode-exclusive</b></td><td>Adaptable for Claude Code, Cursor, Codex CLI, Windsurf, Cline and more</td></tr>
+<tr><td style="white-space: nowrap;"><b>🔧 Platform-agnostic</b></td><td>Works with any AI coding tool (Claude Code, Codex CLI, Cursor, DSH, Windsurf, Cline and more)</td></tr>
 <tr><td style="white-space: nowrap;"><b>📁 Local file research</b></td><td>Also supports PDF/DOCX/TXT/MD, no internet needed, auto-parsed</td></tr>
 <tr><td style="white-space: nowrap;"><b>🖥️ Local report browser</b></td><td>Auto-refreshed as a local browser page after each run<br><code>reports-browser/index.html</code> — search, filter, sort, preview</td></tr>
 <tr><td style="white-space: nowrap;"><b>📄 PDF/DOCX export</b></td><td>Export reports as PDF or DOCX from the preview modal — fully client-side, no server required</td></tr>
@@ -96,7 +96,7 @@ Click a report title to jump to the H33 report collection and search for the top
 | **SearXNG search (author-deployed)** | Deployed on VPS, zero cost, unlimited usage |
 | **Scrapling fetching** | Runs locally, zero cost |
 | **Domestic sources** | Direct connection, zero cost, no proxy needed |
-| **OpenCode runtime** | MIT open source, zero cost |
+| **AI tool runtime** | MIT open source, zero cost |
 
 > Estimates based on DeepSeek v4 Flash ($0.14/1M input, $0.28/1M output, source: `https://api-docs.deepseek.com/quick_start/pricing`). Actual costs vary by cache hit rate and topic complexity.
 
@@ -107,7 +107,7 @@ The pipeline runs in 4 automated stages:
 ```
 ① Analyze outline — Analyze topic, generate research framework and search plan
          ↓
-② Collect data — ╭─ Online: five-layer parallel search (CLI built-in engine → suggested sources → SearXNG → sources.json → free fallback) → Scrapling batch fetch → data pool
+② Collect data — ╭─ Online: five-layer parallel search (tool built-in engine → suggested sources → SearXNG → sources.json → free fallback) → Scrapling batch fetch → data pool
                   ╰─ Offline: read local files directly (PDF/DOCX/TXT/MD) → data pool
          ↓
 ③ Serial writing — One chapter at a time synchronously, facts embedded directly in prompts, no tool calls
@@ -121,7 +121,7 @@ The pipeline runs in 4 automated stages:
 Search uses a **five-layer priority** strategy, all issued in parallel:
 
 ```
-Layer 0 — CLI built-in engine (auto-detected at runtime, e.g., OpenCode Exa websearch)
+Layer 0 — Tool built-in engine (auto-detected at runtime, e.g., `websearch` / `web_search`)
 Layer 1 — Outline-suggested sources (topic-targeted recommendations, e.g., arctic-council.org)
 Layer 2 — SearXNG (author-deployed, 70+ engines)
 Layer 3 — sources.json (30+ curated quality sources, health-checked on startup)
@@ -155,50 +155,45 @@ All layers are merged and deduplicated, then batch-fetched by Scrapling. Free so
 
 ## 9. Installation
 
+deep-research is a **platform-agnostic** skill: one codebase, drop it into any AI tool that supports skill/command mechanisms — no per-tool rewrite needed.
+
 ### 🧠 Method 1: AI Auto-Install (Recommended)
 
-Copy this prompt into OpenCode chat, the AI will do everything automatically:
+Copy this prompt into your AI tool's chat, the AI will do everything automatically:
 
 ```text
 Please read the https://github.com/hoolulu/deep-research project and follow the documentation to:
 1. Install prerequisites (determine method based on Scrapling docs and your OS)
-2. Register the Scrapling MCP Server, verify it works after CLI restart
-3. Register the /research and /research-update commands
+2. Register the Scrapling MCP Server, verify it works after restart
+3. Register the /research and /research-update entry points for your current tool
 Confirm each step, then read VERSION and summarize the installation status.
 ```
 
 The AI reads the docs → understands your system → installs step by step → verifies. No manual commands needed.
 
-### 🔧 Method 2: Non-OpenCode Users (Claude Code / Codex CLI / Cursor etc.)
+### 📋 Method 2: Manual Entry Registration
 
-Paste this into your AI coding tool:
+Each tool registers skills/commands differently — drop the whole project into the right directory (common tools below):
 
-```text
-Please read the https://github.com/hoolulu/deep-research project, auto-install prerequisites and adapt for the current CLI tool:
-1. Install Python and Scrapling (refer to Scrapling docs and your system)
-2. Register Scrapling MCP Server, verify after restart
-3. Register equivalent entry points for /research and /research-update based on the current tool's capabilities:
-   - **Codex CLI** → Register as a skill (the `command/` directory already contains command files; registration activates them)
-   - **Claude Code** → Register as a slash command (Hook)
-   - **Cursor** → Adapt per platform (custom commands / Agent rules)
-   - Other tools: check for skill/command mechanisms first, then pick the best fit
-4. Translate the multi-agent chain architecture (outline → data collection → parallel writing → assembly+QA) to the current tool's equivalent
-5. If multiple CLI tools are installed, only configure the current tool — do not affect other CLI tools on this machine.
+| Tool | skill/entry location | Command form |
+|------|----------------------|--------------|
+| OpenCode | `~/.opencode/skills/deep-research/` | `/research`, `/research-update` (included in `command/`) |
+| Codex CLI | skill directory, `command/` files included | `/research`, `/research-update` |
+| Claude Code | `~/.claude/skills/deep-research/` | Use SKILL.md as an Agent Skill |
+| Cursor | `.cursor/skills/` or custom commands | Custom command pointing at SKILL.md |
+| DSH / others | Any directory that supports skill loading | Load SKILL.md, then enter a topic |
 
-Confirm each step, then read VERSION and summarize.
-```
-
-Adaptation notes: Multi-agent orchestration needs to map to each platform's native mechanisms (Claude Code's sub-agent, Codex CLI's agent/skill mode, Cursor's agent mode, etc.). Entry point registration also varies by tool (OpenCode/Codex CLI use skills, Claude Code uses Hooks/commands, Cursor uses custom instructions). Search and scraping logic (python-scrapling + search API) can be reused as-is.
+> This skill's SKILL.md is already written as **platform-agnostic** instructions: no dependency on any tool-specific `task()` multi-agent syntax. Chapter writing is parallel by default (when a multi-agent tool is detected); tools without multi-agent support automatically fall back to sequential writing — same output, slightly slower. Search and scraping logic (Scrapling + SearXNG) is reused unchanged across platforms.
 
 ### Prerequisites
 
 | Component | Online mode | Offline mode | How to get |
 |-----------|:-----------:|:------------:|------------|
-| **LLM runtime** (OpenCode / Claude Code / Codex CLI / Cursor etc.) | ✅ Required | ✅ Required | Pick your preferred tool |
+| **AI tool runtime** (Claude Code / Codex CLI / Cursor / DSH / OpenCode etc.) | ✅ Required | ✅ Required | Pick your preferred tool |
 | **Scrapling** | ✅ Required | ❌ Not needed | For web scraping; offline mode doesn't need it |
 | **SearXNG** (author-deployed, 70+ engines) | ✅ Used | ❌ Not needed | Built-in endpoint, ready out of the box |
 
-> **Platform note**: OpenCode has native multi-agent orchestration (Task 1-4 architecture) — no additional plugins needed. Other tools (Claude Code, Cursor, Codex CLI) have their own native multi-agent frameworks and can adapt this skill's workflow directly. Offline mode only needs the LLM's file-reading capability — no search/scraping components required.
+> **Platform note**: Multi-agent-capable tools (OpenCode, Claude Code, Codex, DSH, etc.) naturally write chapters in parallel; tools without multi-agent support automatically write sequentially. Offline mode only needs the LLM's file-reading capability — no search/scraping components required.
 
 ## 10. Usage
 
@@ -232,7 +227,7 @@ The entire pipeline runs automatically — you don't need to do anything:
 Reports are saved as Markdown files in the skill's `reports/` directory, with date-timestamped filenames:
 
 ```
-~/.opencode/skills/deep-research/reports/
+<your skill install dir>/deep-research/reports/
 ```
 
 Open with any Markdown reader (Typora / Obsidian / VS Code etc.).
@@ -245,9 +240,9 @@ You can also specify a custom output path — ask AI to configure it.
 
 **1. Search quotas? How to ensure uninterrupted searching?**
 
-The system uses a **five-layer priority search** architecture (CLI built-in engine → outline-suggested sources → SearXNG → sources.json → free source fallback), all issued in parallel, each layer auto-degrades on failure:
+The system uses a **five-layer priority search** architecture (tool built-in engine → outline-suggested sources → SearXNG → sources.json → free source fallback), all issued in parallel, each layer auto-degrades on failure:
 
-- **Layer 0 — CLI built-in engine**: Auto-detects the CLI tool's built-in search engine at runtime (e.g., OpenCode's Exa websearch). If available, used as primary, runs in parallel with subsequent layers. No additional configuration needed.
+- **Layer 0 — Tool built-in engine**: Auto-detects the tool's built-in search engine at runtime (e.g., `websearch` / `web_search`). If available, used as primary, runs in parallel with subsequent layers. No additional configuration needed.
 - **Layer 1 — Outline-suggested sources**: Task 1 recommends authoritative domains per topic (e.g., arctic-council.org, stats.gov.cn), searched first.
 - **Layer 2 — SearXNG (author-deployed)**: Meta-search engine aggregating 70+ engines (Baidu/Google/Brave), full coverage of Chinese and English. Built-in endpoint, ready out of the box, unlimited, no rate limits.
 - **Layer 3 — sources.json quality sources**: 30+ curated sources (Semantic Scholar / arXiv / Nature / World Bank / IMF / Reuters / BBC / Baidu Baike / Zhihu / 36Kr / iResearch / East Money etc.). Auto health check on startup, dead sources skipped.
@@ -281,23 +276,16 @@ Help me organize the materials in D:\notes\projectA into a structured research r
 
 **Version strategy**: `main` branch always has the latest code. GitHub Releases are only for milestone markers.
 
-OpenCode users:
+All tools:
+
 - **Auto**: Type `/research-update`, AI auto-runs `git pull`
-- **Manual**: `cd ~/.opencode/skills/deep-research && git pull`
+- **Manual**: `cd <skill install dir>/deep-research && git pull`
 
-Check version: `cat ~/.opencode/skills/deep-research/VERSION`
+Check version: `cat <skill install dir>/deep-research/VERSION`
 
-**4. Can non-OpenCode users auto-update?**
+**4. Can other tools auto-update?**
 
-Yes — ask your AI to do a version comparison and apply updates:
-
-```text
-Compare the latest https://github.com/hoolulu/deep-research with your local version,
-identify new features and fixes,
-apply them one by one to your local adapted version,
-preserving platform-specific changes.
-If multiple CLI tools are installed, only configure the current tool — do not affect other CLI tools on this machine.
-```
+Yes. All tools share the same platform-agnostic codebase — just `git pull` in the install directory (or ask your AI to do it). There are no platform-specific changes to preserve, so updates never conflict.
 
 **5. Is my data safe?**
 
@@ -328,7 +316,7 @@ You can also manually refresh the browser page anytime by running `python tools/
 
 MIT
 
-This project uses MIT instead of GPL/CC because its core value is a portable methodology and pipeline design, not a copyrighted product. MIT maximizes reuse and adaptation across different platforms and toolchains, consistent with the "not platform-exclusive" positioning.
+This project uses MIT instead of GPL/CC because its core value is a portable methodology and pipeline design, not a copyrighted product. MIT maximizes reuse and adaptation across different platforms and toolchains, consistent with the "platform-agnostic" positioning.
 
 ---
 

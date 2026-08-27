@@ -3,16 +3,12 @@ description: Deep research on any topic — generates professional-grade reports
 ---
 
 <command-instruction>
-Load and follow the `deep-research` skill exactly.
+读取本 skill 的 SKILL.md（本 `command/` 的上级目录中的 SKILL.md，即已安装的 deep-research skill），并严格遵循其全部指令执行调研。不要再发明或改写 SKILL.md 里的流程。
 
-```text
-skill(name="deep-research")
-```
-
-Parse `$ARGUMENTS` to determine the research topic and optional mode flags:
-- `/research <topic>` → standard mode
-- `/research <topic> -quick` → quick mode
-- `/research <topic> -deep` → deep mode
+先读取 SKILL.md 全文，再解析 `$ARGUMENTS` 确定调研主题与可选模式：
+- `/research <topic>` → standard 模式
+- `/research <topic> -quick` → quick 模式
+- `/research <topic> -deep` → deep 模式
 </command-instruction>
 
 <user-request>

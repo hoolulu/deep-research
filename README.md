@@ -24,7 +24,7 @@
 <tr><td style="white-space: nowrap; width: 1%;"><b>🎯 一个命令</b></td><td><code>/research 你的主题</code> → 全自动调研，无需人工干预</td></tr>
 <tr><td style="white-space: nowrap;"><b>⏱ 十分钟出报告</b></td><td>quick 模式约 8–12 分钟，standard 约 10–15 分钟</td></tr>
 <tr><td style="white-space: nowrap;"><b>🌍 19 种语言</b></td><td>主题用什么语言写，报告就用什么语言出，自动检测</td></tr>
-<tr><td style="white-space: nowrap;"><b>🔧 非 OpenCode 独占</b></td><td>Claude Code、Cursor、Codex CLI、Windsurf、Cline 等均可适配</td></tr>
+<tr><td style="white-space: nowrap;"><b>🔧 平台无关</b></td><td>任何 AI 编程工具均可使用（Claude Code、Codex CLI、Cursor、DSH、Windsurf、Cline 等）</td></tr>
 <tr><td style="white-space: nowrap;"><b>📁 本地文件调研</b></td><td>也可支持本地 PDF/DOCX/TXT/MD，不联网，AI 自动解析</td></tr>
 <tr><td style="white-space: nowrap;"><b>🖥️ 本地报告浏览页</b></td><td>每次报告生成后自动刷新为本地浏览器页面<br><code>reports-browser/index.html</code>，支持搜索/筛选/排序/弹窗预览</td></tr>
 <tr><td style="white-space: nowrap;"><b>📄 PDF/DOCX 导出</b></td><td>本地浏览页弹窗中可导出 PDF、DOCX 格式，浏览器端直接转换下载</td></tr>
@@ -102,7 +102,7 @@
 | **SearXNG 搜索（作者部署）**                            | 已部署在 VPS，零费用，无限畅用                                                                                               |
 | **Scrapling 抓取**                                | 纯本地运行，零费用                                                                                                       |
 | **国内源（百度百科/维基百科/知乎/36氪/澎湃/199IT/艾瑞/东方财富/国统局等）** | 直连零费用，不要代理                                                                                                      |
-| **OpenCode 运行时**                                | MIT 开源，零费用                                                                                                      |
+| **AI 工具运行时**                                | 开源免费，零费用                                                                                                      |
 
 
 > 以上估算基于 DeepSeek v4 Flash（$0.14/百万输入、$0.28/百万输出，来源：`https://api-docs.deepseek.com/quick_start/pricing`）。实际因缓存命中率与主题复杂度浮动。
@@ -114,7 +114,7 @@
 ```
 ① 分析大纲 — 分析主题，生成调研框架和搜索计划
          ↓
-② 采集数据 — ╭─ 在线模式：五层搜索并行（CLI 内置引擎 → 建议源 → SearXNG → sources.json → 免费源）→ Scrapling 批量抓取 → 数据池
+② 采集数据 — ╭─ 在线模式：五层搜索并行（工具内置引擎 → 建议源 → SearXNG → sources.json → 免费源）→ Scrapling 批量抓取 → 数据池
                ╰─ 离线模式：直接读取本地文件（PDF/DOCX/TXT/MD）→ 数据池
          ↓
 ③ 并行撰写 — 所有章节同时撰写，事实直接嵌入 prompt，不做工具调用
@@ -128,7 +128,7 @@
 搜索采用 **五层优先级** 策略，全部并行发出：
 
 ```
-Layer 0 — CLI 内置引擎（如 OpenCode 的 Exa websearch，运行时自适应）
+Layer 0 — 工具内置引擎（如 `websearch` / `web_search`，运行时自适应）
 Layer 1 — 大纲建议源（按主题定向推荐，如 arctic-council.org）
 Layer 2 — SearXNG（作者部署，70+ 引擎）
 Layer 3 — sources.json（skill 内置 30+ 优质源，启动时健康检测）
@@ -166,58 +166,52 @@ Layer 4 — 免费源补强（A/B 类搜索兜底）
 
 ## 九、安装
 
+deep-research 是**平台无关**的 skill：一套文件，放入任意支持 skill/命令机制的 AI 工具即可使用，无需按工具改写流程。
+
 ### 🧠 方式一：AI 傻瓜安装（推荐）
 
-把下面这段提示词复制到 OpenCode 聊天框发送，AI 会自动完成一切：
+把下面这段提示词复制到你的 AI 工具聊天框发送，AI 会自动完成一切：
 
 ```text
 请调研 https://github.com/hoolulu/deep-research 项目，按照文档要求依次完成：
 
 1. 安装前置依赖（根据 Scrapling 官方文档和你的操作系统确定安装方式）
-2. 注册 Scrapling MCP Server，确保重启 CLI 后正常使用
-3. 注册 /research 和 /research-update 命令
+2. 注册 Scrapling MCP Server，确保重启工具后正常使用
+3. 把本 skill 注册为当前工具的 skill / 命令入口（/research 和 /research-update）
 
 每完成一步都确认结果，完成后读取 VERSION 确认版本号，并总结安装状态。
 ```
 
 AI 会读取项目文档→理解系统类型→逐项安装→验证可用性。不需要手动执行任何命令。
 
-### 🔧 方式二：非 OpenCode 用户（Claude Code / Codex CLI / Cursor 等）
+### 📋 方式二：手动注册命令入口
 
-把这段提示词粘贴到你的 AI 编码工具中：
+各工具的 skill/命令注册方式不同，把整个项目放进对应目录即可（以下为常见工具）：
 
-```text
-请调研 https://github.com/hoolulu/deep-research 项目，自动安装前置依赖并改造适配当前 CLI 工具：
+| 工具 | skill/入口位置 | 命令形式 |
+|------|--------------|---------|
+| OpenCode | `~/.opencode/skills/deep-research/` | `/research`、`/research-update`（`command/` 已含） |
+| Codex CLI | skill 目录，`command/` 已含命令文件 | `/research`、`/research-update` |
+| Claude Code | `~/.claude/skills/deep-research/` | 用 SKILL.md 作为 Agent Skill |
+| Cursor | `.cursor/skills/` 或自定义命令 | 自定义命令指向 SKILL.md |
+| DSH / 其他 | 任意支持 skill 加载的目录 | 加载 SKILL.md 后输入主题 |
 
-1. 安装 Python 和 Scrapling（参考 Scrapling 官方文档和系统确定方式）
-2. 注册 Scrapling MCP Server，重启后生效
-3. 根据当前工具的能力注册 /research 和 /research-update 的等价入口：
-   - **Codex CLI** → 注册为 skill（skill 目录 `command/` 已含命令文件，注册后自动生效）
-   - **Claude Code** → 注册为 slash command（Hook）
-   - **Cursor** → 按平台机制适配（自定义命令 / Agent rules）
-   - 其他工具先判断有无 skill/命令机制，再选最合适的方式
-4. 将多 agent 链式架构（大纲 → 数据采集 → 并行撰写 → 装配QA）翻译为当前工具的等价实现
-5. 若本机有多个 CLI 工具，只配置当前工具，不影响本机其他 CLI 工具。
-
-每完成一步确认结果，完成后读取 VERSION 确认版本号并总结状态。
-```
-
-不同工具的适配点：多 agent 编排需映射到各自的原生机制（Claude Code 的 sub-agent、Codex CLI 的 agent/skill 模式、Cursor 的 agent 模式等），命令入口注册方式也不同（OpenCode/Codex CLI 使用 skill，Claude Code 使用 Hook/命令，Cursor 使用自定义指令）。搜索和抓取逻辑（python-scrapling + 搜索 API）可原样复用。
+> 本 skill 的 SKILL.md 已写成**平台无关**指令：不再依赖任何工具专属的 `task()` 等多 agent 语法。章节撰写默认并行（探测到多 agent 工具时），没有多 agent 能力的工具会自动降级为串行撰写，产物一致，仅耗时略增。搜索与抓取逻辑（Scrapling + SearXNG）各平台原样复用。
 
 ### 前置依赖
 
 
 | 组件 | 在线模式 | 离线模式 | 获取方式 |
 |:----|:--------|:--------|:--------|
-| **LLM 运行时**（OpenCode / Claude Code / Codex CLI / Cursor 等） | ✅ 必须 | ✅ 必须 | 选择你习惯的工具即可 |
+| **AI 工具运行时**（Claude Code / Codex CLI / Cursor / DSH / OpenCode 等） | ✅ 必须 | ✅ 必须 | 选择你习惯的工具即可 |
 | **Scrapling** | ✅ 必须 | ❌ 不需要 | 网页抓取用，离线模式不涉及 |
 | **SearXNG**（作者部署，70+ 引擎） | ✅ 使用 | ❌ 不需要 | 内置默认端点，开箱即用 |
 
-> **平台说明**：OpenCode 原生支持多 agent 编排（Task 1-4 的多 agent 架构），无需额外插件。其他编程工具（Claude Code、Cursor、Codex CLI 等）有自己的原生多 agent 框架，可以直接适配本 skill 的工作流。离线模式下仅依赖 LLM 的文件读取能力，无需搜索/抓取组件。
+> **平台说明**：支持多 agent 的工具（OpenCode、Claude Code、Codex、DSH 等）天然并行撰写章节；不支持多 agent 的工具自动串行撰写。离线模式下仅依赖 LLM 的文件读取能力，无需搜索/抓取组件。
 
 ## 十、使用方法
 
-安装并重启 OpenCode 后，在聊天框输入：
+安装并重启你的 AI 工具后，在聊天框输入：
 
 
 | 命令                                                         | 说明          | 参考耗时       |
@@ -248,7 +242,7 @@ AI 会读取项目文档→理解系统类型→逐项安装→验证可用性�
 报告以 Markdown 格式保存到 skill 目录下的 `reports/` 文件夹，文件名包含日期时间戳：
 
 ```
-~/.opencode/skills/deep-research/reports/
+<你的 skill 安装目录>/deep-research/reports/
 ```
 
 可以用任何 Markdown 阅读器（Typora / Obsidian / VS Code 等）打开。
@@ -263,7 +257,7 @@ AI 会读取项目文档→理解系统类型→逐项安装→验证可用性�
 
 系统采用 **五层搜索 + 质量触发补强** 架构：
 
-- **Layer 0 — CLI 内置引擎（新增）**：运行时自动探测当前 CLI 工具的内置搜索引擎（如 OpenCode 的 `websearch` Exa）。如果可用，以此为主力搜索引擎，与后续层并行发出。无需额外配置。
+- **Layer 0 — 工具内置引擎（新增）**：运行时自动探测当前工具的内置搜索引擎（如 `websearch` / `web_search`）。如果可用，以此为主力搜索引擎，与后续层并行发出。无需额外配置。
 - **Layer 1 — SearXNG（作者部署）**：作者在 VPS 上部署的元搜索引擎，聚合 70+ 搜索引擎（含百度/Google/Brave），中文英文全覆盖。内置默认端点，开箱即用，无限畅用、不限速、无额度限制。
 - **Layer 2 — sources.json 优质源**：skill 内置 30+ 精选源（Semantic Scholar / arXiv / Nature / World Bank / IMF / Reuters / BBC / 百度百科 / 知乎 / 36氪 / 艾瑞 / 东方财富 等）。启动时自动健康检测，死源跳过。
 - **Layer 3 — 免费源补强（兜底）**：当 Layers 0-2 合计结果质量不足（URL < 3 / 年份过旧 / 来源过少）时触发。DuckDuckGo / Bing / Brave / Mojeek / Semantic Scholar / GDELT / arXiv + 百度百科 / 知乎 / 199IT / 艾瑞 / 36氪 / 澎湃 / 东方财富 / 微博 / CSDN / 虎嗅 / 豆瓣 等 20+ 源。不依赖任何 API Key，永远可用。
@@ -296,24 +290,16 @@ Skill 内置了离线模式，可以根据本地文件直接生成带有完整�
 
 **版本策略**：`main` 分支始终是最新代码，日常小修改直接推送。GitHub Releases 仅用于里程碑版本标记（如 v2.1.0 → v2.2.0），不必等到新 Release 才更新。
 
-OpenCode 用户：
+任意工具的用户：
 
 - **自动**：输入 `/research-update`，AI 自动执行 `git pull` 获取最新
-- **手动**：`cd ~/.opencode/skills/deep-research && git pull`
+- **手动**：`cd <skill 安装目录>/deep-research && git pull`
 
-版本号可通过 `cat ~/.opencode/skills/deep-research/VERSION` 查看。
+版本号可通过 `cat <skill 安装目录>/deep-research/VERSION` 查看。
 
-**4. 非 OpenCode 用户能自动更新吗？**
+**4. 其他工具能自动更新吗？**
 
-可以直接让 AI 帮你做版本对比和更新适配。把下面这段提示词粘贴到你的 AI 编码工具中：
-
-```text
-请对比 https://github.com/hoolulu/deep-research 最新版与本地版本的差异，
-找出上游新增功能和修复，
-逐项应用到本地适配版本中，
-保留平台特定改动。
-若本机有多个 CLI 工具，只配置当前工具，不影响本机其他 CLI 工具。
-```
+可以。所有工具共用同一套平台无关代码，直接在安装目录 `git pull` 即可（或让 AI 帮你执行）。没有平台特定的适配改动需要保留，因此更新不会产生冲突。
 
 **5. 数据安全吗？**
 
@@ -335,7 +321,7 @@ OpenCode 用户：
 
 MIT
 
-本项目采用 MIT 协议。选择 MIT 而非 GPL/CC 等更严格的协议，是因为本项目的核心是一套可移植的方法论和管道设计，而非需要保护版权的成品库。MIT 能让它在不同平台和工具链中被最大化地复用和改造，与"非 OpenCode 独占"的定位一致。
+本项目采用 MIT 协议。选择 MIT 而非 GPL/CC 等更严格的协议，是因为本项目的核心是一套可移植的方法论和管道设计，而非需要保护版权的成品库。MIT 能让它在不同平台和工具链中被最大化地复用和改造，与"平台无关"的定位一致。
 
 ---
 

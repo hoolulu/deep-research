@@ -9,10 +9,9 @@ description: 从 GitHub 拉取 deep-research skill 最新代码
 
 ### Step 1 — 定位 skill 目录
 
-通过以下路径查找 skill 目录：
-- `find ~/.opencode/skills -name "VERSION" -path "*/deep-research/*"`
-- `find ~/.config/opencode/skills -name "VERSION" -path "*/deep-research/*"`
-- 或检查当前工作目录是否就是 skill 根目录（存在 VERSION 文件）
+通过以下方式查找 skill 目录（不同工具的 skill 安装位置不同，现场探测即可）：
+- 检查当前工作目录是否就是 skill 根目录（存在 VERSION 文件）
+- 或在常见位置查找 deep-research 的 VERSION 文件（如 `~/.opencode/skills`、`~/.claude/skills`、`.cursor/skills` 等）
 
 如果找不到 → 提示"找不到 deep-research skill 目录"，给出手动克隆命令后退出。
 

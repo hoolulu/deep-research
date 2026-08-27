@@ -17,7 +17,7 @@
 
 搜索执行顺序从高优先级到低优先级：
 
-**Layer 0 — CLI 内置搜索（最高优先级，新增）**：Step 0 探测当前 CLI 工具的内置搜索引擎（如 OpenCode 的 `websearch` Exa）。如果可用，**以此为主力搜索引擎**，与后续层并行发出。详见 Step 0。
+**Layer 0 — 工具内置搜索（最高优先级）**：Step 0 探测当前工具的内置搜索引擎（如 `websearch` / `web_search` 等）。如果可用，**以此为主力搜索引擎**，与后续层并行发出。详见 Step 0。
 
 **Layer 1 — 大纲建议源**：读取 {TMPDIR}/outline.json 的 `source_suggestions` 数组（如 `["noaa.gov", "ipcc.ch"]`），对每个域名，用 SearXNG 搜索 `site:{域名} {子问题关键词}`。这些是大纲阶段根据主题定向推荐的源，最贴合主题。与 Layer 0 并行发出。
 
@@ -127,7 +127,7 @@ for p in doc.paragraphs:
 ☐ 创建 `{TMPDIR}/task2_manifest.json`：
 
 ```json
-{"task":2,"source_count":N,"fact_count":N,"search_engine":"local_files","fetch_method":"本地读取","data_pool_path":"{TMPDIR}/data-pool.json","cautions_path":"{TMPDIR}/cautions.json","data_limited":false,"searxng_available":false,"exa_available":false,"engines":[]}
+{"task":2,"source_count":N,"fact_count":N,"search_engine":"local_files","fetch_method":"本地读取","data_pool_path":"{TMPDIR}/data-pool.json","cautions_path":"{TMPDIR}/cautions.json","data_limited":false,"searxng_available":false,"builtin_available":false,"engines":[]}
 ```
 
 > `source_count` = 本地文件数，`fact_count` = 提取到的事实总数。`data_limited` 固定为 false（用户选择纯本地，不套用在线模式的 insufficient_count 判定）。
@@ -159,7 +159,7 @@ Step 2 — 多源并行搜索（Layer 0-3 同时发出）
 
 五层搜索中的 Layer 0-3 在本步骤中一次性全部发出，不串行等待：
 
-**Layer 0 — CLI 内置引擎主力搜索**：如果 Step 0 探测到内置搜索引擎，**以此为主力**，搜索所有子问题：
+**Layer 0 — 工具内置引擎主力搜索**：如果 Step 0 探测到内置搜索引擎，**以此为主力**，搜索所有子问题：
    ```
    websearch(query="{子问题描述} {time_anchor.target_year}", numResults=10)
    ```
@@ -332,7 +332,7 @@ Step 5 — 直接提取数据池（不嵌套子 agent，I/O 并行）
 
 **先一次性并行读取所有页面**：将所有抓取到的 URL 一次性用多个 `read` 工具并行读取（不逐个等），收集全部页面内容到内存。读取完成后，**再按子问题遍历**从已读取的内容中提取结构化数据。这避免了串行 I/O 等待。
 
-使用 `read`、`grep`、`write`、`bash` 工具，**不允许**嵌套调用 `task()` 派生子 agent。
+使用 `read`、`grep`、`write`、终端 工具，**不允许**嵌套派生子 agent / 子任务。
 
 URL↔子问题的映射已在 Step 2-4 的搜索过程中确定，无需额外匹配步骤。
 
@@ -415,7 +415,7 @@ manifest 中的 `fetch_method` 字段根据 Step 4 的实际抓取情况填写�
 | Scrapling 完全不可用，全部走 webfetch | `🌐 webfetch` |
 
 ## 硬规则
-1. **搜索引擎策略**：CLI 内置引擎（Layer 0，如有）为主力 + SearXNG（Layer 1-2）补充并行，搜索结果合并去重。搜索结果质量不足时（URL < 3 / 年份过旧 / 来源过少）触发免费源补强（Layer 4 兜底）。
+1. **搜索引擎策略**：工具内置引擎（Layer 0，如有）为主力 + SearXNG（Layer 1-2）补充并行，搜索结果合并去重。搜索结果质量不足时（URL < 3 / 年份过旧 / 来源过少）触发免费源补强（Layer 4 兜底）。
 2. **年份时效（默认强制）**：`time_anchor.mode != "relaxed"` 时，search_keywords 必须含 `{target_year}`；`user_specified` 时用用户指定年份替代 `{target_year}`
 3. Scrapling 为默认抓取工具，不可跳过、不可替代；若 Scrapling MCP 不可用则回退 webfetch，并在输出中明确标注所用抓取方式
 4. 连续 3 次域名 404/403 → 标记"来源稀缺"并跳过
@@ -448,7 +448,7 @@ manifest 中的 `fetch_method` 字段根据 Step 4 的实际抓取情况填写�
    1. `search_layer_trace`（对象）——各搜索层的贡献度：
    ```json
    {
-     "layer0_exa": {"used": true, "sub_questions_covered": 10, "urls_contributed": 30},
+     "layer0_builtin": {"used": true, "sub_questions_covered": 10, "urls_contributed": 30},
      "layer1_searxng_site": {"used": true, "domains_active": ["moe.gov.cn"], "urls_contributed": 5},
      "layer2_searxng": {"used": false, "reason": "结果已充足"},
      "layer3_sources_json": {"sources_checked": 6, "alive": 4, "dead": 2, "urls_contributed": 6},
@@ -483,10 +483,10 @@ manifest 中的 `fetch_method` 字段根据 Step 4 的实际抓取情况填写�
      "source_count": 14,
      "fact_count": 41,
      "unique_domains": 11,
-     "search_engine": "exa+searxng",
+     "search_engine": "builtin+searxng",
      "fetch_method": "🔧 Scrapling",
      "engines": ["websearch", "searxng"],
-     "exa_available": true,
+     "builtin_available": true,
      "searxng_available": false,
      "free_fallback": false,
      "english_fallback": false,
@@ -494,7 +494,7 @@ manifest 中的 `fetch_method` 字段根据 Step 4 的实际抓取情况填写�
      "data_pool_path": "{TMPDIR}/data-pool.json",
      "cautions_path": "{TMPDIR}/cautions.json",
      "search_layer_trace": {
-       "layer0_exa": {"used": true, "sub_questions_covered": 10, "urls_contributed": 30},
+       "layer0_builtin": {"used": true, "sub_questions_covered": 10, "urls_contributed": 30},
        "layer1_searxng_site": {"used": true, "domains_active": ["moe.gov.cn"], "urls_contributed": 5},
        "layer2_searxng": {"used": false, "reason": "结果已充足"},
        "layer3_sources_json": {"sources_checked": 6, "alive": 4, "dead": 2, "urls_contributed": 8},

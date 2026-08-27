@@ -1,8 +1,8 @@
 ---
 name: deep-research
 description: "Professional deep research report generation — multi-agent collaboration with parallel chapter writing, automatic latest-data targeting, multilingual output, and built-in quality checks."
-version: 5.1.0
-updated: 2026-08-27
+version: 6.0.0
+updated: 2026-08-28
 risk: medium
 author: hoolulu
 repository: https://github.com/hoolulu/deep-research
@@ -14,7 +14,7 @@ repository: https://github.com/hoolulu/deep-research
 生成对标券商/第三方研究机构标准的深度调研报告。
 
 - **架构**：主 agent 调度 4 个子 agent Task（大纲/数据/预检/装配）+ 1 轮主控并行派发章节，中间数据走临时文件
-- **数据源**：在线模式 → CLI 内置引擎（Layer 0，如有）+ SearXNG（Layer 1） + sources.json 优质源搜索（Layer 2）并行 → 按质量触发免费源补强（Layer 3 兜底）→ Scrapling 批量抓取；离线模式 → 用户指定的本地文件（md/txt/pdf/docx）
+- **数据源**：在线模式 → 工具内置引擎（Layer 0，如有）+ SearXNG（Layer 1） + sources.json 优质源搜索（Layer 2）并行 → 按质量触发免费源补强（Layer 3 兜底）→ Scrapling 批量抓取；离线模式 → 用户指定的本地文件（md/txt/pdf/docx）
 - **安装**：见下方「安装与配置」
 - **输出**：`$TMPDIR/outline.json`（临时，非最终报告）
 - **最终报告**：保存到 skill 目录下的 `reports/`
@@ -72,7 +72,7 @@ repository: https://github.com/hoolulu/deep-research
 
 ══ Setup (必须先执行) ══
 
- → 创建一个带时间戳的临时目录作为 TMPDIR（例如 D:\TEMP\opencode\deep-research-YYYYMMDD-HHMMSS）
+ → 创建一个带时间戳的临时目录作为 TMPDIR（例如系统临时目录下的 deep-research-YYYYMMDD-HHMMSS）
  → 同时确定 TOOLSDIR（本 skill 的 tools/ 目录）、PROMPTSDIR（本 skill 的 prompts/ 目录）、SKILLDIR（本 skill 的根目录）
  → 读取本 SKILL.md + RULES.md + TYPES.md
 
@@ -101,7 +101,7 @@ repository: https://github.com/hoolulu/deep-research
 ☐ 我是否在无意识中用了指令文件的语言（如中文）而非 $LANG？
 如果任一答案为"否"→ 立即改写为 $LANG 再输出。
 ```
-**硬规则**：task() 派发子 agent 时，其 prompt 中的 `{LANG}` 必须是你检测到的语言代码。子 agent 输出的语言由你负责保证。
+**硬规则**：派发子任务/子 agent 时（如有多 agent 工具），其 prompt 中的 `{LANG}` 必须是你检测到的语言代码。子任务输出的语言由你负责保证。
 
 ══ 主流程 ══
 
@@ -124,14 +124,14 @@ repository: https://github.com/hoolulu/deep-research
      - 无上述后缀 → `$DEPTH_MODE=standard`（默认）
 
  2. 记录任务开始时间到 {TMPDIR}/start_time.txt
- 3. todowrite 创建进度条目（使用 $LANG 语言）
+ 3. 创建任务清单（使用 `todo_write` 或当前环境等价工具；无则用文本记录），使用 $LANG 语言
   4. ══ Task 1 — 分析主题 + 生成大纲 ══
      → 读取 {PROMPTSDIR}/task1_outline.md，替换 {TMPDIR} {TOOLSDIR} {LANG} {CURRENT_YEAR} {MODE}，注入 prompt
      → **只做变量替换，不添加语言、格式、报告结构等额外指令。语言已由 Step 0 判定为 $LANG 并在 prompt 中替换 {LANG}。**
-     → 派发 task()，等待完成
+     → 派发子任务（若有多 agent 工具则用之；否则由你本人直接执行本任务），等待完成
      → 用 `read` 确认 {TMPDIR}/outline.json 存在
      → 从 outline.json 读取 title + chapter_count + depth_mode
-    → todowrite 标记完成
+    → 任务清单标记完成
     → 向用户报告进度（使用 $LANG 语言）
   6. ══ Task 2 — 数据收集 + 结构化数据池 ══
      → 读取 {PROMPTSDIR}/task2_data_collection.md
@@ -140,10 +140,10 @@ repository: https://github.com/hoolulu/deep-research
        {OFFLINE_MODE} → true
        {LOCAL_PATHS} → 读取 {TMPDIR}/offline_mode.txt 的内容（路径列表）
      → 如果 `offline_mode=false`，替换 {OFFLINE_MODE} → false，{LOCAL_PATHS} → 空字符串
-     → 派发 task()，等待返回
-    → 如失败（task 报错或 task2_manifest.json 不存在），**自动重试 1 次**，重新派发。第二次仍失败则向用户报告并终止
+     → 派发子任务（若有多 agent 工具则用之；否则由你本人直接执行本任务），等待返回
+    → 如失败（子任务报错或 task2_manifest.json 不存在），**自动重试 1 次**，重新派发。第二次仍失败则向用户报告并终止
      → 读取 {TMPDIR}/task2_manifest.json，提取 source_count + fact_count + search_engine + fetch_method + engines + free_fallback + english_fallback + unique_domains
-    → todowrite 标记完成
+    → 任务清单标记完成
     → 向用户报告进度（使用 $LANG 语言）
      7. ══ Task 3 — 派发章节撰写 ══
      → 读取 {TMPDIR}/outline.json 获取 chapters 数组；读取 {TMPDIR}/data-pool.json
@@ -155,33 +155,36 @@ repository: https://github.com/hoolulu/deep-research
        - prompt 中的 `[LANG_zh]` 段落：仅当 $LANG=zh 时保留，其他语言删除
        - 删除标记文本本身（`[LANG_en]` `[/LANG_en]` 占位符行）
        - 无标记的段落全部语言通用，保留
-      → **撰写模式**：所有平台统一使用并行模式撰写章节
-        - **章节 agent 不做任何工具调用**（不跑 prepare-chapter、validate、manifest、word-count），只写文件
+      → **撰写方式（平台无关，默认并行、无多 agent 时串行）**：
+        - **章节执笔者不做任何工具调用**（不跑 prepare-chapter、validate、manifest、word-count），只写文件
+        - 探测当前环境是否存在多 agent / 子任务工具（如 `task`、`subagent`、`Task`、`agent` 等）：
+          - **有** → 为每章逐一构建 prompt，**并行**派发全部章节子任务，全部完成后进入 Round 2
+          - **无** → 由你本人按章节顺序**逐一撰写**每章正文并落盘，全部写完后直接进入 Round 2
+        - **不得因为无法并行派发而中断调研**：串行撰写与其余步骤完全等价，仅耗时略增
 
-      → **并行派发章节**：
+      → **并行派发章节**（仅当存在多 agent 工具时）：
        - 初始化空列表 task_ids = []
        - For N = 1 to chapters.length:
          - 读取 outline.chapters[N] 的 title、sections
          - 从 data-pool.json 中筛选该章 sub_questions 对应的事实条目
          - **将事实直接嵌入 prompt**：每条事实前标注预分配的 `[N]` 编号
-         - 调用 task(run_in_background=true) 并行派出每章
-         - 从 task 返回的元数据中提取 background_task_id（格式 bg_xxx），追加到 task_ids
-         - todowrite 标记该章 in_progress
+         - 用多 agent 工具的后台/并行模式派出每章
+         - 记录每章子任务的句柄/ID 到 task_ids（无句柄可记录时，以章节文件路径为追踪依据）
+         - 任务清单标记该章 in_progress
        - 将 task_ids 写入 {TMPDIR}/task3_bg_ids.json（持久化，防止主 agent 中断后丢失状态）
        - 向用户报告："已并行派出 {N} 章，等待全部完成..."（使用 $LANG 语言）
-       - **结束 response，等待系统通知。仅当收到 [ALL BACKGROUND TASKS COMPLETE] 通知时，才继续到 Round 2。中间的单章完成通知忽略不处理。**
+       - 等待全部章节完成（本轮结束后收到全部完成提示再继续；单章完成通知可忽略）
        - 然后进入 Round 2：
 
        **Round 2 — 收集结果 + 失败重写**：
-       - 读取 {TMPDIR}/task3_bg_ids.json 获取所有 background_task_id
-       - For 每个 bg_task_id in task_ids:
-         - 调用 background_output(task_id=bg_task_id) 收集章节结果
+       - 读取 {TMPDIR}/task3_bg_ids.json 获取所有 task 句柄
+       - 对每个子任务收集其章节结果（或直接读取产物文件）
        - 用 `read` 逐一确认 {TMPDIR}/chapters/chapter-{N}.md 是否存在且非空
        - 如果有章节缺失或内容为空：
          - 记录失败章节编号列表
-         - **串行重写**：对每个失败章节逐一重新派发 task(run_in_background=false)，同步等待完成
+         - **串行重写**：对每个失败章节逐一（同步）重新派发/执笔，等待完成
          - 再次用 `read` 确认
-       - todowrite 标记每章 completed
+       - 任务清单标记每章 completed
        - 向用户报告最终章节完成情况（使用 $LANG 语言）
      8. ══ Task 4 — 验证 + 装配 + QA（**主 agent 直接执行**） ══
      → **Step 0 — 清理残留**：删除 {SKILLDIR}/reports/ 目录下所有 0 字节文件（前次装配失败的空壳）；创建 {SKILLDIR}/reports/$LANG/ 子目录（如果不存在）
@@ -209,7 +212,7 @@ repository: https://github.com/hoolulu/deep-research
     → **Step 4b — 货币符号转义**：`python {TOOLSDIR}/dr_tools.py escape-currency "$REPORT"`（将 `$` 转义为 `\$`，避免被知乎/Obsidian/Typora 等渲染器错误解析为 LaTeX math mode）
       → **Step 5 — QA**：`python {TOOLSDIR}/dr_tools.py qa-report "$REPORT" --mode {depth_mode} --target-year {target_year} --lang $LANG`，解析 JSON 输出，从 `checks.word_count.count` 取字数，从 `checks.word_count.limit` 取上限
      → **Step 6 — 更新本地报告列表页**：`python {TOOLSDIR}/generate_pages.py --local`（刷新 reports-browser/index.html，将 reports/ 下所有报告打包为嵌入 JS 的可浏览页面）——需在 `{SKILLDIR}` 目录下执行，bash 命令须加 `workdir="{SKILLDIR}"` 参数
-     → todowrite 标记完成
+     → 任务清单标记完成
     → ⏱ **强制计算总耗时**（读取 start_time.txt + 当前时间算差值）
     → 从 outline.json + task2_manifest.json + qa-report 中提取数据，使用 $LANG 语言汇报最终结果。
 
@@ -289,7 +292,7 @@ repository: https://github.com/hoolulu/deep-research
        - `<覆盖_{coverage_summary}>` = 从 `task2_manifest.coverage_summary` 读取（adequate/partial/insufficient），用语言映射表中"覆盖充足/部分覆盖/覆盖不足"行对应翻译替换
        - `{conf_high_pct}`、`{conf_actual_pct}`、`{conf_score}` = 从 Step 2b 的 `CONFIDENCE:` 行解析对应的字段
        - `{llm_verdict}` = 读取 Step 2c 写入的 `{TMPDIR}/llm_assessment.txt` 完整内容
-    → todowrite 全部完成
+    → 任务清单全部完成
 
 **禁止**：主 agent 不得在 Task 调度之间自行执行搜索引擎调用或数据处理。搜索/抓取归 Task 2，大纲生成归 Task 1，章节撰写归 Task 3，装配验证归 Task 4。Task 间的 handoff 文件读取（outline.json、task2_manifest.json 等）不受此限。
 
@@ -297,7 +300,7 @@ repository: https://github.com/hoolulu/deep-research
 
 ## 2. Task 1 — 主题分析 + 大纲
 
-**工具**：`task()` | **一次调用**
+**工具**：多 agent / 子任务工具（如有）| 一次调用；无则主 agent 直接执行本任务
 **prompt 文件**：`prompts/task1_outline.md`
 **用法**：读取文件内容，替换 `{TMPDIR}` `{TOOLSDIR} {LANG} {CURRENT_YEAR}` 为实际值后注入 prompt。
 
@@ -305,9 +308,9 @@ repository: https://github.com/hoolulu/deep-research
 
 ---
 
-## 3. Task 2 — 数据收集 + 结构化数据池（unspecified-high）
+## 3. Task 2 — 数据收集 + 结构化数据池
 
-**工具**：`task(category="unspecified-high", load_skills=[], ...)`
+**工具**：多 agent / 子任务工具（如有，建议用高并发/高思考 budget 分类）；无则主 agent 直接执行本任务
 **prompt 文件**：`prompts/task2_data_collection.md`
 **用法**：读取文件内容，替换 `{TMPDIR}` `{TOOLSDIR}` `{LANG}` `{COUNTRY}` `{OFFLINE_MODE}` `{LOCAL_PATHS}` 为实际值后注入 prompt。
 
@@ -319,7 +322,7 @@ repository: https://github.com/hoolulu/deep-research
 
 ## 3. Task 3 — 章节撰写 & 章节 agent 指令模板
 
-主 agent 在循环中为每章调用 `task()` 时，prompt 参数使用 `{PROMPTSDIR}/task3_chapter_agent.md` 模板。
+主 agent 为每章准备子任务 prompt 时，参数使用 `{PROMPTSDIR}/task3_chapter_agent.md` 模板。
 
 **用法**：读取 `{PROMPTSDIR}/task3_chapter_agent.md`，替换以下变量：
 - `[章节 title]` → 当前章的 title（从 outline.json chapters 数组读取）
@@ -382,21 +385,21 @@ Task 4 装配 + QA 通过后，内部已完成清理：
 
 ## 7. 工具依赖速查
 
-| 工具 | 用途 | 免费？ | 国内源？ |
+| 能力 | 用途 | 免费？ | 国内源？ |
 |:----|:-----|:-----:|:--------:|
-| `websearch` | **主力**搜索引擎（CLI 内置 Exa，运行时探测） | ✅ 共享免费（Exa） | ❌ 国外引擎 |
-| `searxng` | 搜索引擎（自定义 SearXNG，运行时探测） | ✅ 自建零费用 | ✅ 70+引擎含百度/搜狗 |
-| 其他搜索引擎 | 不同 CLI 工具的内置搜索（运行时自动适配） | 取决于环境 | — |
-| `scrapling_bulk_get/stealthy/fetch` | 全文抓取（MCP，依赖 opencode.json 注册） | ✅ | **✅ 推荐，国内源主力** |
-| `webfetch` | 抓取回退（Scrapling 不可用时替代） | ✅ | ❌ 远端受限，国内源效果一般 |
-| `bash` | date 时间戳 / 文件操作 | ✅ | — |
-| `write` | 写文件 | ✅ | — |
+| 内置搜索（探测） | **主力**搜索引擎（当前工具的内置搜索，如 `websearch`/`web_search`，运行时探测） | 取决于环境 | 视引擎而定 |
+| SearXNG | 元搜索引擎（运行时探测端点） | ✅ 自建零费用 | ✅ 70+引擎含百度/搜狗 |
+| 其他搜索引擎 | 不同工具的内置搜索（运行时自动适配） | 取决于环境 | — |
+| Scrapling MCP | 全文抓取（MCP，需注册到当前工具的 MCP 配置） | ✅ | **✅ 推荐，国内源主力** |
+| webfetch / fetch | 抓取回退（Scrapling 不可用时替代） | ✅ | ❌ 远端受限，国内源效果一般 |
+| bash / 终端 | date 时间戳 / 文件操作 / 运行 Python | ✅ | — |
+| write | 写文件 | ✅ | — |
 
 搜索策略由 agent 在运行时根据工具集**自动适配**，不依赖预设的搜索引擎配置。
 
 **搜索链路**：
 ```
-Layer 0 — CLI 内置引擎探测（扫描可用工具集）
+Layer 0 — 工具内置引擎探测（扫描可用工具集）
   │
   ├─ 发现内置引擎 → 作为主力搜索，与后续层并行
   └─ 未发现 → 跳过此层，不影响后续
@@ -426,33 +429,31 @@ Layer 3 — sources.json 优质源搜索（并行）
 
 ### 注册 Scrapling MCP Server
 
-Scrapling 通过 MCP（Model Context Protocol）与 AI agent 通信，需注册到 `opencode.json` 后才能被 agent 调用。
+Scrapling 通过 MCP（Model Context Protocol）与 AI agent 通信，需注册到当前工具的 MCP 配置后才能被调用（各工具配置文件位置与键名不同：Claude Code 用 `mcpServers`，OpenCode 用 `mcp`，等等——让 AI 现场探测并适配）。
 
 **推荐方式**：运行一次 `/research`，Task 2 在检测到 Scrapling 未注册时，会自动完成安装和注册。
 
 **参考实现**：本项目提供了 `scrapling-mcp-server.py`（与本文件同目录），是一份标准 MCP Server 实现，覆盖了标准抓取、反检测抓取、JS 渲染抓取三种模式。AI 可根据本机环境参考此脚本，如有问题再参考 Scrapling 官方文档。
 
-**手动注册格式**（在 `opencode.json` 的 `mcp` 中添加，供 AI 安装时参考）：
+**手动注册格式**（以 `mcpServers` 标准格式为例，供 AI 安装时参考；按你当前工具的配置键名与数组格式调整）：
   ```json
   {
-    "mcp": {
+    "mcpServers": {
       "scrapling": {
-        "type": "local",
-        "command": ["<python-path>", "<mcp-server-script-path>"],
-        "enabled": true
+        "command": "<python-path>",
+        "args": ["<mcp-server-script-path>"]
       }
     }
   }
   ```
-  > 注意：OpenCode 使用 `"mcp"` 键（数组格式 `command`），非 Claude Desktop 的 `"mcpServers"`
 
-### 重启 OpenCode
+### 重启当前工具
 
-MCP Server 在 OpenCode 启动时加载，注册后**必须重启**才能生效。
+MCP Server 在工具启动时加载，注册后**必须重启**才能生效。
 
 ### 验证是否生效
 
-运行 `/research` 调研时，Task 2 阶段如显示 `🔧 Scrapling 抓取` 则表示 MCP 工作正常。若显示 `🌐 webfetch 抓取（Scrapling 已自动安装，重启后生效）` 则表示 Scrapling 已自动安装，重启 OC 后下次生效。若显示 `🌐 webfetch 抓取` 则表示安装失败，需检查 Python 环境和网络连接。
+运行 `/research` 调研时，Task 2 阶段如显示 `🔧 Scrapling 抓取` 则表示 MCP 工作正常。若显示 `🌐 webfetch 抓取（Scrapling 已自动安装，重启后生效）` 则表示 Scrapling 已自动安装，重启后下次生效。若显示 `🌐 webfetch 抓取` 则表示安装失败，需检查 Python 环境和网络连接。
 
 ### 抓取回退说明
 

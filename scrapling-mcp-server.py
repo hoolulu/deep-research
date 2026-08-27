@@ -1,9 +1,9 @@
 """
-Scrapling MCP Server for OpenCode
+Scrapling MCP Server (platform-agnostic)
 Exposes: scrapling_bulk_get, scrapling_bulk_stealthy_fetch, scrapling_bulk_fetch
 
 此脚本是一个标准 MCP Server 实现，供 AI 在安装 Scrapling 时参考。
-AI 可以原样使用此脚本，或根据系统环境自行修改后注册到 opencode.json。
+AI 可以原样使用此脚本，或根据系统环境自行修改后注册到当前工具的 MCP 配置。
 不包含任何硬编码路径，完全由 AI 在注册时动态配置。
 """
 import asyncio
