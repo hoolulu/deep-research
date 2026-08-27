@@ -1,5 +1,5 @@
 """
-Scrapling MCP Server (platform-agnostic)
+Scrapling MCP Server (all-platform)
 Exposes: scrapling_bulk_get, scrapling_bulk_stealthy_fetch, scrapling_bulk_fetch
 
 此脚本是一个标准 MCP Server 实现，供 AI 在安装 Scrapling 时参考。

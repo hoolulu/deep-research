@@ -155,7 +155,7 @@ repository: https://github.com/hoolulu/deep-research
        - prompt 中的 `[LANG_zh]` 段落：仅当 $LANG=zh 时保留，其他语言删除
        - 删除标记文本本身（`[LANG_en]` `[/LANG_en]` 占位符行）
        - 无标记的段落全部语言通用，保留
-      → **撰写方式（平台无关，默认并行、无多 agent 时串行）**：
+      → **撰写方式（所有平台通用，默认并行、无多 agent 时串行）**：
         - **章节执笔者不做任何工具调用**（不跑 prepare-chapter、validate、manifest、word-count），只写文件
         - 探测当前环境是否存在多 agent / 子任务工具（如 `task`、`subagent`、`Task`、`agent` 等）：
           - **有** → 为每章逐一构建 prompt，**并行**派发全部章节子任务，全部完成后进入 Round 2
