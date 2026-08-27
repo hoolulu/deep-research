@@ -107,7 +107,7 @@ The pipeline runs in 4 automated stages:
 ```
 ① Analyze outline — Analyze topic, generate research framework and search plan
          ↓
-② Collect data — ╭─ Online: SearXNG + sources.json parallel search → quality-triggered reinforcement → Scrapling batch fetch → data pool
+② Collect data — ╭─ Online: five-layer parallel search (CLI built-in engine → suggested sources → SearXNG → sources.json → free fallback) → Scrapling batch fetch → data pool
                   ╰─ Offline: read local files directly (PDF/DOCX/TXT/MD) → data pool
          ↓
 ③ Serial writing — One chapter at a time synchronously, facts embedded directly in prompts, no tool calls
@@ -118,24 +118,19 @@ The pipeline runs in 4 automated stages:
 
 ## 6. Search Pipeline & Built-in Resources
 
-All tools are built-in, no additional purchase needed. The system uses a **CLI built-in engine + SearXNG + quality-triggered reinforcement** strategy: CLI built-in search (Layer 0, auto-detected at runtime, e.g., OpenCode's Exa websearch) runs as primary along with SearXNG (Layer 1, author-deployed, 70+ engines incl. Baidu/Google/Brave) and sources.json (Layer 2, 30+ curated quality sources) — all searched in **parallel** — results are merged and deduplicated. Free source reinforcement (Layer 3) is triggered only when search result quality is insufficient (< 3 URLs per sub-question / outdated results / too few sources).
+Search uses a **five-layer priority** strategy, all issued in parallel:
 
 ```
 Layer 0 — CLI built-in engine (auto-detected at runtime, e.g., OpenCode Exa websearch)
-  + SearXNG (Layer 1, author-deployed primary, 70+ engines, ready out of the box)
-  + sources.json (Layer 2, 30+ curated sources)
-  ∥ parallel search, results merged & deduplicated
-  ↓ triggered when search quality is insufficient
-Layer 3 — Free source reinforcement (fallback)
-  ├─ Search line          │  Known-source line
-  ├─ DuckDuckGo           │  Baidu Baike / Wikipedia
-  ├─ Bing (China)         │  Zhihu / 36Kr / The Paper
-  ├─ Brave / Mojeek       │  199IT / iResearch / East Money
-  ├─ Semantic Scholar     │  National Bureau of Statistics / Weibo / CSDN
-  └─ GDELT / arXiv        │  Douban / Huxiu
+Layer 1 — Outline-suggested sources (topic-targeted recommendations, e.g., arctic-council.org)
+Layer 2 — SearXNG (author-deployed, 70+ engines)
+Layer 3 — sources.json (30+ curated quality sources, health-checked on startup)
+Layer 4 — Free source reinforcement (A/B class search fallback)
 ```
 
-> The search reinforcement line can **dynamically discover** any website, not limited to the list above. All source URLs are ultimately batch-fetched by Scrapling.
+All layers are merged and deduplicated, then batch-fetched by Scrapling. Free source reinforcement is triggered only when Layer 0-3 fail the per-sub-question quality gate (URL < 3 / outdated year / no authoritative source for high-priority sub-questions).
+
+`sources.json` covers academic (Semantic Scholar / arXiv / PubMed / Nature), data (World Bank / IMF / Our World in Data), news (Reuters / BBC / Guardian), and Chinese sources (Baidu Baike / Zhihu / 36Kr / The Paper / iResearch / East Money / CSDN) — 30+ sources, auto health-checked on startup with dead sources skipped.
 
 ## 7. Report Highlights
 
@@ -250,16 +245,17 @@ You can also specify a custom output path — ask AI to configure it.
 
 **1. Search quotas? How to ensure uninterrupted searching?**
 
-The system uses a **CLI built-in engine + SearXNG + free source fallback** search architecture, each layer independent, auto-degrades on failure:
+The system uses a **five-layer priority search** architecture (CLI built-in engine → outline-suggested sources → SearXNG → sources.json → free source fallback), all issued in parallel, each layer auto-degrades on failure:
 
-- **Layer 0 — CLI built-in engine (new)**: Auto-detects the CLI tool's built-in search engine at runtime (e.g., OpenCode's Exa websearch). If available, used as primary, runs in parallel with subsequent layers. No additional configuration needed.
-- **Layer 1 — SearXNG (author-deployed)**: Meta-search engine aggregating 70+ engines (Baidu/Google/Brave), full coverage of Chinese and English. Built-in endpoint, ready out of the box, unlimited, no rate limits.
-- **Layer 2 — sources.json quality sources**: 30+ curated sources (Semantic Scholar / arXiv / Nature / World Bank / IMF / Reuters / BBC / Baidu Baike / Zhihu / 36Kr / iResearch / East Money etc.). Auto health check on startup, dead sources skipped.
-- **Layer 3 — Free source reinforcement (final fallback)**: DuckDuckGo / Bing / Brave / Mojeek / Semantic Scholar / GDELT / arXiv + 20+ Chinese sources. No API keys required, always available.
+- **Layer 0 — CLI built-in engine**: Auto-detects the CLI tool's built-in search engine at runtime (e.g., OpenCode's Exa websearch). If available, used as primary, runs in parallel with subsequent layers. No additional configuration needed.
+- **Layer 1 — Outline-suggested sources**: Task 1 recommends authoritative domains per topic (e.g., arctic-council.org, stats.gov.cn), searched first.
+- **Layer 2 — SearXNG (author-deployed)**: Meta-search engine aggregating 70+ engines (Baidu/Google/Brave), full coverage of Chinese and English. Built-in endpoint, ready out of the box, unlimited, no rate limits.
+- **Layer 3 — sources.json quality sources**: 30+ curated sources (Semantic Scholar / arXiv / Nature / World Bank / IMF / Reuters / BBC / Baidu Baike / Zhihu / 36Kr / iResearch / East Money etc.). Auto health check on startup, dead sources skipped.
+- **Layer 4 — Free source reinforcement (final fallback)**: triggered only when Layer 0-3 fail the per-sub-question quality gate (URL < 3 / outdated / no authoritative source for high-priority). DuckDuckGo / Bing / Brave / Mojeek / Semantic Scholar / GDELT / arXiv + 20+ Chinese sources. No API keys required, always available.
 
 **2. How to use local materials for report generation?**
 
-The skill has a built-in offline mode that generates fully-formatted reports (TOC, citations, metadata) from local files. Supported formats: **MD / TXT** (native read), **PDF** (AI auto-installs PyPDF2 for text extraction), **DOCX** (AI auto-installs python-docx).
+The skill has a built-in offline mode that generates fully-formatted reports (TOC, citations, metadata) from local files. Supported formats: **MD / TXT** (native read), **PDF** (AI auto-installs pypdf for text extraction), **DOCX** (AI auto-installs python-docx).
 
 Choose your scenario:
 
