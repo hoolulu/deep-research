@@ -135,7 +135,7 @@ Layer 3 — sources.json（skill 内置 30+ 优质源，启动时健康检测）
 Layer 4 — 免费源补强（A/B 类搜索兜底）
 ```
 
-所有层的结果合并去重，由 Scrapling 统一抓取全文。免费源补强仅在 Layer 0-3 结果不足时触发（独立来源 < 8 或全部 URL 来自 ≤3 个域名）。
+所有层的结果合并去重，由 Scrapling 统一抓取全文。免费源补强仅在 Layer 0-3 结果未通过逐子问题质量门时触发（子问题可用 URL < 3 / 结果年份过旧 / high 优先级子问题无权威来源）。
 
 `sources.json` 覆盖学术（Semantic Scholar / arXiv / PubMed / Nature）、数据（World Bank / IMF / Our World in Data）、新闻（Reuters / BBC / Guardian）、中文（百度百科 / 知乎 / 36氪 / 澎湃 / 艾瑞 / 东方财富 / CSDN 等）30+ 个源，启动时自动健康检测，死源跳过。
 

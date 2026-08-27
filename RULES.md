@@ -10,7 +10,7 @@
 |:----|:-----|:---------|
 | **章节约束** | quick 5-8 章 / standard 8-10 章 / deep 10-12 章（区间以 profiles.json 的 min_chapters / max_chapters 为准） | 阶段1 大纲 agent |
 | **可搜索性** | 每个子问题必须能通过 CLI 内置引擎（如有）+ SearXNG + 免费源（DuckDuckGo/Semantic Scholar/GDELT/Wikipedia）独立搜索 | 阶段1 大纲 agent |
-| **免费源补强** | 所有搜索引擎结果不足时触发 Step 3，补强与 Step 4 抓取并行执行，新 URL 追加到下一轮抓取 | 阶段2 Step 3（并行） |
+| **免费源补强** | 逐子问题质量门未达标时触发 Step 3（与 Step 4 抓取并行，新 URL 追加到下一轮抓取） | 阶段2 Step 3（并行） |
 | **对比视角** | 至少 1 个反方观点子问题 | 阶段1 大纲 agent |
 | **子节结构完整性** | 大纲 agent 必须为每章定义 sections[]，deep 3-6 节，standard 2-4 节，quick 1-2 节 | 阶段1 大纲 agent |
 
@@ -23,7 +23,7 @@
 | **跨源矛盾标记** | 不同来源矛盾数据在 controversies[] 数组中对齐 | 阶段2 数据池 |
 | **来源稀缺** | 连续 3 不同域名 404 → 2 分钟上限 | 阶段2 |
 | **不重复** | 每个新子问题前检查数据池已有内容 | 阶段2 Step 5（数据提取） |
-| **来源多样性硬线** | 补强触发条件：总独立来源 < 8，或全部 URL 集中在 ≤3 个域名（数量够但多样性不足） | 阶段2 Step 3（补强条件） |
+| **来源多样性硬线** | 补强与 data_limited 均基于逐子问题质量门：子问题 insufficient（可用 URL < 3 / 结果年份早于 target_year-2 / high 优先级无权威域名）单独补搜；insufficient_count ≥ total_sub_questions/3 时标记 data_limited | 阶段2 Step 3 + Step 6 |
 | **数据时序分类** | 每条 fact 必须标注 `data_type`（actual/estimate/forecast）。若该指标的官方发布日在报告生成日之后，自动标记为 estimate 或 forecast | 阶段2 数据池 |
 
 ## 章节与装配规范

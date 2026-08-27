@@ -130,8 +130,7 @@ for p in doc.paragraphs:
 {"task":2,"source_count":N,"fact_count":N,"search_engine":"local_files","fetch_method":"本地读取","data_pool_path":"{TMPDIR}/data-pool.json","cautions_path":"{TMPDIR}/cautions.json","data_limited":false,"searxng_available":false,"exa_available":false,"engines":[]}
 ```
 
-> `source_count` = 本地文件数，`fact_count` = 提取到的事实总数。`data_limited` 固定为 false（用户选择了只看本地）。
-> 对于 check-datapool 的来源数量检查——本地文件场景下 source_count < 8 不标记 data_limited，因为用户选择了纯本地模式。
+> `source_count` = 本地文件数，`fact_count` = 提取到的事实总数。`data_limited` 固定为 false（用户选择纯本地，不套用在线模式的 insufficient_count 判定）。
 
 在回答中只输出 data-pool.json 路径。
 
