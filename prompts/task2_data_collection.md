@@ -29,12 +29,6 @@
 
 所有层的搜索结果合并去重后进入 Step 4 抓取队列。
 
-**Layer 3 — sources.json 优质源**：读取 `{PROMPTSDIR}/../sources.json`（与 prompts 同级的 skill 根目录），对每个子问题，遍历其中 `lang` 字段匹配 `{LANG}` 的源，用 webfetch 或 Scrapling 抓取搜索结果页。如某源 health check 失败（前面检测结果）则跳过。
-
-**Layer 4 — 免费源补强**：当前 prompt 中 Step 3 定义的 A/B 类免费源。只在 Layer 1-3 结果不足时触发。
-
-所有层的搜索结果合并去重后进入 Step 4 抓取队列。
-
 ## 输入
 - 大纲文件：{TMPDIR}/outline.json
 - 优质源列表：{PROMPTSDIR}/../sources.json（与 prompts 同级的 skill 根目录）
@@ -67,15 +61,15 @@
 | 文件类型 | 处理方式 |
 |:--------|:---------|
 | `.md` / `.txt` | `read` 工具直接读取 |
-| `.pdf` | **先用 `read` 工具尝试**（模型如支持 PDF 输入则直接理解）；如失败 → 自动安装 PyPDF2 提取文本 |
+| `.pdf` | **先用 `read` 工具尝试**（模型如支持 PDF 输入则直接理解）；如失败 → 自动安装 pypdf 提取文本 |
 | `.docx` | **自动安装 python-docx 后提取**（见下方说明）|
 | 其他格式 | 标记为不支持，加入 gaps |
 
 **PDF 文件处理**（如果 `read` 工具返回的不是可读文本而是"PDF read successfully"，说明模型不支持直接解析 PDF）：
 ```
-pip install pypdf2 -q
+pip install pypdf -q
 python3 -c "
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 import sys
 reader = PdfReader(sys.argv[1])
 for page in reader.pages:
@@ -157,7 +151,7 @@ Step 0 — 工具环境探测（运行时自适应）
    ```
    python {TOOLSDIR}/dr_tools.py detect-engine
    ```
-   如无搜索引擎可用 → 标记 `all_search_unavailable=true`，后续跳过 Layer 1-2。
+   输出 JSON 含 `available`（是否可用）与 `endpoint`（可用端点地址，默认 `https://search.h33.top`，可用环境变量 `SEARXNG_ENDPOINTS` 覆盖多端点）。如 `available=false` → 标记 `all_search_unavailable=true`，后续跳过 Layer 1-2。
 
    **Scrapling MCP 可用性**（已有，在 Step 4 前检测）：
    尝试调用 `scrapling_bulk_get(urls=["https://example.com"], timeout=10, extraction_type="text")` 检测。
@@ -175,9 +169,9 @@ Step 2 — 多源并行搜索（Layer 0-3 同时发出）
 **Layer 1 — 大纲建议源定向搜索**：如果 outline.json 包含 `source_suggestions`，对每个域名用 SearXNG 搜索 `site:{域名} {子问题关键词}`，一次性并行发出。
 
 **Layer 2 — SearXNG 补充搜索**：
-   ☐ **searxng_available=true** → SearXNG 搜索所有子问题
+   ☐ **searxng_available=true** → 用 Step 0 探测到的 `endpoint`（默认 `https://search.h33.top`）搜索所有子问题
       ```
-      webfetch(url="https://search.h33.top/search?q={URL编码的子问题描述} {time_anchor.target_year}&format=json", timeout=20)
+      webfetch(url="{endpoint}/search?q={URL编码的子问题描述} {time_anchor.target_year}&format=json", timeout=20)
       ```
    🔍 **反方关键词搜索**：从 outline.json 找出所有 `priority=="high"` 且 `counter_keywords` 非空（首元素不为 `""`）的子问题，将其 counter_keywords 作为额外搜索词，与主搜索一次性并行发出。结果存入该子问题的 `controversies` 数组。
 

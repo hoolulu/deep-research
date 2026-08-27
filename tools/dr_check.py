@@ -216,7 +216,7 @@ def check_tail(filepath: str, lang: str = "zh") -> dict:
 def year_density(filepath: str, target_year: int) -> dict:
     with open(filepath, 'r', encoding='utf-8-sig') as f:
         content = f.read()
-    years = re.findall(r'20[2-9]\d', content)
+    years = re.findall(r'(?:19|20|21)\d{2}', content)
     if not years:
         return {"passed": False, "issues": ["No year data found"], "density": 0, "total": 0}
     total = len(years)
