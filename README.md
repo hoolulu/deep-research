@@ -95,7 +95,6 @@ Click a report title to jump to the H33 report collection and search for the top
 | Component | Cost |
 |-----------|------|
 | **LLM (already using)** | **DeepSeek v4 Flash** baseline: quick ~100–150k tokens / < $0.03, standard ~150–300k / < $0.06, deep ~300–500k / < $0.10 |
-| **SearXNG search (author-deployed)** | Deployed on VPS, zero cost, unlimited usage |
 | **Scrapling fetching** | Runs locally, zero cost |
 | **Domestic sources** | Direct connection, zero cost, no proxy needed |
 | **AI tool runtime** | MIT open source, zero cost |
@@ -109,7 +108,7 @@ The pipeline runs in 4 automated stages:
 ```
 ① Analyze outline — Analyze topic, generate research framework and search plan
          ↓
-② Collect data — ╭─ Online: five-layer parallel search (tool built-in engine → suggested sources → SearXNG → sources.json → free fallback) → Scrapling batch fetch → data pool
+② Collect data — ╭─ Online: four-layer parallel search (tool built-in engine → suggested sources → sources.json → free fallback) → Scrapling batch fetch → data pool
                   ╰─ Offline: read local files directly (PDF/DOCX/TXT/MD) → data pool
          ↓
 ③ Parallel writing — All chapters in parallel (auto-sequential without multi-agent), facts embedded directly in prompts, no tool calls
@@ -120,17 +119,16 @@ The pipeline runs in 4 automated stages:
 
 ## 6. Search Pipeline & Built-in Resources
 
-Search uses a **five-layer priority** strategy, all issued in parallel:
+Search uses a **four-layer priority** strategy, all issued in parallel:
 
 ```
 Layer 0 — Tool built-in engine (auto-detected at runtime, e.g., `websearch` / `web_search`)
 Layer 1 — Outline-suggested sources (topic-targeted recommendations, e.g., arctic-council.org)
-Layer 2 — SearXNG (author-deployed, 70+ engines)
-Layer 3 — sources.json (30+ curated quality sources, health-checked on startup)
-Layer 4 — Free source reinforcement (A/B class search fallback)
+Layer 2 — sources.json (30+ curated quality sources, health-checked on startup)
+Layer 3 — Free source reinforcement (A/B class search fallback)
 ```
 
-All layers are merged and deduplicated, then batch-fetched by Scrapling. Free source reinforcement is triggered only when Layer 0-3 fail the per-sub-question quality gate (URL < 3 / outdated year / no authoritative source for high-priority sub-questions).
+All layers are merged and deduplicated, then batch-fetched by Scrapling. Free source reinforcement is triggered only when Layer 0-2 fail the per-sub-question quality gate (URL < 3 / outdated year / no authoritative source for high-priority sub-questions).
 
 `sources.json` covers academic (Semantic Scholar / arXiv / PubMed / Nature), data (World Bank / IMF / Our World in Data), news (Reuters / BBC / Guardian), and Chinese sources (Baidu Baike / Zhihu / 36Kr / The Paper / iResearch / East Money / CSDN) — 30+ sources, auto health-checked on startup with dead sources skipped.
 
@@ -185,7 +183,7 @@ Each tool registers skills/commands differently — drop the whole project into 
 | Cursor | `.cursor/skills/` or custom commands | Custom command pointing at SKILL.md |
 | DSH / others | Any directory that supports skill loading | Load SKILL.md, then enter a topic |
 
-> This skill's SKILL.md is already written as **all-platform** instructions: no dependency on any tool-specific `task()` multi-agent syntax. Chapter writing is parallel by default (when a multi-agent tool is detected); tools without multi-agent support automatically fall back to sequential writing — same output, slightly slower. Search and scraping logic (Scrapling + SearXNG) is reused unchanged across platforms.
+> This skill's SKILL.md is already written as **all-platform** instructions: no dependency on any tool-specific `task()` multi-agent syntax. Chapter writing is parallel by default (when a multi-agent tool is detected); tools without multi-agent support automatically fall back to sequential writing — same output, slightly slower. Search and scraping logic (Scrapling) is reused unchanged across platforms.
 
 ### Prerequisites
 
@@ -193,7 +191,6 @@ Each tool registers skills/commands differently — drop the whole project into 
 |-----------|:-----------:|:------------:|------------|
 | **AI tool runtime** (Claude Code / Codex CLI / Cursor / DSH / OpenCode etc.) | ✅ Required | ✅ Required | Pick your preferred tool |
 | **Scrapling** | ✅ Required | ❌ Not needed | For web scraping; offline mode doesn't need it |
-| **SearXNG** (author-deployed, 70+ engines) | ✅ Used | ❌ Not needed | Built-in endpoint, ready out of the box |
 
 > **Platform note**: Multi-agent-capable tools (OpenCode, Claude Code, Codex, DSH, etc.) naturally write chapters in parallel; tools without multi-agent support automatically write sequentially. Offline mode only needs the LLM's file-reading capability — no search/scraping components required.
 
@@ -217,7 +214,7 @@ The entire pipeline runs automatically — you don't need to do anything:
 
 ```
 ① Analyze outline — Analyze topic, generate framework and search plan
-② Collect data — SearXNG + sources.json parallel search → quality-triggered reinforcement → Scrapling batch fetch → data pool → quality check
+② Collect data — tool built-in engine + sources.json parallel search → quality-triggered reinforcement → Scrapling batch fetch → data pool → quality check
 ③ Parallel writing — All chapters simultaneously, facts embedded in prompts
 ④ Validate & assemble — Batch validate → assemble → citations → QA
 ```
@@ -242,13 +239,12 @@ You can also specify a custom output path — ask AI to configure it.
 
 **1. Search quotas? How to ensure uninterrupted searching?**
 
-The system uses a **five-layer priority search** architecture (tool built-in engine → outline-suggested sources → SearXNG → sources.json → free source fallback), all issued in parallel, each layer auto-degrades on failure:
+The system uses a **four-layer priority search** architecture (tool built-in engine → outline-suggested sources → sources.json → free source fallback), all issued in parallel, each layer auto-degrades on failure:
 
 - **Layer 0 — Tool built-in engine**: Auto-detects the tool's built-in search engine at runtime (e.g., `websearch` / `web_search`). If available, used as primary, runs in parallel with subsequent layers. No additional configuration needed.
 - **Layer 1 — Outline-suggested sources**: Task 1 recommends authoritative domains per topic (e.g., arctic-council.org, stats.gov.cn), searched first.
-- **Layer 2 — SearXNG (author-deployed)**: Meta-search engine aggregating 70+ engines (Baidu/Google/Brave), full coverage of Chinese and English. Built-in endpoint, ready out of the box, unlimited, no rate limits.
-- **Layer 3 — sources.json quality sources**: 30+ curated sources (Semantic Scholar / arXiv / Nature / World Bank / IMF / Reuters / BBC / Baidu Baike / Zhihu / 36Kr / iResearch / East Money etc.). Auto health check on startup, dead sources skipped.
-- **Layer 4 — Free source reinforcement (final fallback)**: triggered only when Layer 0-3 fail the per-sub-question quality gate (URL < 3 / outdated / no authoritative source for high-priority). DuckDuckGo / Bing / Brave / Mojeek / Semantic Scholar / GDELT / arXiv + 20+ Chinese sources. No API keys required, always available.
+- **Layer 2 — sources.json quality sources**: 30+ curated sources (Semantic Scholar / arXiv / Nature / World Bank / IMF / Reuters / BBC / Baidu Baike / Zhihu / 36Kr / iResearch / East Money etc.). Auto health check on startup, dead sources skipped.
+- **Layer 3 — Free source reinforcement (final fallback)**: triggered only when Layer 0-2 fail the per-sub-question quality gate (URL < 3 / outdated / no authoritative source for high-priority). DuckDuckGo / Bing / Brave / Mojeek / Semantic Scholar / GDELT / arXiv + 20+ Chinese sources. No API keys required, always available.
 
 **2. How to use local materials for report generation?**
 
@@ -415,7 +411,6 @@ You can also manually refresh the browser page anytime by running `python tools/
 | 组件                                              | 费用                                                                                                              |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
 | **LLM（你已经在用的）**                                 | **DeepSeek v4 Flash** 基准：quick 约 10–15 万 token / < 0.2 元，standard 约 15–30 万 / < 0.4 元，deep 约 30–50 万 / < 0.7 元 |
-| **SearXNG 搜索（作者部署）**                            | 已部署在 VPS，零费用，无限畅用                                                                                               |
 | **Scrapling 抓取**                                | 纯本地运行，零费用                                                                                                       |
 | **国内源（百度百科/维基百科/知乎/36氪/澎湃/199IT/艾瑞/东方财富/国统局等）** | 直连零费用，不要代理                                                                                                      |
 | **AI 工具运行时**                                | 开源免费，零费用                                                                                                      |
@@ -430,7 +425,7 @@ You can also manually refresh the browser page anytime by running `python tools/
 ```
 ① 分析大纲 — 分析主题，生成调研框架和搜索计划
          ↓
-② 采集数据 — ╭─ 在线模式：五层搜索并行（工具内置引擎 → 建议源 → SearXNG → sources.json → 免费源）→ Scrapling 批量抓取 → 数据池
+② 采集数据 — ╭─ 在线模式：四层搜索并行（工具内置引擎 → 建议源 → sources.json → 免费源）→ Scrapling 批量抓取 → 数据池
                ╰─ 离线模式：直接读取本地文件（PDF/DOCX/TXT/MD）→ 数据池
          ↓
 ③ 并行撰写 — 所有章节同时撰写，事实直接嵌入 prompt，不做工具调用
@@ -441,17 +436,16 @@ You can also manually refresh the browser page anytime by running `python tools/
 
 ## 六、搜索链路与内置资源
 
-搜索采用 **五层优先级** 策略，全部并行发出：
+搜索采用 **四层优先级** 策略，全部并行发出：
 
 ```
 Layer 0 — 工具内置引擎（如 `websearch` / `web_search`，运行时自适应）
 Layer 1 — 大纲建议源（按主题定向推荐，如 arctic-council.org）
-Layer 2 — SearXNG（作者部署，70+ 引擎）
-Layer 3 — sources.json（skill 内置 30+ 优质源，启动时健康检测）
-Layer 4 — 免费源补强（A/B 类搜索兜底）
+Layer 2 — sources.json（skill 内置 30+ 优质源，启动时健康检测）
+Layer 3 — 免费源补强（A/B 类搜索兜底）
 ```
 
-所有层的结果合并去重，由 Scrapling 统一抓取全文。免费源补强仅在 Layer 0-3 结果未通过逐子问题质量门时触发（子问题可用 URL < 3 / 结果年份过旧 / high 优先级子问题无权威来源）。
+所有层的结果合并去重，由 Scrapling 统一抓取全文。免费源补强仅在 Layer 0-2 结果未通过逐子问题质量门时触发（子问题可用 URL < 3 / 结果年份过旧 / high 优先级子问题无权威来源）。
 
 `sources.json` 覆盖学术（Semantic Scholar / arXiv / PubMed / Nature）、数据（World Bank / IMF / Our World in Data）、新闻（Reuters / BBC / Guardian）、中文（百度百科 / 知乎 / 36氪 / 澎湃 / 艾瑞 / 东方财富 / CSDN 等）30+ 个源，启动时自动健康检测，死源跳过。
 
@@ -512,7 +506,7 @@ AI 会读取项目文档→理解系统类型→逐项安装→验证可用性�
 | Cursor | `.cursor/skills/` 或自定义命令 | 自定义命令指向 SKILL.md |
 | DSH / 其他 | 任意支持 skill 加载的目录 | 加载 SKILL.md 后输入主题 |
 
-> 本 skill 的 SKILL.md 已写成**所有平台通用**指令：不再依赖任何工具专属的 `task()` 等多 agent 语法。章节撰写默认并行（探测到多 agent 工具时），没有多 agent 能力的工具会自动降级为串行撰写，产物一致，仅耗时略增。搜索与抓取逻辑（Scrapling + SearXNG）各平台原样复用。
+> 本 skill 的 SKILL.md 已写成**所有平台通用**指令：不再依赖任何工具专属的 `task()` 等多 agent 语法。章节撰写默认并行（探测到多 agent 工具时），没有多 agent 能力的工具会自动降级为串行撰写，产物一致，仅耗时略增。搜索与抓取逻辑（Scrapling）各平台原样复用。
 
 ### 前置依赖
 
@@ -521,7 +515,6 @@ AI 会读取项目文档→理解系统类型→逐项安装→验证可用性�
 |:----|:--------|:--------|:--------|
 | **AI 工具运行时**（Claude Code / Codex CLI / Cursor / DSH / OpenCode 等） | ✅ 必须 | ✅ 必须 | 选择你习惯的工具即可 |
 | **Scrapling** | ✅ 必须 | ❌ 不需要 | 网页抓取用，离线模式不涉及 |
-| **SearXNG**（作者部署，70+ 引擎） | ✅ 使用 | ❌ 不需要 | 内置默认端点，开箱即用 |
 
 > **平台说明**：支持多 agent 的工具（OpenCode、Claude Code、Codex、DSH 等）天然并行撰写章节；不支持多 agent 的工具自动串行撰写。离线模式下仅依赖 LLM 的文件读取能力，无需搜索/抓取组件。
 
@@ -546,7 +539,7 @@ AI 会读取项目文档→理解系统类型→逐项安装→验证可用性�
 
 ```
 ① 分析大纲 — 分析主题，生成调研框架和搜索计划（含 source_suggestions 定向源推荐）
-② 采集数据 — 五层搜索并行（工具内置引擎→建议源→SearXNG→sources.json→免费源）→ Scrapling 批量抓取 → 数据池提取 → 数据质检
+② 采集数据 — 四层搜索并行（工具内置引擎→建议源→sources.json→免费源）→ Scrapling 批量抓取 → 数据池提取 → 数据质检
 ③ 并行撰写 — 所有章节同时撰写，事实直接嵌入 prompt，不做额外工具调用
 ④ 装配验收 — 批量 validate → assemble-report → convert-citations → escape-currency → qa-report
 ```
@@ -571,10 +564,10 @@ AI 会读取项目文档→理解系统类型→逐项安装→验证可用性�
 
 **1. 搜索额度？怎么保证搜索不中断？**
 
-系统采用 **五层搜索 + 质量触发补强** 架构：
+系统采用 **四层搜索 + 质量触发补强** 架构：
 
 - **Layer 0 — 工具内置引擎（新增）**：运行时自动探测当前工具的内置搜索引擎（如 `websearch` / `web_search`）。如果可用，以此为主力搜索引擎，与后续层并行发出。无需额外配置。
-- **Layer 1 — SearXNG（作者部署）**：作者在 VPS 上部署的元搜索引擎，聚合 70+ 搜索引擎（含百度/Google/Brave），中文英文全覆盖。内置默认端点，开箱即用，无限畅用、不限速、无额度限制。
+- **Layer 1 — 大纲建议源**：阶段1 根据主题定向推荐权威域名（如 moe.gov.cn、stats.gov.cn），用内置引擎做 `site:` 定向搜索。
 - **Layer 2 — sources.json 优质源**：skill 内置 30+ 精选源（Semantic Scholar / arXiv / Nature / World Bank / IMF / Reuters / BBC / 百度百科 / 知乎 / 36氪 / 艾瑞 / 东方财富 等）。启动时自动健康检测，死源跳过。
 - **Layer 3 — 免费源补强（兜底）**：当 Layers 0-2 合计结果质量不足（URL < 3 / 年份过旧 / 来源过少）时触发。DuckDuckGo / Bing / Brave / Mojeek / Semantic Scholar / GDELT / arXiv + 百度百科 / 知乎 / 199IT / 艾瑞 / 36氪 / 澎湃 / 东方财富 / 微博 / CSDN / 虎嗅 / 豆瓣 等 20+ 源。不依赖任何 API Key，永远可用。
 

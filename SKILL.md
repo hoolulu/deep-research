@@ -14,7 +14,7 @@ repository: https://github.com/hoolulu/deep-research
 生成对标券商/第三方研究机构标准的深度调研报告。
 
 - **架构**：主 agent 调度 4 个子 agent Task（大纲/数据/预检/装配）+ 1 轮主控并行派发章节，中间数据走临时文件
-- **数据源**：在线模式 → 工具内置引擎（Layer 0，如有）+ SearXNG（Layer 1） + sources.json 优质源搜索（Layer 2）并行 → 按质量触发免费源补强（Layer 3 兜底）→ Scrapling 批量抓取；离线模式 → 用户指定的本地文件（md/txt/pdf/docx）
+- **数据源**：在线模式 → 工具内置引擎（Layer 0，如有）+ 大纲建议源定向搜索（Layer 1） + sources.json 优质源搜索（Layer 2）并行 → 按质量触发免费源补强（Layer 3 兜底）→ Scrapling 批量抓取；离线模式 → 用户指定的本地文件（md/txt/pdf/docx）
 - **安装**：见下方「安装与配置」
 - **输出**：`$TMPDIR/outline.json`（临时，非最终报告）
 - **最终报告**：保存到 skill 目录下的 `reports/`
@@ -253,7 +253,7 @@ repository: https://github.com/hoolulu/deep-research
       IF offline_mode=true:
         <搜索词>：{offline_$LANG}
       ELSE:
-        engines_names = engines 数组元素大写（["searxng"] → "SearXNG"）
+        engines_names = engines 数组元素大写（["websearch"] → "Websearch"）
         desc = engines_names
         IF free_fallback=true: desc += " (+{free_fallback_$LANG})"
         IF english_fallback=true: desc += " (+EN)"
@@ -388,7 +388,6 @@ Task 4 装配 + QA 通过后，内部已完成清理：
 | 能力 | 用途 | 免费？ | 国内源？ |
 |:----|:-----|:-----:|:--------:|
 | 内置搜索（探测） | **主力**搜索引擎（当前工具的内置搜索，如 `websearch`/`web_search`，运行时探测） | 取决于环境 | 视引擎而定 |
-| SearXNG | 元搜索引擎（运行时探测端点） | ✅ 自建零费用 | ✅ 70+引擎含百度/搜狗 |
 | 其他搜索引擎 | 不同工具的内置搜索（运行时自动适配） | 取决于环境 | — |
 | Scrapling MCP | 全文抓取（MCP，需注册到当前工具的 MCP 配置） | ✅ | **✅ 推荐，国内源主力** |
 | webfetch / fetch | 抓取回退（Scrapling 不可用时替代） | ✅ | ❌ 远端受限，国内源效果一般 |
@@ -404,13 +403,13 @@ Layer 0 — 工具内置引擎探测（扫描可用工具集）
   ├─ 发现内置引擎 → 作为主力搜索，与后续层并行
   └─ 未发现 → 跳过此层，不影响后续
 
-Layer 1 — 大纲建议源（SearXNG site:定向搜索）+ Layer 2 — SearXNG 全网补充搜索 并行
+Layer 1 — 大纲建议源定向搜索（site: 搜索，用内置引擎）
          ↓
-Layer 3 — sources.json 优质源搜索（并行）
+Layer 2 — sources.json 优质源搜索（并行）
          ↓
 搜索结果质量评估（Step 3 质量门）
   ├─ 达标 → 直接进入抓取
-  └─ 不达标 → Layer 4 免费源补强（A/B 类源 + 区域引擎）
+  └─ 不达标 → Layer 3 免费源补强（A/B 类源 + 区域引擎）
          ↓
 全部 URL → 检测 Scrapling MCP 可用性
     ├─ 🔧 可用 → Scrapling 批量抓取全文 → 数据池

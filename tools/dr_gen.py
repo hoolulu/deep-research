@@ -187,54 +187,6 @@ def _read_json_handle_bom(path: str):
         return json.load(f)
 
 
-# ── Search Engine Detection ─────────────────────────────────────────────────
-
-
-DEFAULT_SEARXNG_ENDPOINTS = ["https://search.h33.top"]
-
-
-def detect_engine() -> dict:
-    import json as _json
-    import os
-    import urllib.request as _req
-    import urllib.error as _err
-
-    env_endpoints = os.environ.get("SEARXNG_ENDPOINTS", "").strip()
-    if env_endpoints:
-        endpoints = [e.strip() for e in env_endpoints.split(",") if e.strip()]
-    else:
-        endpoints = list(DEFAULT_SEARXNG_ENDPOINTS)
-
-    errors = []
-    for ep in endpoints:
-        url = ep.rstrip("/") + "/search?q=test&format=json"
-        try:
-            r = _req.Request(
-                url,
-                headers={"User-Agent": "Mozilla/5.0"},
-                method="GET",
-            )
-            with _req.urlopen(r, timeout=15) as resp:
-                data = _json.loads(resp.read().decode("utf-8"))
-                if isinstance(data, dict) and "results" in data:
-                    return {
-                        "engine": "searxng",
-                        "available": True,
-                        "endpoint": ep,
-                        "reason": "ok",
-                    }
-                errors.append(f"{url}: no results field")
-        except Exception as e:
-            errors.append(f"{url}: {type(e).__name__}: {e}")
-
-    return {
-        "engine": "none",
-        "available": False,
-        "reason": " | ".join(errors) or "no endpoints configured",
-        "endpoints_tried": endpoints,
-    }
-
-
 def convert_citations(report_path: str, datapool_path: str, output_path: str = None, lang: str = "zh") -> dict:
     with open(report_path, 'r', encoding='utf-8-sig') as f:
         content = f.read()

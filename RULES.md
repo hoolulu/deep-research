@@ -9,7 +9,7 @@
 | 规则 | 说明 | 在哪拦截 |
 |:----|:-----|:---------|
 | **章节约束** | quick 5-8 章 / standard 8-10 章 / deep 10-12 章（区间以 profiles.json 的 min_chapters / max_chapters 为准） | 阶段1 大纲 agent |
-| **可搜索性** | 每个子问题必须能通过工具内置引擎（如有）+ SearXNG + 免费源（DuckDuckGo/Semantic Scholar/GDELT/Wikipedia）独立搜索 | 阶段1 大纲 agent |
+| **可搜索性** | 每个子问题必须能通过工具内置引擎（如有）+ 免费源（DuckDuckGo/Semantic Scholar/GDELT/Wikipedia）独立搜索 | 阶段1 大纲 agent |
 | **免费源补强** | 逐子问题质量门未达标时触发 Step 3（与 Step 4 抓取并行，新 URL 追加到下一轮抓取） | 阶段2 Step 3（并行） |
 | **对比视角** | 至少 1 个反方观点子问题 | 阶段1 大纲 agent |
 | **子节结构完整性** | 大纲 agent 必须为每章定义 sections[]，deep 3-6 节，standard 2-4 节，quick 1-2 节 | 阶段1 大纲 agent |

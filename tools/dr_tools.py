@@ -15,7 +15,7 @@ from dr_gen import (
     generate_refs, map_chapters,
     write_json, write_md,
     prepare_chapter, assemble_report, convert_citations,
-    detect_engine, generate_confidence_section, escape_currency,
+    generate_confidence_section, escape_currency,
 )
 from lang_config import get_lang_config
 
@@ -154,7 +154,6 @@ def main():
     p.add_argument('--chapter', type=int, required=True)
     p.add_argument('--total', type=int, default=1)
     p.add_argument('--mode', choices=['quick', 'standard', 'deep'], default='standard')
-    p = sub.add_parser('detect-engine', help='Detect available search engine')
     p = sub.add_parser('assemble-report', help='Assemble final report from chapters + metadata')
     p.add_argument('--outline', required=True)
     p.add_argument('--chapters-dir', required=True)
@@ -265,12 +264,6 @@ def main():
         _exit(write_json(args.filepath))
     elif args.command == 'write-md':
         _exit(write_md(args.filepath))
-
-    # ── Dispatch: engine ──
-    elif args.command == 'detect-engine':
-        result = detect_engine()
-        print(json.dumps(result, ensure_ascii=False, indent=2))
-        sys.exit(0)
 
     # ── Dispatch: confidence section ──
     elif args.command == 'generate-confidence-section':

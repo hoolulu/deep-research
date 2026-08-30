@@ -8,24 +8,22 @@
 - 违规后果：整个流程降级，需重跑
 
 ## 优化说明
-- Layer 0-4 搜索全部并行发出，不等前一层完成
+- Layer 0-3 搜索全部并行发出，不等前一层完成
 - 免费源补强与 Scrapling 抓取并行执行，不串行等待
 - **搜索源语言过滤**：根据 {LANG} 决定搜索源——{LANG}=zh 时使用全部来源；其他语言跳过中文专用站（cn.bing.com、搜狗、360、B类国内源），对通用搜索引擎加 locale 参数，对特定语言启用区域引擎（详见各步骤说明）
 - **工具探测优先**：agent 在启动时自行扫描可用工具集，根据实际可用的搜索工具自适应选择搜索策略。不依赖任何预设配置。
 
-## 五层搜索优先级
+## 四层搜索优先级
 
 搜索执行顺序从高优先级到低优先级：
 
 **Layer 0 — 工具内置搜索（最高优先级）**：Step 0 探测当前工具的内置搜索引擎（如 `websearch` / `web_search` 等）。如果可用，**以此为主力搜索引擎**，与后续层并行发出。详见 Step 0。
 
-**Layer 1 — 大纲建议源**：读取 {TMPDIR}/outline.json 的 `source_suggestions` 数组（如 `["noaa.gov", "ipcc.ch"]`），对每个域名，用 SearXNG 搜索 `site:{域名} {子问题关键词}`。这些是大纲阶段根据主题定向推荐的源，最贴合主题。与 Layer 0 并行发出。
+**Layer 1 — 大纲建议源**：读取 {TMPDIR}/outline.json 的 `source_suggestions` 数组（如 `["noaa.gov", "ipcc.ch"]`），对每个域名，用内置引擎搜索 `site:{域名} {子问题关键词}`。这些是大纲阶段根据主题定向推荐的源，最贴合主题。与 Layer 0 并行发出。
 
-**Layer 2 — SearXNG 补充搜索**：SearXNG 全网搜索，70+ 搜索引擎（含 Google/Bing/Brave/百度）并行。作为 Layer 0 的深度补充，与 Layer 0-1 并行发出。
+**Layer 2 — sources.json 优质源**：读取 `{PROMPTSDIR}/../sources.json`（与 prompts 同级的 skill 根目录），对每个子问题，遍历其中 `lang` 字段匹配 `{LANG}` 的源，用 webfetch 或 Scrapling 抓取搜索结果页。如某源 health check 失败（前面检测结果）则跳过。
 
-**Layer 3 — sources.json 优质源**：读取 `{PROMPTSDIR}/../sources.json`（与 prompts 同级的 skill 根目录），对每个子问题，遍历其中 `lang` 字段匹配 `{LANG}` 的源，用 webfetch 或 Scrapling 抓取搜索结果页。如某源 health check 失败（前面检测结果）则跳过。
-
-**Layer 4 — 免费源补强**：当前 prompt 中 Step 3 定义的 A/B 类免费源。只在 Layer 0-3 结果不足时触发。
+**Layer 3 — 免费源补强**：当前 prompt 中 Step 3 定义的 A/B 类免费源。只在 Layer 0-2 结果不足时触发。
 
 所有层的搜索结果合并去重后进入 Step 4 抓取队列。
 
@@ -127,7 +125,7 @@ for p in doc.paragraphs:
 ☐ 创建 `{TMPDIR}/task2_manifest.json`：
 
 ```json
-{"task":2,"source_count":N,"fact_count":N,"search_engine":"local_files","fetch_method":"本地读取","data_pool_path":"{TMPDIR}/data-pool.json","cautions_path":"{TMPDIR}/cautions.json","data_limited":false,"searxng_available":false,"builtin_available":false,"engines":[]}
+{"task":2,"source_count":N,"fact_count":N,"search_engine":"local_files","fetch_method":"本地读取","data_pool_path":"{TMPDIR}/data-pool.json","cautions_path":"{TMPDIR}/cautions.json","data_limited":false,"builtin_available":false,"engines":[]}
 ```
 
 > `source_count` = 本地文件数，`fact_count` = 提取到的事实总数。`data_limited` 固定为 false（用户选择纯本地，不套用在线模式的 insufficient_count 判定）。
@@ -141,23 +139,17 @@ Step 0 — 工具环境探测（运行时自适应）
    巡检当前可用的所有工具，识别搜索相关工具。**这是关键步骤——agent 必须在此步骤中根据实际可用的工具自适应选择搜索策略。**
 
    1. **扫描工具集**：检查你的工具列表中每个工具的 description 字段，找出搜索相关工具：
-      - **搜索引擎**：description 含 `search` / `web search` / `搜索引擎` / `搜索引擎` 等关键词的工具（如 `websearch`、`searxng`、`web_search` 等）
+      - **搜索引擎**：description 含 `search` / `web search` / `搜索引擎` 等关键词的工具（如 `websearch`、`web_search` 等）
       - **抓取工具**：description 含 `fetch` / `webfetch` / `scrapling` / `抓取` 等关键词的工具（如 `webfetch`、`scrapling_bulk_get` 等）
 
-   2. **输出**：根据识别结果，在 manifest 的 `engines` 数组中列出可用的搜索引擎名。
-
-   **备用检测**（网络层确认，用于标记 `searxng_available` 字段）：
-   ```
-   python {TOOLSDIR}/dr_tools.py detect-engine
-   ```
-   输出 JSON 含 `available`（是否可用）与 `endpoint`（可用端点地址，默认 `https://search.h33.top`，可用环境变量 `SEARXNG_ENDPOINTS` 覆盖多端点）。如 `available=false` → 标记 `all_search_unavailable=true`，后续跳过 Layer 1-2。
+   2. **输出**：根据识别结果，在 manifest 的 `engines` 数组中列出可用的搜索引擎名。如未发现任何内置引擎 → 标记 `builtin_available=false`、`all_search_unavailable=true`。
 
    **Scrapling MCP 可用性**（已有，在 Step 4 前检测）：
    尝试调用 `scrapling_bulk_get(urls=["https://example.com"], timeout=10, extraction_type="text")` 检测。
 
-Step 2 — 多源并行搜索（Layer 0-3 同时发出）
+Step 2 — 多源并行搜索（Layer 0-2 同时发出）
 
-五层搜索中的 Layer 0-3 在本步骤中一次性全部发出，不串行等待：
+四层搜索中的 Layer 0-2 在本步骤中一次性全部发出，不串行等待：
 
 **Layer 0 — 工具内置引擎主力搜索**：如果 Step 0 探测到内置搜索引擎，**以此为主力**，搜索所有子问题：
    ```
@@ -165,16 +157,11 @@ Step 2 — 多源并行搜索（Layer 0-3 同时发出）
    ```
    如果 Step 0 未发现任何内置引擎，跳过本层。
 
-**Layer 1 — 大纲建议源定向搜索**：如果 outline.json 包含 `source_suggestions`，对每个域名用 SearXNG 搜索 `site:{域名} {子问题关键词}`，一次性并行发出。
-
-**Layer 2 — SearXNG 补充搜索**：
-   ☐ **searxng_available=true** → 用 Step 0 探测到的 `endpoint`（默认 `https://search.h33.top`）搜索所有子问题
-      ```
-      webfetch(url="{endpoint}/search?q={URL编码的子问题描述} {time_anchor.target_year}&format=json", timeout=20)
-      ```
    🔍 **反方关键词搜索**：从 outline.json 找出所有 `priority=="high"` 且 `counter_keywords` 非空（首元素不为 `""`）的子问题，将其 counter_keywords 作为额外搜索词，与主搜索一次性并行发出。结果存入该子问题的 `controversies` 数组。
 
-**Layer 3 — sources.json 优质源搜索**：先并行 health check（`webfetch(url=health_url, timeout=5)` 检测所有 `lang` 匹配 `{LANG}` 的源，非 200/超时标记 dead 跳过）。对存活源用 `webfetch(url=url_template.replace("{query}", url编码的关键词))` 一次性并行发出全部搜索。
+**Layer 1 — 大纲建议源定向搜索**：如果 outline.json 包含 `source_suggestions`，对每个域名用内置引擎搜索 `site:{域名} {子问题关键词}`，一次性并行发出。
+
+**Layer 2 — sources.json 优质源搜索**：先并行 health check（`webfetch(url=health_url, timeout=5)` 检测所有 `lang` 匹配 `{LANG}` 的源，非 200/超时标记 dead 跳过）。对存活源用 `webfetch(url=url_template.replace("{query}", url编码的关键词))` 一次性并行发出全部搜索。
 
 所有层的搜索结果合并去重后进入抓取队列。
 
@@ -183,7 +170,7 @@ Step 2 — 多源并行搜索（Layer 0-3 同时发出）
 在搜索结果合并去重后，利用各层已返回的数据，对每个子问题记录搜索元数据。**不额外增加串行等待**——各层搜索返回后立即记录，信息已在内存中。
 
 对每个 sub_question（通过 outline.json 的 chapters[].sub_questions[] 获取索引），暗自记录：
-- `layer_urls`：各层分别贡献的 URL 数（Layer 0/1/2/3 各自多少条搜索结果）
+- `layer_urls`：各层分别贡献的 URL 数（Layer 0/1/2 各自多少条搜索结果）
 - `recent_urls`：其中来自 target_year 及前一年的 URL 数
 - `authoritative_urls`：来自权威域名（.gov/.edu/.org 或知名研究机构）的 URL 数
 - `unique_domains`：不同独立域名数量
@@ -195,14 +182,14 @@ Step 2 — 多源并行搜索（Layer 0-3 同时发出）
 当 {LANG} ≠ "en" 且 **所有子问题合计可用 URL < 3** 时，执行英文补搜：
 
 ☐ 对每个子问题，使用自然语言将其 `question` 和 `search_keywords` 翻译为英文
-☐ 使用 SearXNG 用英文关键词重新搜索，一次性并行发出
+☐ 使用内置引擎用英文关键词重新搜索，一次性并行发出
 ☐ 反方关键词同理翻译为英文后重搜
 ☐ 结果去重后合并到 Step 2 的 URL 队列中
 ☐ 在 manifest 的 `search_engine` 中追加标记 `+english_fallback`
 
 > 专有名词处理示例：`"Türkiye enerji piyasası"` → `"Turkey energy market"`，不要硬翻。
 
-Step 3 — 免费数据源补强（Layer 4，与 Scrapling 抓取并行）
+Step 3 — 免费数据源补强（Layer 3，与 Scrapling 抓取并行）
     触发条件：基于**逐子问题矩阵**的质量评估。
 
     对每个子问题独立评估：
@@ -302,7 +289,7 @@ Step 3 — 免费数据源补强（Layer 4，与 Scrapling 抓取并行）
 Step 4 — Scrapling 批量抓取（与 Step 3 并行）
 
 ### Scrapling 批量抓取（与补强搜索并行）
-    收集全部 URL（SearXNG 搜索结果 + 年度专项）→ 去重 → 立即启动抓取，不等补强：
+    收集全部 URL（搜索结果 + 年度专项）→ 去重 → 立即启动抓取，不等补强：
    ```
    scrapling_bulk_get(urls=[去重URL], timeout=60, extraction_type="markdown")
    ```
@@ -415,7 +402,7 @@ manifest 中的 `fetch_method` 字段根据 Step 4 的实际抓取情况填写�
 | Scrapling 完全不可用，全部走 webfetch | `🌐 webfetch` |
 
 ## 硬规则
-1. **搜索引擎策略**：工具内置引擎（Layer 0，如有）为主力 + SearXNG（Layer 1-2）补充并行，搜索结果合并去重。搜索结果质量不足时（URL < 3 / 年份过旧 / 来源过少）触发免费源补强（Layer 4 兜底）。
+1. **搜索引擎策略**：工具内置引擎（Layer 0，如有）为主力，大纲建议源（Layer 1）与 sources.json 优质源（Layer 2）补充并行，搜索结果合并去重。搜索结果质量不足时（URL < 3 / 年份过旧 / 来源过少）触发免费源补强（Layer 3 兜底）。
 2. **年份时效（默认强制）**：`time_anchor.mode != "relaxed"` 时，search_keywords 必须含 `{target_year}`；`user_specified` 时用用户指定年份替代 `{target_year}`
 3. Scrapling 为默认抓取工具，不可跳过、不可替代；若 Scrapling MCP 不可用则回退 webfetch，并在输出中明确标注所用抓取方式
 4. 连续 3 次域名 404/403 → 标记"来源稀缺"并跳过
@@ -424,7 +411,7 @@ manifest 中的 `fetch_method` 字段根据 Step 4 的实际抓取情况填写�
 7. **补强限时**：Step 3 从启动到终止总耗时默认 ≤ 30 秒。超时后已获得的 URL 继续进入 Step 4，未完成的子问题标记 gap。不得因为补强未完成阻塞 Step 4 抓取或数据池构建。
 
 ## 作业
-1. 完成 SearXNG（Layer 1-2） + Step 0 补充引擎（如有） + sources.json 优质源（Layer 3） + Scrapling/webfetch 数据收集 + 数据池提取
+1. 完成工具内置引擎（Layer 0，如有） + 大纲建议源（Layer 1） + sources.json 优质源（Layer 2） + Scrapling/webfetch 数据收集 + 数据池提取
 2. Step 6 数据质检（来源可信度/乱码/一致性/Adversarial 检查）
 3. 清理 tool-output/ 中的中间文件
 4. 使用 `write` 工具创建 `{TMPDIR}/cautions.json`：
@@ -449,10 +436,9 @@ manifest 中的 `fetch_method` 字段根据 Step 4 的实际抓取情况填写�
    ```json
    {
      "layer0_builtin": {"used": true, "sub_questions_covered": 10, "urls_contributed": 30},
-     "layer1_searxng_site": {"used": true, "domains_active": ["moe.gov.cn"], "urls_contributed": 5},
-     "layer2_searxng": {"used": false, "reason": "结果已充足"},
-     "layer3_sources_json": {"sources_checked": 6, "alive": 4, "dead": 2, "urls_contributed": 6},
-     "layer4_free_fallback": {"triggered": false, "reason": "达标"}
+     "layer1_outline_sources": {"used": true, "domains_active": ["moe.gov.cn"], "urls_contributed": 5},
+     "layer2_sources_json": {"sources_checked": 6, "alive": 4, "dead": 2, "urls_contributed": 6},
+     "layer3_free_fallback": {"triggered": false, "reason": "达标"}
    }
    ```
 
@@ -483,11 +469,10 @@ manifest 中的 `fetch_method` 字段根据 Step 4 的实际抓取情况填写�
      "source_count": 14,
      "fact_count": 41,
      "unique_domains": 11,
-     "search_engine": "builtin+searxng",
+     "search_engine": "builtin",
      "fetch_method": "🔧 Scrapling",
-     "engines": ["websearch", "searxng"],
+     "engines": ["websearch"],
      "builtin_available": true,
-     "searxng_available": false,
      "free_fallback": false,
      "english_fallback": false,
      "data_limited": false,
@@ -495,10 +480,9 @@ manifest 中的 `fetch_method` 字段根据 Step 4 的实际抓取情况填写�
      "cautions_path": "{TMPDIR}/cautions.json",
      "search_layer_trace": {
        "layer0_builtin": {"used": true, "sub_questions_covered": 10, "urls_contributed": 30},
-       "layer1_searxng_site": {"used": true, "domains_active": ["moe.gov.cn"], "urls_contributed": 5},
-       "layer2_searxng": {"used": false, "reason": "结果已充足"},
-       "layer3_sources_json": {"sources_checked": 6, "alive": 4, "dead": 2, "urls_contributed": 8},
-       "layer4_free_fallback": {"triggered": false, "reason": "达标"}
+       "layer1_outline_sources": {"used": true, "domains_active": ["moe.gov.cn"], "urls_contributed": 5},
+       "layer2_sources_json": {"sources_checked": 6, "alive": 4, "dead": 2, "urls_contributed": 8},
+       "layer3_free_fallback": {"triggered": false, "reason": "达标"}
      },
      "coverage": [
        {"q_index": 0, "status": "adequate", "facts": 4, "recent": 3, "data_types": ["actual", "estimate"], "gaps": []},
